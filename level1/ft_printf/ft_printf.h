@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:37:03 by haito             #+#    #+#             */
-/*   Updated: 2024/11/23 18:59:09 by haito            ###   ########.fr       */
+/*   Updated: 2024/11/25 05:06:14 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_putchar(char c);
 int	ft_putstr(const char *s);
 int	ft_putnbr(int n);
 int	ft_putunbr(unsigned int n);
+int	ft_strlen(const char *s);
 int	ft_print_addr(unsigned char *addr_hex);
 int	case_c(va_list args);
 int	case_s(va_list args);

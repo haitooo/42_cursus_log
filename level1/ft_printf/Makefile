@@ -6,7 +6,7 @@
 #    By: haito <haito@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/23 19:28:46 by haito             #+#    #+#              #
-#    Updated: 2024/11/23 19:35:27 by haito            ###   ########.fr        #
+#    Updated: 2024/11/25 05:07:13 by haito            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INC = -I ft_printf.h
 all: $(NAME)
 
 $(NAME): $(OBJS)
-		ar cr $(NAME) $(OBJS) libft.a
+		ar cr $(NAME) $(OBJS)
 
 clean:
 		rm -f $(OBJS)

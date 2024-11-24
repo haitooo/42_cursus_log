@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:42:31 by haito             #+#    #+#             */
-/*   Updated: 2024/11/23 19:21:00 by haito            ###   ########.fr       */
+/*   Updated: 2024/11/25 05:03:02 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,9 @@ int	case_s(va_list args)
 	str = va_arg(args, const char *);
 	if (str == NULL)
 		return (ft_putstr("(null)"));
-	while (*str)
-	{
-		if (ft_putchar(*(str++)) == -1)
-			return (-1);
-		result += 1;
-	}
+	if (ft_putstr(str) == -1)
+		return (-1);
+	result = ft_strlen(str);
 	return (result);
 }
 

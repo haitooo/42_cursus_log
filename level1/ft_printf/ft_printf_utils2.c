@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:38:21 by haito             #+#    #+#             */
-/*   Updated: 2024/11/23 19:02:27 by haito            ###   ########.fr       */
+/*   Updated: 2024/11/25 05:05:56 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,16 @@ int	ft_putstr(const char *s)
 int	ft_putchar(char c)
 {
 	return (write(1, &c, 1));
+}
+
+int	ft_strlen(const char *s)
+{
+	int	count;
+
+	count = 0;
+	while (s[count])
+		count++;
+	return (count);
 }
 
 int	ft_putunbr(unsigned int n)
