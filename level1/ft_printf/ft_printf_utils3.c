@@ -1,16 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils2.c                                 :+:      :+:    :+:   */
+/*   ft_printf_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 18:38:21 by haito             #+#    #+#             */
-/*   Updated: 2024/11/25 03:51:21 by haito            ###   ########.fr       */
+/*   Created: 2024/11/25 12:48:04 by haito             #+#    #+#             */
+/*   Updated: 2024/11/25 15:54:19 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int	ft_print_addr(unsigned char *addr_hex, t_flag *flag, int i)
+{
+	int		result;
+	int		has_num;
+
+	result = 2;
+	has_num = 0;
+	if (ft_putstr("0x") == -1)
+		return (-1);
+	while (i++ < 15)
+	{
+		if (addr_hex[i] != '0' || has_num)
+		{
+			has_num = 1;
+			if (ft_putchar(addr_hex[i]) == -1)
+				return (-1);
+			result++;
+		}
+	}
+	while (result < flag->flag_left)
+	{
+		if (ft_putchar(' ') == -1)
+			return (-1);
+		result++;
+	}
+	return (result);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -41,65 +69,12 @@ int	ft_atoi(const char *str)
 	return ((int)(result * is_nega));
 }
 
-int	ft_putstr(const char *s)
+int	ft_strlen(const char *s)
 {
-	int	result;
+	int	count;
 
-	result = 0;
-	while (*s)
-	{
-		if (write(1, s++, 1) == -1)
-			return (-1);
-		result += 1;
-	}
-	return (result);
-}
-
-int	ft_putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-int	ft_putunbr(unsigned int n)
-{
-	char	c;
-	int		result;
-
-	result = 0;
-	if (n > 9)
-		result += ft_putunbr(n / 10);
-	c = (n % 10) + '0';
-	if (ft_putchar(c) == -1)
-		return (-1);
-	result += 1;
-	return (result);
-}
-
-int	ft_putnbr(int n, t_flag *flag)
-{
-	char	c;
-	int		result;
-
-	result = 0;
-	if (n == -2147483648)
-	{
-		if (flag->flag_zero == 0)
-			return (ft_putstr("-2147483648"));
-		else
-			return (ft_putstr("2147483648"));
-	}
-	if (n < 0)
-	{
-		if (ft_putchar('-') == -1)
-			return (-1);
-		result += 1;
-		n = -n;
-	}
-	if (n > 9)
-		result += ft_putnbr(n / 10, flag);
-	c = (n % 10) + '0';
-	if (ft_putchar(c) == -1)
-		return (-1);
-	result += 1;
-	return (result);
+	count = 0;
+	while (s[count])
+		count++;
+	return (count);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_option.c                                 :+:      :+:    :+:   */
+/*   ft_printf_option_c_s.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:42:31 by haito             #+#    #+#             */
-/*   Updated: 2024/11/25 04:39:46 by haito            ###   ########.fr       */
+/*   Updated: 2024/11/25 21:09:41 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,65 @@ int	case_c(va_list args, t_flag *flag)
 	return (result);
 }
 
-int	case_s(va_list args, t_flag *flag)
+int	help_case_s(t_flag *flag, int result, int total_size, const char *str)
 {
-	const char	*str;
-	int			result;
-	int			length;
-
-	result = 0;
-	str = va_arg(args, const char *);
-	if (str == NULL)
-		return (ft_putstr("(null)"));
-	length = ft_strlen(str);
-	while (result < flag->flag_right - length && flag->flag_left == 0)
+	while (result < flag->flag_right - total_size && flag->flag_left == 0)
 	{
 		if (ft_putchar(' ') == -1)
 			return (-1);
 		result++;
 	}
-	if (ft_putstr(str) == -1)
+	if (ft_putstr_s(str, total_size) == -1)
 		return (-1);
-	result += length;
+	result += total_size;
 	while (result < flag->flag_left)
+	{
+		if (ft_putchar(' ') == -1)
+			return (-1);
+		result++;
+	}
+	return (result);
+}
+
+int	case_s(va_list args, t_flag *flag)
+{
+	const char	*str;
+	int			result;
+	int			result_tmp;
+	int			length;
+	int			total_size;
+
+	result = 0;
+	str = va_arg(args, const char *);
+	if (str == NULL)
+	{
+		if (!(flag->flag_period < 6) || flag->flag_right != 0
+			|| (flag->flag_period == -1 && flag->flag_right == 0))
+		{
+			while (result++ < flag->flag_right - 6)
+				if (ft_putchar(' ') == -1)
+					return (-1);
+			return (ft_putstr("(null)") + result - 1);
+		}
+		return (0);
+	}
+	length = ft_strlen(str);
+	if (flag->flag_period >= 0 && flag->flag_period < length)
+		total_size = flag->flag_period;
+	else
+		total_size = length;
+	result_tmp = help_case_s(flag, result, total_size, str);
+	if (result_tmp == -1)
+		return (-1);
+	return (result + result_tmp);
+}
+
+int	help_case_p(t_flag *flag)
+{
+	int	result;
+
+	result = 0;
+	while (result < flag->flag_right - 5)
 	{
 		if (ft_putchar(' ') == -1)
 			return (-1);
@@ -77,7 +115,7 @@ int	case_p(va_list args, t_flag *flag)
 	addr = va_arg(args, void *);
 	address = (unsigned long)addr;
 	if (address == 0)
-		return (ft_putstr("(nil)"));
+		return (help_case_p(flag) + ft_putstr("(nil)"));
 	hex = (unsigned char *)"0123456789abcdef";
 	i = 15;
 	while (i >= 0)
@@ -92,67 +130,5 @@ int	case_p(va_list args, t_flag *flag)
 			return (-1);
 		i++;
 	}
-	return (ft_print_addr(addr_hex, flag) + i);
-}
-
-int	case_d_i_zero(va_list args, t_flag *flag)
-{
-	int	num;
-	int	result;
-	int	result_put;
-	int	digit_num;
-
-	result = 0;
-	num = va_arg(args, int);
-	digit_num = get_digit_zero(num);
-	if (num < 0)
-	{
-		if (ft_putchar('-') == -1)
-			return (-1);
-		num = -num;
-		result++;
-	}
-	while (result < flag->flag_zero - digit_num)
-	{
-		if (ft_putchar('0') == -1)
-			return (-1);
-		result++;
-	}
-	if (num)
-	{
-		result_put = ft_putnbr(num, flag);
-		if (result_put == -1)
-			return (-1);
-		result += result_put;
-	}
-	return (result);
-}
-
-int	case_d_i(va_list args, t_flag *flag)
-{
-	int	num;
-	int	result;
-	int	result_put;
-	int	digit_num;
-
-	result = 0;
-	num = va_arg(args, int);
-	digit_num = get_digit(num);
-	while (result < flag->flag_right - digit_num && flag->flag_left == 0)
-	{
-		if (ft_putchar(' ') == -1)
-			return (-1);
-		result++;
-	}
-	result_put = ft_putnbr(num, flag);
-	if (result_put == -1)
-		return (-1);
-	result += result_put;
-	while (result < flag->flag_left)
-	{
-		if (ft_putchar(' ') == -1)
-			return (-1);
-		result++;
-	}
-	return (result);
+	return (ft_print_addr(addr_hex, flag, -1) + i);
 }

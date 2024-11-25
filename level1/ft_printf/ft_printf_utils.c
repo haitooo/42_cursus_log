@@ -6,33 +6,67 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:22:43 by haito             #+#    #+#             */
-/*   Updated: 2024/11/23 19:27:25 by haito            ###   ########.fr       */
+/*   Updated: 2024/11/25 18:18:53 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_print_addr(unsigned char *addr_hex)
+int	get_digit(int num)
 {
-	int		i;
-	int		result;
-	int		has_num;
+	int	count;
 
-	result = 0;
-	has_num = 0;
-	if (ft_putstr("0x") == -1)
-		return (-1);
-	result += 2;
-	i = -1;
-	while (i++ < 15)
+	count = 0;
+	if (num < 0)
+		count++;
+	while (num)
 	{
-		if (addr_hex[i] != '0' || has_num)
-		{
-			has_num = 1;
-			if (ft_putchar(addr_hex[i]) == -1)
-				return (-1);
-			result += 1;
-		}
+		num /= 10;
+		count++;
 	}
-	return (result);
+	return (count);
+}
+
+int	get_digit_zero(int num)
+{
+	int	count;
+
+	count = 0;
+	while (num)
+	{
+		num /= 10;
+		count++;
+	}
+	return (count);
+}
+
+int	get_digit_u(unsigned int num)
+{
+	int	count;
+
+	count = 0;
+	while (num)
+	{
+		num /= 10;
+		count++;
+	}
+	return (count);
+}
+
+int	get_digit_ul(unsigned long num)
+{
+	int	count;
+
+	count = 0;
+	while (num)
+	{
+		num /= 10;
+		count++;
+	}
+	return (count);
+}
+
+int	ft_isdigit(int c)
+{
+	return (c >= '0' && c <= '9');
 }

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:38:21 by haito             #+#    #+#             */
-/*   Updated: 2024/11/25 05:05:56 by haito            ###   ########.fr       */
+/*   Updated: 2024/11/25 18:17:24 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,26 @@ int	ft_putstr(const char *s)
 	return (result);
 }
 
+int	ft_putstr_s(const char *s, int size)
+{
+	int	result;
+
+	result = 0;
+	while (*s && result < size)
+	{
+		if (write(1, s++, 1) == -1)
+			return (-1);
+		result += 1;
+	}
+	return (result);
+}
+
 int	ft_putchar(char c)
 {
 	return (write(1, &c, 1));
 }
 
-int	ft_strlen(const char *s)
-{
-	int	count;
-
-	count = 0;
-	while (s[count])
-		count++;
-	return (count);
-}
-
-int	ft_putunbr(unsigned int n)
+int	ft_putunbr(unsigned long long n)
 {
 	char	c;
 	int		result;
@@ -56,14 +60,19 @@ int	ft_putunbr(unsigned int n)
 	return (result);
 }
 
-int	ft_putnbr(int n)
+int	ft_putnbr(int n, t_flag *flag)
 {
 	char	c;
 	int		result;
 
 	result = 0;
 	if (n == -2147483648)
-		return (ft_putstr("-2147483648"));
+	{
+		if (flag->flag_zero == 0)
+			return (ft_putstr("-2147483648"));
+		else
+			return (ft_putstr("2147483648"));
+	}
 	if (n < 0)
 	{
 		if (ft_putchar('-') == -1)
@@ -72,7 +81,7 @@ int	ft_putnbr(int n)
 		n = -n;
 	}
 	if (n > 9)
-		result += ft_putnbr(n / 10);
+		result += ft_putnbr(n / 10, flag);
 	c = (n % 10) + '0';
 	if (ft_putchar(c) == -1)
 		return (-1);
