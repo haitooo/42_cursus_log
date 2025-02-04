@@ -1,58 +1,66 @@
 #include "push_swap.h"
 
-void	sa(long **stack_a, int *sizeof_stack_a)
+void	sa(t_stacks *stacks, int is_ss)
 {
 	long	tmp;
 
-	if (*sizeof_stack_a <= 1)
+	if (stacks->sizeof_stack_a <= 1)
 		return ;
-	tmp = (*stack_a)[0];
-	(*stack_a)[0] = (*stack_a)[1];
-	(*stack_a)[1] = tmp;
+	tmp = (stacks->stack_a)[0];
+	(stacks->stack_a)[0] = (stacks->stack_a)[1];
+	(stacks->stack_a)[1] = tmp;
+	if (!is_ss)
+		ft_printf("sa\n");
 }
 
-void	sb(long **stack_b, int *sizeof_stack_b)
+void	sb(t_stacks *stacks, int is_ss)
 {
 	long	tmp;
 
-	if (*sizeof_stack_b <= 1)
+	if (stacks->sizeof_stack_b <= 1)
 		return ;
-	tmp = (*stack_b)[0];
-	(*stack_b)[0] = (*stack_b)[1];
-	(*stack_b)[1] = tmp;
+	tmp = (stacks->stack_b)[0];
+	(stacks->stack_b)[0] = (stacks->stack_b)[1];
+	(stacks->stack_b)[1] = tmp;
+	if (!is_ss)
+		ft_printf("sb\n");
 }
 
-void	ra(long **stack_a, int *sizeof_stack_a)
+void	ra(t_stacks *stacks, int is_rr)
 {
 	int		i;
 	long	tmp;
 
 	i = 0;
-	if (*sizeof_stack_a <= 1)
+	if (stacks->sizeof_stack_a <= 1)
 		return;
-	tmp = (*stack_a)[0];
-	while (i < (*sizeof_stack_a - 1))
+	tmp = (stacks->stack_a)[0];
+	while (i < (stacks->sizeof_stack_a - 1))
 	{
-		(*stack_a)[i] = (*stack_a)[i + 1];
+		(stacks->stack_a)[i] = (stacks->stack_a)[i + 1];
 		i++;
 	}
-	(*stack_a)[i] = tmp;
+	(stacks->stack_a)[i] = tmp;
+	if (!is_rr)
+		ft_printf("ra\n");
 }
 
-void	rb(long **stack_b, int *sizeof_stack_b)
+void	rb(t_stacks *stacks, int is_rr)
 {
 	int		i;
 	long	tmp;
 
 	i = 0;
-	if (*sizeof_stack_b <= 1)
+	if (stacks->sizeof_stack_b <= 1)
 		return;
-	tmp = (*stack_b)[0];
-	while (i < (*sizeof_stack_b - 1))
+	tmp = (stacks->stack_b)[0];
+	while (i < (stacks->sizeof_stack_b - 1))
 	{
-		(*stack_b)[i] = (*stack_b)[i + 1];
+		(stacks->stack_b)[i] = (stacks->stack_b)[i + 1];
 		i++;
 	}
-	(*stack_b)[i] = tmp;
+	(stacks->stack_b)[i] = tmp;
+	if (!is_rr)
+		ft_printf("rb\n");
 }
 

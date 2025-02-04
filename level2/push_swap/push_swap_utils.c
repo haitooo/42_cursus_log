@@ -71,3 +71,31 @@ long	ft_atol(const char *str)
 	}
 	return (result * is_nega);
 }
+
+int	is_smallnum(int index, int suit_index_in_b)
+{
+	if (index >= suit_index_in_b)
+		return (suit_index_in_b);
+	else
+		return (index);
+}
+
+int	is_largenum(int index, int suit_index_in_b)
+{
+	if (index <= suit_index_in_b)
+		return (suit_index_in_b);
+	else
+		return (index);
+}
+
+int	which_is_smallnum(int a, int b, int c)
+{
+	int	small_num;
+
+	small_num = a;
+	if (a > b)
+		small_num = b;
+	if (small_num > c)
+		small_num = c;
+	return (small_num);
+}

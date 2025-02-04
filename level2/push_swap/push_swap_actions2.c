@@ -1,79 +1,85 @@
 #include "push_swap.h"
 
-void	rra(long **stack_a, int *sizeof_stack_a)
+void	rra(t_stacks *stacks, int is_rrr)
 {
 	long	tmp;
 	int		i;
 
 	i = 2;
-	tmp = (*stack_a)[*sizeof_stack_a - 1];
-	while (*sizeof_stack_a - i >= 0)
+	tmp = (stacks->stack_a)[stacks->sizeof_stack_a - 1];
+	while (stacks->sizeof_stack_a - i >= 0)
 	{
-		(*stack_a)[*sizeof_stack_a - (i - 1)] = (*stack_a)[*sizeof_stack_a - i];
+		(stacks->stack_a)[stacks->sizeof_stack_a - (i - 1)] = (stacks->stack_a)[stacks->sizeof_stack_a - i];
 		i++;
 	}
-	(*stack_a)[0] = tmp;
+	(stacks->stack_a)[0] = tmp;
+	if (!is_rrr)
+		ft_printf("rra\n");
 }
 
-void	rrb(long **stack_b, int *sizeof_stack_b)
+void	rrb(t_stacks *stacks, int is_rrr)
 {
 	long	tmp;
 	int		i;
 
 	i = 2;
-	tmp = (*stack_b)[*sizeof_stack_b - 1];
-	while (*sizeof_stack_b - i >= 0)
+	tmp = (stacks->stack_b)[stacks->sizeof_stack_b - 1];
+	while (stacks->sizeof_stack_b - i >= 0)
 	{
-		(*stack_b)[*sizeof_stack_b - (i - 1)] = (*stack_b)[*sizeof_stack_b - i];
+		(stacks->stack_b)[stacks->sizeof_stack_b - (i - 1)] = (stacks->stack_b)[stacks->sizeof_stack_b - i];
 		i++;
 	}
-	(*stack_b)[0] = tmp;
+	(stacks->stack_b)[0] = tmp;
+	if (!is_rrr)
+		ft_printf("rrb\n");
 }
 
-void	pa(long **stack_a, long **stack_b, int *sizeof_stack_a, int *sizeof_stack_b)
+void	pa(t_stacks *stacks)
 {
 	int	i;
 
 	i = 0;
-	if (*sizeof_stack_b <=0)
+	if (stacks->sizeof_stack_b <=0)
 		return ;
-	while (i < *sizeof_stack_a)
+	while (i < stacks->sizeof_stack_a)
 	{
-		(*stack_a)[*sizeof_stack_a - i] = (*stack_a)[*sizeof_stack_a - 1 - i];
+		(stacks->stack_a)[stacks->sizeof_stack_a - i] = (stacks->stack_a)[stacks->sizeof_stack_a - 1 - i];
 		i++;
 	}
-	(*stack_a)[0] = (*stack_b)[0];
+	(stacks->stack_a)[0] = (stacks->stack_b)[0];
 	i = 0;
-	while (i < (*sizeof_stack_b - 1))
+	while (i < (stacks->sizeof_stack_b - 1))
 	{
-		(*stack_b)[i] = (*stack_b)[i + 1];
+		(stacks->stack_b)[i] = (stacks->stack_b)[i + 1];
 		i++;
 	}
-	(*stack_b)[i] = 9000000000;
-	*sizeof_stack_a += 1;
-	*sizeof_stack_b -= 1;
+	(stacks->stack_b)[i] = 9000000000;
+	stacks->sizeof_stack_a += 1;
+	stacks->sizeof_stack_b -= 1;
+	ft_printf("pa\n");
 }
 
-void	pb(long **stack_a, long **stack_b, int *sizeof_stack_a, int *sizeof_stack_b)
+void	pb(t_stacks *stacks)
 {
 	int	i;
 
 	i = 0;
-	if (*sizeof_stack_a <=0)
+	if (stacks->sizeof_stack_a <=0)
 		return ;
-	while (i < *sizeof_stack_b)
+	while (i < stacks->sizeof_stack_b)
 	{
-		(*stack_b)[*sizeof_stack_b - i] = (*stack_b)[*sizeof_stack_b - 1 - i];
+		(stacks->stack_b)[stacks->sizeof_stack_b - i] = (stacks->stack_b)[stacks->sizeof_stack_b - 1 - i];
 		i++;
 	}
-	(*stack_b)[0] = (*stack_a)[0];
+	(stacks->stack_b)[0] = (stacks->stack_a)[0];
 	i = 0;
-	while (i < (*sizeof_stack_a - 1))
+	while (i < (stacks->sizeof_stack_a - 1))
 	{
-		(*stack_a)[i] = (*stack_a)[i + 1];
+		(stacks->stack_a)[i] = (stacks->stack_a)[i + 1];
 		i++;
 	}
-	(*stack_a)[i] = 9000000000;
-	*sizeof_stack_b += 1;
-	*sizeof_stack_a -= 1;
+	(stacks->stack_a)[i] = 9000000000;
+	stacks->sizeof_stack_b += 1;
+	stacks->sizeof_stack_a -= 1;
+	ft_printf("pb\n");
 }
