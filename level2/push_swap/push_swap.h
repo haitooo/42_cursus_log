@@ -18,7 +18,7 @@ size_t	ft_strlen(const char *s);
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
 long	ft_atol(const char *str);
-int		is_smallnum(int index, int suit_index_in_b);
+int		is_smallnum(t_stacks stacks, int index, int suit_index_in_b);
 int		is_largenum(int index, int suit_index_in_b);
 int		which_is_smallnum(int a, int b, int c);
 void	check_args_error(int argc, char **argv);
@@ -39,5 +39,11 @@ void	rrb(t_stacks *stacks, int is_rrr);
 void	rrr(t_stacks *stacks);
 void	pa(t_stacks *stacks);
 void	pb(t_stacks *stacks);
+int		pattern_max_num(t_stacks *stacks, long *maxnum_stack_b);
+int		pattern_min_num(t_stacks *stacks, long *minnum_stack_b);
+int		pattern_a(t_stacks *stacks, int push_index, int suit_index_in_b);
+int		pattern_b(t_stacks *stacks, int push_index, int suit_index_in_b);
+int		pattern_c(t_stacks *stacks, int push_index, int suit_index_in_b);
+int		pattern_d(t_stacks *stacks, int push_index, int suit_index_in_b);
 
 #endif

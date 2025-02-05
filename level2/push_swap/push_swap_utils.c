@@ -72,16 +72,20 @@ long	ft_atol(const char *str)
 	return (result * is_nega);
 }
 
-int	is_smallnum(int index, int suit_index_in_b)
+int	is_smallnum(t_stacks stacks, int index, int suit_index_in_b)
 {
-	if (index >= suit_index_in_b)
-		return (suit_index_in_b);
+	// ft_printf("b\n");
+	if (index == 0)
+		return (stacks.sizeof_stack_b - suit_index_in_b);
+	if (stacks.sizeof_stack_a - index >= stacks.sizeof_stack_b - suit_index_in_b)
+		return (stacks.sizeof_stack_b - (suit_index_in_b - 1));
 	else
-		return (index);
+		return (stacks.sizeof_stack_a - (index - 1));
 }
 
 int	is_largenum(int index, int suit_index_in_b)
 {
+	// ft_printf("a\n");
 	if (index <= suit_index_in_b)
 		return (suit_index_in_b);
 	else
@@ -92,6 +96,7 @@ int	which_is_smallnum(int a, int b, int c)
 {
 	int	small_num;
 
+	// ft_printf("c\n");
 	small_num = a;
 	if (a > b)
 		small_num = b;
