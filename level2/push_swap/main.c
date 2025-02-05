@@ -49,10 +49,8 @@ int main(int argc, char **argv)
 		return (1);
 	stack_b = init_stack_b(argc);
 	if (!stack_b)
-		return (push_swap_free(stack_a), 1);
+		return (free(stack_a), 1);
 	sort_stacks((argc - 1), stack_a, stack_b);
-
-	ft_printf("sucsess\n");
 	free(stack_a);
 	free(stack_b);
 	return (0);

@@ -1,8 +1,46 @@
+	ft_printf("debug index     : %d\n", index);
+	ft_printf("debug min_steps : %d\n", *min_steps);
+	ft_printf("debug steps     : %d\n", steps);
+	ft_printf("debug best_index: %d\n", *best_index);
+	ft_printf("debug suit_index: %d\n", suit_index_in_b);
+	ft_printf("debug maxnum_b  : %d\n", maxnum_stack_b);
+	ft_printf("debug sizeof_a  : %d\n", stacks.sizeof_stack_a);
+	ft_printf("debug sizeof_b  : %d\n\n", stacks.sizeof_stack_b);
+	
+	
+void	tester_print_stacks(long *stack_a, long *stack_b, int sizeof_args)
+{
+	int	n;
+
+	ft_printf("\nstack_a:\n");
+	n = 0;
+	while (sizeof_args > n)
+	{
+		ft_printf("%l\n", stack_a[n]);
+		n++;
+	}
+	ft_printf("stack_b:\n");
+	n = 0;
+	while (sizeof_args > n)
+	{
+		ft_printf("%l\n", stack_b[n]);
+		n++;
+	}
+}
+
 stack_a:
-321
-9000000000
-9000000000
-9000000000
+3
+2
+18
+11
+7
+9
+15
+13
+17
+8
+12
+4
 9000000000
 9000000000
 9000000000
@@ -12,15 +50,23 @@ stack_a:
 9000000000
 9000000000
 stack_b:
-60
-58
-28
-24
-15
 10
-9
-8
-131
-100
-67
+6
+5
+1
+20
+19
+16
+14
+9000000000
+9000000000
+9000000000
+9000000000
+9000000000
+9000000000
+9000000000
+9000000000
+9000000000
+9000000000
+9000000000
 9000000000
