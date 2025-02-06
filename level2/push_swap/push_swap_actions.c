@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	sa(t_stacks *stacks, int is_ss)
+void	sa(t_stacks *stacks, int is_ss, int non_print)
 {
 	long	tmp;
 
@@ -9,11 +9,11 @@ void	sa(t_stacks *stacks, int is_ss)
 	tmp = (stacks->stack_a)[0];
 	(stacks->stack_a)[0] = (stacks->stack_a)[1];
 	(stacks->stack_a)[1] = tmp;
-	if (!is_ss)
+	if (!is_ss && !non_print)
 		ft_printf("sa\n");
 }
 
-void	sb(t_stacks *stacks, int is_ss)
+void	sb(t_stacks *stacks, int is_ss, int non_print)
 {
 	long	tmp;
 
@@ -22,11 +22,11 @@ void	sb(t_stacks *stacks, int is_ss)
 	tmp = (stacks->stack_b)[0];
 	(stacks->stack_b)[0] = (stacks->stack_b)[1];
 	(stacks->stack_b)[1] = tmp;
-	if (!is_ss)
+	if (!is_ss && !non_print)
 		ft_printf("sb\n");
 }
 
-void	ra(t_stacks *stacks, int is_rr)
+void	ra(t_stacks *stacks, int is_rr, int non_print)
 {
 	int		i;
 	long	tmp;
@@ -41,11 +41,11 @@ void	ra(t_stacks *stacks, int is_rr)
 		i++;
 	}
 	(stacks->stack_a)[i] = tmp;
-	if (!is_rr)
+	if (!is_rr && !non_print)
 		ft_printf("ra\n");
 }
 
-void	rb(t_stacks *stacks, int is_rr)
+void	rb(t_stacks *stacks, int is_rr, int non_print)
 {
 	int		i;
 	long	tmp;
@@ -60,7 +60,7 @@ void	rb(t_stacks *stacks, int is_rr)
 		i++;
 	}
 	(stacks->stack_b)[i] = tmp;
-	if (!is_rr)
+	if (!is_rr && !non_print)
 		ft_printf("rb\n");
 }
 

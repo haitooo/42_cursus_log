@@ -27,3 +27,13 @@ int	pattern_min_num(t_stacks *stacks, long *minnum_stack_b)
 	}
 	return (suit_index_in_b);
 }
+
+int	maxnum_b_index(t_stacks stacks, long maxnum_stack_b)
+{
+	int	index;
+
+	index = 0;
+	while (stacks.stack_b[index] != maxnum_stack_b)
+		index++;
+	return (index);
+}

@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	rra(t_stacks *stacks, int is_rrr)
+void	rra(t_stacks *stacks, int is_rrr, int non_print)
 {
 	long	tmp;
 	int		i;
@@ -13,11 +13,11 @@ void	rra(t_stacks *stacks, int is_rrr)
 		i++;
 	}
 	(stacks->stack_a)[0] = tmp;
-	if (!is_rrr)
+	if (!is_rrr && !non_print)
 		ft_printf("rra\n");
 }
 
-void	rrb(t_stacks *stacks, int is_rrr)
+void	rrb(t_stacks *stacks, int is_rrr, int non_print)
 {
 	long	tmp;
 	int		i;
@@ -30,11 +30,11 @@ void	rrb(t_stacks *stacks, int is_rrr)
 		i++;
 	}
 	(stacks->stack_b)[0] = tmp;
-	if (!is_rrr)
+	if (!is_rrr && !non_print)
 		ft_printf("rrb\n");
 }
 
-void	pa(t_stacks *stacks)
+void	pa(t_stacks *stacks, int non_print)
 {
 	int	i;
 
@@ -56,10 +56,11 @@ void	pa(t_stacks *stacks)
 	(stacks->stack_b)[i] = 9000000000;
 	stacks->sizeof_stack_a += 1;
 	stacks->sizeof_stack_b -= 1;
-	ft_printf("pa\n");
+	if (!non_print)
+		ft_printf("pa\n");
 }
 
-void	pb(t_stacks *stacks)
+void	pb(t_stacks *stacks, int non_print)
 {
 	int	i;
 
@@ -81,5 +82,6 @@ void	pb(t_stacks *stacks)
 	(stacks->stack_a)[i] = 9000000000;
 	stacks->sizeof_stack_b += 1;
 	stacks->sizeof_stack_a -= 1;
-	ft_printf("pb\n");
+	if (!non_print)
+		ft_printf("pb\n");
 }

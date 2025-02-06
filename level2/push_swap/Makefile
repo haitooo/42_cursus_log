@@ -10,6 +10,7 @@ SRCS = main.c \
 		push_swap_sort_help.c \
 		push_swap_sort_help2.c \
 		push_swap_utils.c \
+		push_swap_next_push.c \
 		ft_printf/ft_printf.c \
 		ft_printf/ft_printf_option.c \
 		ft_printf/ft_printf_option2.c \
