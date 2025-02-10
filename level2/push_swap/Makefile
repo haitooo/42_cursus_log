@@ -6,11 +6,13 @@ SRCS = main.c \
 		push_swap_actions2.c \
 		push_swap_actions3.c \
 		push_swap_check_error.c \
-		push_swap_sort.c \
-		push_swap_sort_help.c \
-		push_swap_sort_help2.c \
+		push_swap_turk.c \
+		push_swap_quick.c \
+		push_swap_quick_help.c \
+		push_swap_turk_help.c \
+		push_swap_turk_help2.c \
+		push_swap_turk_help3.c \
 		push_swap_utils.c \
-		push_swap_next_push.c \
 		ft_printf/ft_printf.c \
 		ft_printf/ft_printf_option.c \
 		ft_printf/ft_printf_option2.c \

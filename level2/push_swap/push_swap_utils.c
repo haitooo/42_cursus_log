@@ -75,19 +75,19 @@ long	ft_atol(const char *str)
 int	is_smallnum(t_stacks stacks, int index, int suit_index_in_b)
 {
 	if (index == 0)
-		return (stacks.sizeof_stack_b - suit_index_in_b);
-	if (stacks.sizeof_stack_a - index >= stacks.sizeof_stack_b - suit_index_in_b)
-		return (stacks.sizeof_stack_a - (index - 1));
+		return (stacks.size_b - suit_index_in_b);
+	if (stacks.size_a - index >= stacks.size_b - suit_index_in_b)
+		return (stacks.size_a - (index - 1));
 	else
-		return (stacks.sizeof_stack_b - (suit_index_in_b - 1));
+		return (stacks.size_b - (suit_index_in_b - 1));
 }
 
-int	is_largenum(int index, int suit_index_in_b)
+int	which_bigger(int a, int b)
 {
-	if (index <= suit_index_in_b)
-		return (suit_index_in_b);
+	if (a <= b)
+		return (b);
 	else
-		return (index);
+		return (a);
 }
 
 long	is_biggest(long a, long b, long stack_b_num)
@@ -111,3 +111,57 @@ int	which_is_smallnum(int a, int b, int c)
 		small_num = c;
 	return (small_num);
 }
+
+long	get_min_num(t_date *date, int sizeof_stack)
+{
+	long	min_num;
+	int		i;
+
+	min_num = 900000000000;
+	i = 0;
+	while (i < sizeof_stack)
+	{
+		if (date[i].num < min_num)
+			min_num = date[i].num;
+		i++;
+	}
+	return (min_num);
+}
+
+long	get_max_num(t_date *date, int sizeof_stack)
+{
+	long	max_num;
+	int		i;
+
+	max_num = -900000000000;
+	i = 0;
+	while (i < sizeof_stack)
+	{
+		if (date[i].num > max_num)
+			max_num = date[i].num;
+		i++;
+	}
+	return (max_num);
+}
+
+// void	view_date(t_stacks stacks, int sizeof_args)
+// {
+// 	int	n;
+
+// 	n = 0;
+// 	ft_printf("<stack_a>\n");
+// 	while (n < sizeof_args)
+// 	{
+// 		ft_printf("num %l : coord %d\n", stacks.a[n].num, stacks.a[n].coord);
+// 		n++;
+// 	}
+// 	ft_printf("\n<stack_b>\n");
+// 	n = 0;
+// 	while (n < sizeof_args)
+// 	{
+// 		ft_printf("num %l : coord %d\n", stacks.b[n].num, stacks.b[n].coord);
+// 		n++;
+// 	}
+// 	ft_printf("\nsize a :%d\n", stacks.size_a);
+// 	ft_printf("size b :%d\n", stacks.size_b);
+// }

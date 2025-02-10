@@ -1,57 +1,82 @@
 #include "push_swap.h"
 
-long	*init_stack_a(int argc, char **argv)
+t_date	*init_stack_a(int argc, char **argv)
 {
-	long	*stack_a;
+	t_date	*date;
 	int		n;
+	int		i;
+	long	min_num;
 
 	n = 0;
-	stack_a = (long *)malloc(sizeof(long) * (argc - 1));
-	if (!stack_a)
+	date = (t_date *)malloc(sizeof(t_date) * (argc - 1));
+	if (!date)
 		return (NULL);
 	while ((argc - 1) > n)
 	{
-		stack_a[n] = ft_atoi(argv[n + 1]);
+		date[n].num = ft_atoi(argv[n + 1]);
+		date[n].coord = -1;
 		n++;
 	}
-	return (stack_a);
+	n = 0;
+	while ((argc - 1) > n)
+	{
+		i = 0;
+		min_num = 9000000000;
+		while (i < (argc - 1))
+		{
+			if (min_num > date[i].num && date[i].coord == -1)
+				min_num = date[i].num;
+			i++;
+		}
+		i = 0;
+		while (date[i].num != min_num)
+			i++;
+		date[i].coord = n;
+		n++;
+	}
+	return (date);
 }
 
-long	*init_stack_b(int argc)
+t_date	*init_stack_b(int argc)
 {
-	long	*stack_b;
+	t_date	*date;
 	int		n;
 
 	n = 0;
-	stack_b = (long *)malloc(sizeof(long) * (argc - 1));
-	if (!stack_b)
+	date = (t_date *)malloc(sizeof(t_date) * (argc - 1));
+	if (!date)
 		return (NULL);
 	while ((argc - 1) > n)
 	{
-		stack_b[n] = 9000000000;
+		date[n].num = 9000000000;
+		date[n].coord = -1;
 		n++;
 	}
-	return (stack_b);
+	return (date);
 }
 
 int main(int argc, char **argv)
 {
-	long	*stack_a;
-	long	*stack_b;
+	t_stacks	stacks;
 
 	if (argc <= 1)
 		return (0);
 	check_args_error(argc, argv);
 	if (argc == 2)
 		return (0);
-	stack_a = init_stack_a(argc, argv);
-	if (!stack_a)
+	stacks.a = init_stack_a(argc, argv);
+	if (!stacks.a)
 		return (1);
-	stack_b = init_stack_b(argc);
-	if (!stack_b)
-		return (free(stack_a), 1);
-	sort_stacks((argc - 1), stack_a, stack_b);
-	free(stack_a);
-	free(stack_b);
+	stacks.b = init_stack_b(argc);
+	if (!stacks.b)
+		return (free(stacks.a), 1);
+	stacks.size_a = argc - 1;
+	stacks.size_b = 0;
+	if (argc - 1 <= 300)
+		turk_sort((argc - 1), stacks);
+	else
+		quick_sort((argc - 1), stacks ,0);
+	free(stacks.a);
+	free(stacks.b);
 	return (0);
 }
