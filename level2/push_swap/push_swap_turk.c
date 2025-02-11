@@ -42,7 +42,7 @@ void	calculate_steps(int index, t_stacks stacks, long maxnum_stack_b, long minnu
 	if (stacks.size_a / 2 >= index && stacks.size_b / 2 >= suit_index_in_b)
 		steps = which_bigger(index, suit_index_in_b);
 	else if (stacks.size_a / 2 <= index && stacks.size_b / 2 <= suit_index_in_b)
-		steps = is_smallnum(stacks, index, suit_index_in_b);
+		steps = which_biggest(stacks, index, suit_index_in_b);
 	else if (stacks.size_a / 2 >= (index + 1) && stacks.size_b / 2 <= (suit_index_in_b + 1))
 		steps = which_is_smallnum(index + (stacks.size_b - suit_index_in_b), which_bigger(index, suit_index_in_b), which_bigger(stacks.size_a - index, stacks.size_b - suit_index_in_b));
 	else if (stacks.size_a / 2 <= (index + 1) && stacks.size_b / 2 >= (suit_index_in_b + 1))
@@ -52,25 +52,6 @@ void	calculate_steps(int index, t_stacks stacks, long maxnum_stack_b, long minnu
 		*min_steps = steps;
 		*best_index = index;
 	}
-}
-
-int	choose_push_index(t_stacks stacks, long maxnum_stack_b, long minnum_stack_b)
-{
-	int	index;
-	int	best_index;
-	int	min_steps;
-
-	index = 0;
-	best_index = -1;
-	min_steps = -1;
-	while (index < stacks.size_a)
-	{
-		calculate_steps(index, stacks, maxnum_stack_b, minnum_stack_b, &min_steps, &best_index);
-		index++;
-	}
-	if (best_index == -1 || min_steps == -1)
-		return (ft_printf("coose_index Error\n", -1));
-	return (best_index);
 }
 
 int	turk_sort_3(t_stacks stacks, int sizeof_args, long maxnum_stack_b)

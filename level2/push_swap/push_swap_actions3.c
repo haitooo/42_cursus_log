@@ -23,3 +23,19 @@ void	rrr(t_stacks *stacks, int non_print)
 	if (!non_print)
 		ft_printf("rrr\n");
 }
+
+void	sort_smallsize(t_stacks *stacks)
+{
+	if (stacks->size_a == 7)
+		sort_ele7(stacks);
+	if (stacks->size_a == 6)
+		sort_ele6(stacks);
+	if (stacks->size_a == 5)
+		sort_ele5(stacks);
+	if (stacks->size_a == 4)
+		sort_ele4(stacks);
+	if (stacks->size_a == 3)
+		sort_ele3(stacks);
+	if (stacks->size_a == 2 && stacks->a[0].num > stacks->a[1].num)
+		sa(stacks, 0, 0);
+}

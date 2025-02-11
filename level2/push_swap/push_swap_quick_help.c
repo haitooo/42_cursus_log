@@ -95,3 +95,19 @@ int	quick_d(t_stacks *stacks, int push_index, int suit_index)
 	else
 		return (quick_b(stacks, push_index, suit_index));
 }
+
+void	case_zero(t_stacks *stacks, int sizeof_args)
+{
+	int	count;
+
+	count = 0;
+	while (stacks->b[count].coord != sizeof_args - 1)
+		count++;
+	if (count <= sizeof_args / 2)
+		while (stacks->b[0].coord != sizeof_args - 1)
+			rb(stacks, 0, 0);
+	else
+		while (stacks->b[0].coord != sizeof_args - 1)
+			rrb(stacks, 0, 0);
+	pa(stacks, 0);
+}

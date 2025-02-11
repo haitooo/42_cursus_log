@@ -1,21 +1,5 @@
 #include "push_swap.h"
 
-void	sort_smallsize(t_stacks *stacks)
-{
-	if (stacks->size_a == 7)
-		sort_ele7(stacks);
-	if (stacks->size_a == 6)
-		sort_ele6(stacks);
-	if (stacks->size_a == 5)
-		sort_ele5(stacks);
-	if (stacks->size_a == 4)
-		sort_ele4(stacks);
-	if (stacks->size_a == 3)
-		sort_ele3(stacks);
-	if (stacks->size_a == 2 && stacks->a[0].num > stacks->a[1].num)
-		sa(stacks, 0, 0);
-}
-
 int	push_to_a(t_stacks *stacks, int push_index, int sizeof_args)
 {
 	int suit_index;
@@ -92,22 +76,6 @@ int	quick_choose_index(t_stacks stacks, int sizeof_args)
 	if (best_index == -1 || min_steps == -1)
 		return (ft_printf("choose_index Error\n", -1));
 	return (best_index);
-}
-
-void	case_zero(t_stacks *stacks, int sizeof_args)
-{
-	int	count;
-
-	count = 0;
-	while (stacks->b[count].coord != sizeof_args - 1)
-		count++;
-	if (count <= sizeof_args / 2)
-		while (stacks->b[0].coord != sizeof_args - 1)
-			rb(stacks, 0, 0);
-	else
-		while (stacks->b[0].coord != sizeof_args - 1)
-			rrb(stacks, 0, 0);
-	pa(stacks, 0);
 }
 
 void	quick_sort_2(int sizeof_args, t_stacks stacks)

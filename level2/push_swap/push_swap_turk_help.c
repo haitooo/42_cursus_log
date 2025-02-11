@@ -37,3 +37,22 @@ int	maxnum_b_index(t_stacks stacks, long maxnum_stack_b)
 		index++;
 	return (index);
 }
+
+int	choose_push_index(t_stacks stacks, long maxnum_stack_b, long minnum_stack_b)
+{
+	int	index;
+	int	best_index;
+	int	min_steps;
+
+	index = 0;
+	best_index = -1;
+	min_steps = -1;
+	while (index < stacks.size_a)
+	{
+		calculate_steps(index, stacks, maxnum_stack_b, minnum_stack_b, &min_steps, &best_index);
+		index++;
+	}
+	if (best_index == -1 || min_steps == -1)
+		return (ft_printf("Error\n", -1));
+	return (best_index);
+}
