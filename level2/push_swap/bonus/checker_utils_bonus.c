@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_utils.c                                  :+:      :+:    :+:   */
+/*   checker_utils_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 00:56:58 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 05:17:29 by haito            ###   ########.fr       */
+/*   Created: 2025/02/13 03:57:29 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 05:22:49 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-
-size_t	ft_strlen(const char *s)
-{
-	int	count;
-
-	count = 0;
-	while (s[count])
-		count++;
-	return (count);
-}
+#include "checker_bonus.h"
 
 int	ft_isdigit(int c)
 {
@@ -85,34 +75,22 @@ long	ft_atol(const char *str)
 	return (result * is_nega);
 }
 
-int	which_biggest(t_stacks stacks, int index, int suit_index_in_b)
+int	check_sorted(t_stacks stacks, int sizeof_args)
 {
-	if (index == 0)
-		return (stacks.size_b - suit_index_in_b);
-	if (stacks.size_a - index >= stacks.size_b - suit_index_in_b)
-		return (stacks.size_a - (index - 1));
-	else
-		return (stacks.size_b - (suit_index_in_b - 1));
+	int	is_sorted;
+	int	is_not_sorted;
+	int	i;
+
+	is_sorted = 1;
+	is_not_sorted = 0;
+	i = 0;
+	if (sizeof_args != stacks.size_a)
+		return (is_not_sorted);
+	while (i < (sizeof_args - 1))
+	{
+		if (stacks.a[i].num > stacks.a[i + 1].num)
+			return (is_not_sorted);
+		i++;
+	}
+	return (is_sorted);
 }
-
-// void	view_date(t_stacks stacks, int sizeof_args)
-// {
-// 	int	n;
-
-// 	n = 0;
-// 	ft_printf("<stack_a>\n");
-// 	while (n < sizeof_args)
-// 	{
-// 		ft_printf("num %l : coord %d\n", stacks.a[n].num, stacks.a[n].coord);
-// 		n++;
-// 	}
-// 	ft_printf("\n<stack_b>\n");
-// 	n = 0;
-// 	while (n < sizeof_args)
-// 	{
-// 		ft_printf("num %l : coord %d\n", stacks.b[n].num, stacks.b[n].coord);
-// 		n++;
-// 	}
-// 	ft_printf("\nsize a :%d\n", stacks.size_a);
-// 	ft_printf("size b :%d\n", stacks.size_b);
-// }

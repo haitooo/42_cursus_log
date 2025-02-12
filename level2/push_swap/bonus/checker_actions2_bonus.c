@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_actions2.c                               :+:      :+:    :+:   */
+/*   checker_actions2_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 00:49:12 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 00:49:19 by haito            ###   ########.fr       */
+/*   Created: 2025/02/13 03:19:49 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 03:21:12 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
 void	rra(t_stacks *stacks, int is_rrr, int non_print)
 {

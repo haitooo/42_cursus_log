@@ -1,55 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_quick.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 00:56:50 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 02:29:52 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-int	push_to_a(t_stacks *stacks, int push_index, int sizeof_args)
+int	push_to_a(t_stacks *s, int p_idx, int size_ag)
 {
-	int suit_index;
+	int	suit;
 
-	suit_index = 0;
-	while (suit_index < stacks->size_a)
+	suit = 0;
+	while (suit < s->size_a)
 	{
-		if (suit_index == 0 && stacks->a[0].coord > stacks->b[push_index].coord
-			&& (stacks->a[stacks->size_a - 1].coord < stacks->b[push_index].coord || stacks->a[stacks->size_a - 1].coord == sizeof_args - 1))
+		if (suit == 0 && s->a[0].coord > s->b[p_idx].coord
+			&& (s->a[s->size_a - 1].coord < s->b[p_idx].coord
+				|| s->a[s->size_a - 1].coord == size_ag - 1))
 			break ;
-		if (suit_index > 0 && (stacks->b[push_index].coord > stacks->a[suit_index - 1].coord  || stacks->a[suit_index - 1].coord == sizeof_args - 1)
-			&& stacks->b[push_index].coord < stacks->a[suit_index].coord)
+		if (suit > 0 && (s->b[p_idx].coord > s->a[suit - 1].coord
+				|| s->a[suit - 1].coord == size_ag - 1)
+			&& s->b[p_idx].coord < s->a[suit].coord)
 			break ;
-		suit_index++;
+		suit++;
 	}
-	if (stacks->size_b / 2 >= push_index && stacks->size_a / 2 >= suit_index)
-		return (quick_a(stacks, push_index, suit_index));
-	else if (stacks->size_b / 2 <= push_index && stacks->size_a / 2 <= suit_index)
-		return (quick_b(stacks, push_index, suit_index));
-	else if (stacks->size_b / 2 <= (push_index + 1) && stacks->size_a / 2 >= (suit_index + 1))
-		return (quick_c(stacks, push_index, suit_index));
-	else if (stacks->size_b / 2 >= (push_index + 1) && stacks->size_a / 2 <= (suit_index + 1))
-		return (quick_d(stacks, push_index, suit_index));
+	if (s->size_b / 2 >= p_idx && s->size_a / 2 >= suit)
+		return (quick_a(s, p_idx, suit));
+	else if (s->size_b / 2 <= p_idx && s->size_a / 2 <= suit)
+		return (quick_b(s, p_idx, suit));
+	else if (s->size_b / 2 <= (p_idx + 1) && s->size_a / 2 >= (suit + 1))
+		return (quick_c(s, p_idx, suit));
+	else if (s->size_b / 2 >= (p_idx + 1) && s->size_a / 2 <= (suit + 1))
+		return (quick_d(s, p_idx, suit));
 	return (ft_printf("push_to_b Error\n"));
 }
 
-int	quick_calculate_steps(int index, t_stacks stacks, int sizeof_args)
+int	quick_calculate_steps(int idx, t_stacks s, int size_ag, int steps)
 {
-	int	steps;
-	int	suit_index;
+	int	suit;
 
-	suit_index = 0;
-	while (suit_index < stacks.size_a)
+	suit = -1;
+	while (++suit < s.size_a)
 	{
-		if (suit_index == 0 && stacks.a[0].coord > stacks.b[index].coord
-			&& (stacks.a[stacks.size_a - 1].coord < stacks.b[index].coord || stacks.a[stacks.size_a - 1].coord == sizeof_args - 1))
+		if (suit == 0 && s.a[0].coord > s.b[idx].coord
+			&& (s.a[s.size_a - 1].coord < s.b[idx].coord
+				|| s.a[s.size_a - 1].coord == size_ag - 1))
 			break ;
-		if (suit_index > 0 && (stacks.b[index].coord > stacks.a[suit_index - 1].coord || stacks.a[suit_index - 1].coord == sizeof_args - 1)
-			&& stacks.b[index].coord < stacks.a[suit_index].coord)
+		if (suit > 0 && (s.b[idx].coord > s.a[suit - 1].coord
+				|| s.a[suit - 1].coord == size_ag - 1)
+			&& s.b[idx].coord < s.a[suit].coord)
 			break ;
-		suit_index++;
 	}
-	if (stacks.size_b / 2 >= index && stacks.size_a / 2 >= suit_index)
-		steps = which_bigger(index, suit_index);
-	else if (stacks.size_b / 2 <= index && stacks.size_a / 2 <= suit_index)
-		steps = which_bigger(stacks.size_b - index, stacks.size_a - suit_index);
-	else if (stacks.size_b / 2 <= (index + 1) && stacks.size_a / 2 >= (suit_index + 1))
-		steps = which_is_smallnum(suit_index + (stacks.size_b - index), which_bigger(index, suit_index), which_bigger(stacks.size_b - index, stacks.size_a - suit_index));
-	else if (stacks.size_b / 2 >= (index + 1) && stacks.size_a / 2 <= (suit_index + 1))
-		steps = which_is_smallnum(index + (stacks.size_a - suit_index), which_bigger(index, suit_index), which_bigger(stacks.size_b - index, stacks.size_a - suit_index));
+	if (s.size_b / 2 >= idx && s.size_a / 2 >= suit)
+		steps = bigger(idx, suit);
+	else if (s.size_b / 2 <= idx && s.size_a / 2 <= suit)
+		steps = bigger(s.size_b - idx, s.size_a - suit);
+	else if (s.size_b / 2 <= (idx + 1) && s.size_a / 2 >= (suit + 1))
+		steps = which_is_smallnum(suit + s.size_b - idx, bigger(idx, suit),
+				bigger(s.size_b - idx, s.size_a - suit));
+	else if (s.size_b / 2 >= (idx + 1) && s.size_a / 2 <= (suit + 1))
+		steps = which_is_smallnum(idx + s.size_a - suit, bigger(idx, suit),
+				bigger(s.size_b - idx, s.size_a - suit));
 	return (steps);
 }
 
@@ -65,7 +81,7 @@ int	quick_choose_index(t_stacks stacks, int sizeof_args)
 	min_steps = -1;
 	while (index < stacks.size_b)
 	{
-		steps = quick_calculate_steps(index, stacks, sizeof_args);
+		steps = quick_calculate_steps(index, stacks, sizeof_args, 0);
 		if (min_steps > steps || min_steps == -1)
 		{
 			min_steps = steps;
@@ -81,7 +97,7 @@ int	quick_choose_index(t_stacks stacks, int sizeof_args)
 void	quick_sort_2(int sizeof_args, t_stacks stacks)
 {
 	int	push_index;
-	int count;
+	int	count;
 
 	if (sizeof_args % 6 == 0)
 		case_zero(&stacks, sizeof_args);
@@ -101,30 +117,26 @@ void	quick_sort_2(int sizeof_args, t_stacks stacks)
 			rra(&stacks, 0, 0);
 }
 
-void	quick_sort(int sizeof_args, t_stacks stacks, int count)
+void	quick_sort(int size_ag, t_stacks s, int n)
 {
-	while (count <= 4)
+	while (n <= 4)
 	{
-		while (stacks.size_b < (sizeof_args / 6) * (count + 2))
+		while (s.size_b < (size_ag / 6) * (n + 2))
 		{
-			if (stacks.a[0].coord >= (sizeof_args / 6) * count && stacks.a[0].coord < (sizeof_args / 6) * (count + 1))
+			if (s.a[0].coord >= (size_ag / 6) * n
+				&& s.a[0].coord < (size_ag / 6) * (n + 1))
 			{
-				pb(&stacks, 0);
-				rb(&stacks, 0, 0);
+				pb(&s, 0);
+				rb(&s, 0, 0);
 			}
-			else if (stacks.a[0].coord >= (sizeof_args / 6) * (count + 1) && stacks.a[0].coord < (sizeof_args / 6) * (count + 2))
-				pb(&stacks, 0);
+			else if (s.a[0].coord >= (size_ag / 6) * (n + 1)
+				&& s.a[0].coord < (size_ag / 6) * (n + 2))
+				pb(&s, 0);
 			else
-				ra(&stacks, 0, 0);
+				ra(&s, 0, 0);
 		}
-		count += 2;
+		n += 2;
 	}
-	while (stacks.size_a > 7)
-	{
-		if (stacks.a[0].coord < sizeof_args - 7)
-			pb(&stacks, 0);
-		ra(&stacks, 0, 0);
-	}
-	sort_smallsize(&stacks);
-	quick_sort_2(sizeof_args, stacks);
+	sort_smallsize(&s);
+	quick_sort_2(size_ag, s);
 }

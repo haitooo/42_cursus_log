@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_check_error.c                            :+:      :+:    :+:   */
+/*   checker_error_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 00:49:29 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 00:49:58 by haito            ###   ########.fr       */
+/*   Created: 2025/02/13 03:55:02 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 03:55:28 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
 void	check_args_error_duplicate(int argc, char **argv)
 {

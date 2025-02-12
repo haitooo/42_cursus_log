@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: haito <haito@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/13 02:43:32 by haito             #+#    #+#              #
+#    Updated: 2025/02/13 04:06:59 by haito            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = push_swap
 NAME_BONUS = checker
 CC = cc
@@ -23,11 +35,25 @@ SRCS = push_swap_main.c \
 		ft_printf/ft_printf_utils.c \
 		ft_printf/ft_printf_utils2.c \
 		ft_split.c
-SRCS_BONUS = checker_main_bonus.c
+SRCS_BONUS = bonus/checker_main_bonus.c \
+			bonus/checker_actions_bonus.c \
+			bonus/checker_actions2_bonus.c \
+			bonus/checker_actions3_bonus.c \
+			bonus/checker_error_bonus.c \
+			bonus/checker_utils_bonus.c \
+			bonus/checker_utils2_bonus.c \
+			ft_printf/ft_printf.c \
+			ft_printf/ft_printf_option.c \
+			ft_printf/ft_printf_option2.c \
+			ft_printf/ft_printf_utils.c \
+			ft_printf/ft_printf_utils2.c \
+			ft_split.c \
+			gnl/get_next_line.c \
+			gnl/get_next_line_utils.c
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 INC = -I . -I ft_printf
-INC_BONUS = -I ft_printf -I checker_bonus
+INC_BONUS = -I . -I ft_printf -I gnl -I bonus
 
 all: $(NAME)
 
@@ -43,10 +69,12 @@ clean:
 		rm -f $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
-		rm -f $(NAME) 
-		#$(NAME_BONUS)
+		rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all
 
 %.o: %.c
 		$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+bonus/%.o: bonus/%.c
+		$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@

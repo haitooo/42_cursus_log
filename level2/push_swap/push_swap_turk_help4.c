@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_turk_help4.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 00:56:56 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 01:14:02 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	sort_ele3(t_stacks *stacks)
@@ -37,7 +49,8 @@ void	sort_ele4(t_stacks *stacks)
 	min_index = -1;
 	min_num_a = 9000000000;
 	get_min(stacks, &min_num_a, &min_index);
-	if (min_index == 1 && stacks->a[2].num < stacks->a[1].num && stacks->a[2].num < stacks->a[3].num)
+	if (min_index == 1 && stacks->a[2].num
+		< stacks->a[1].num && stacks->a[2].num < stacks->a[3].num)
 	{
 		sa(stacks, 0, 0);
 		return ;

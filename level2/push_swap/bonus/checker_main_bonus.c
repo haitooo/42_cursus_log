@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_main.c                                   :+:      :+:    :+:   */
+/*   checker_main_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 00:50:07 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 04:13:54 by haito            ###   ########.fr       */
+/*   Created: 2025/02/13 02:42:40 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 05:19:05 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
 t_date	*init_stack_a(int argc, char **argv, int n, int i)
 {
@@ -59,6 +59,56 @@ t_date	*init_stack_b(int argc)
 	return (date);
 }
 
+int	do_action(t_stacks *stacks, char *line)
+{
+	if (!ft_strcmp(line, "ra\n\0"))
+		return (ra(stacks, 0, 1), 0);
+	if (!ft_strcmp(line, "rb\n\0"))
+		return (rb(stacks, 0, 1), 0);
+	if (!ft_strcmp(line, "rr\n\0"))
+		return (rr(stacks, 1), 0);
+	if (!ft_strcmp(line, "rra\n\0"))
+		return (rra(stacks, 0, 1), 0);
+	if (!ft_strcmp(line, "rrb\n\0"))
+		return (rrb(stacks, 0, 1), 0);
+	if (!ft_strcmp(line, "rrr\n\0"))
+		return (rrr(stacks, 1), 0);
+	if (!ft_strcmp(line, "sa\n\0"))
+		return (sa(stacks, 0, 1), 0);
+	if (!ft_strcmp(line, "sb\n\0"))
+		return (sb(stacks, 0, 1), 0);
+	if (!ft_strcmp(line, "ss\n\0"))
+		return (ss(stacks, 1), 0);
+	if (!ft_strcmp(line, "pa\n\0"))
+		return (pa(stacks, 1), 0);
+	if (!ft_strcmp(line, "pb\n\0"))
+		return (pb(stacks, 1), 0);
+	return (1);
+}
+
+void	read_stdin(t_stacks stacks)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = get_next_line(0);
+		if (line == NULL)
+			break ;
+		if (do_action(&stacks, line))
+		{
+			ft_printf("KO\n");
+			free(line);
+			break ;
+		}
+		free(line);
+	}
+	if (check_sorted(stacks, stacks.sizeof_args))
+		ft_printf("OK\n");
+	else
+		ft_printf("KO\n");
+}
+
 int	main(int argc, char **argv)
 {
 	t_stacks	stacks;
@@ -80,9 +130,8 @@ int	main(int argc, char **argv)
 	stacks.size_a = argc - 1;
 	stacks.size_b = 0;
 	stacks.sizeof_args = argc -1;
-	if (argc - 1 <= 300)
-		turk_sort((argc - 1), stacks);
-	else
-		quick_sort((argc - 1), stacks, 0);
-	return (free(stacks.a), free(stacks.b), 0);
+	read_stdin(stacks);
+	free(stacks.a);
+	free(stacks.b);
+	return (0);
 }

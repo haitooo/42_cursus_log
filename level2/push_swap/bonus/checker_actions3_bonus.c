@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap_actions3.c                               :+:      :+:    :+:   */
+/*   checker_actions3_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 00:49:22 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 02:28:26 by haito            ###   ########.fr       */
+/*   Created: 2025/02/13 03:19:51 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 04:59:22 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "checker_bonus.h"
 
 void	ss(t_stacks *stacks, int non_print)
 {
@@ -36,24 +36,16 @@ void	rrr(t_stacks *stacks, int non_print)
 		ft_printf("rrr\n");
 }
 
-void	sort_smallsize(t_stacks *stacks)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	while (stacks->size_a > 7)
+	int	n;
+
+	n = 0;
+	while (s1[n] && s2[n])
 	{
-		if (stacks->a[0].coord < stacks->sizeof_args - 7)
-			pb(stacks, 0);
-		ra(stacks, 0, 0);
+		if (s1[n] != s2[n])
+			return (s1[n] - s2[n]);
+		n++;
 	}
-	if (stacks->size_a == 7)
-		sort_ele7(stacks);
-	if (stacks->size_a == 6)
-		sort_ele6(stacks);
-	if (stacks->size_a == 5)
-		sort_ele5(stacks);
-	if (stacks->size_a == 4)
-		sort_ele4(stacks);
-	if (stacks->size_a == 3)
-		sort_ele3(stacks);
-	if (stacks->size_a == 2 && stacks->a[0].num > stacks->a[1].num)
-		sa(stacks, 0, 0);
+	return (s1[n] - s2[n]);
 }

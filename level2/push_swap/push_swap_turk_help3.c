@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap_turk_help3.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 00:56:55 by haito             #+#    #+#             */
+/*   Updated: 2025/02/13 01:20:54 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	case_sorted_a(t_stacks *stacks)
@@ -17,37 +29,46 @@ void	case_sorted_a(t_stacks *stacks)
 			rra(stacks, 0, 0);
 }
 
-int	get_suit_index(t_stacks stacks, long maxnum_stack_b, int *best_index, int *min_steps, int index)
+int	get_suit_index(t_stacks stacks, int *best_index, int *min_steps, int index)
 {
-	int	suit_index_in_b;
+	int		suit_index_in_b;
+	long	maxnum_stack_b;
 
 	suit_index_in_b = 0;
+	maxnum_stack_b = get_max_num(stacks.b, stacks.size_b);
 	while (suit_index_in_b < stacks.size_b)
 	{
-		if (suit_index_in_b == 0 && stacks.b[0].num == maxnum_stack_b && stacks.a[index].num > maxnum_stack_b)
+		if (suit_index_in_b == 0 && stacks.b[0].num == maxnum_stack_b
+			&& stacks.a[index].num > maxnum_stack_b)
 		{
 			*best_index = 0;
 			*min_steps = 0;
 			return (0);
 		}
-		if (suit_index_in_b == 0 && stacks.a[index].num > stacks.b[0].num && stacks.a[index].num < stacks.b[stacks.size_b - 1].num)
+		if (suit_index_in_b == 0 && stacks.a[index].num > stacks.b[0].num
+			&& stacks.a[index].num < stacks.b[stacks.size_b - 1].num)
 			break ;
-		if (suit_index_in_b > 0 && stacks.a[index].num < stacks.b[suit_index_in_b - 1].num && stacks.a[index].num > stacks.b[suit_index_in_b].num)
+		if (suit_index_in_b > 0 && stacks.a[index].num
+			< stacks.b[suit_index_in_b - 1].num && stacks.a[index].num
+			> stacks.b[suit_index_in_b].num)
 			break ;
 		suit_index_in_b++;
 	}
 	return (suit_index_in_b);
 }
 
-int	check_sorted_a(t_stacks stacks, int sizeof_args, int i, int count, long min_num)
+int	check_sorted_a(t_stacks stacks, int sizeof_args,
+	int i, int count)
 {
+	long	min_num;
+
 	min_num = get_min_num(stacks.a, stacks.size_a);
 	while (stacks.a[0].num != min_num)
 	{
 		ra(&stacks, 0, 1);
 		count++;
 	}
-	while (i < (sizeof_args - 1))
+	while (++i < (sizeof_args - 1))
 	{
 		if (stacks.a[i].num > stacks.a[i + 1].num)
 		{
@@ -58,13 +79,10 @@ int	check_sorted_a(t_stacks stacks, int sizeof_args, int i, int count, long min_
 			}
 			return (0);
 		}
-		i++;
 	}
-	while (count > 0)
-	{
+	count++;
+	while (--count > 0)
 		rra(&stacks, 0, 1);
-		count--;
-	}
 	return (1);
 }
 
