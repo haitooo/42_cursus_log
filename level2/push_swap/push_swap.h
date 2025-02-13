@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:57:04 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 02:45:48 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 07:02:20 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int		quick_c(t_stacks *stacks, int push_index, int suit_index);
 int		quick_d(t_stacks *stacks, int push_index, int suit_index);
 void	case_zero(t_stacks *stacks, int sizeof_args);
 void	get_min(t_stacks *stacks, long *min_num_a, int *min_index);
-void	sort_ele7(t_stacks *stacks);
 void	sort_ele6(t_stacks *stacks);
 void	sort_ele5(t_stacks *stacks);
 void	sort_ele4(t_stacks *stacks);

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 02:42:40 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 05:19:05 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 05:59:54 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,11 @@ void	read_stdin(t_stacks stacks)
 			break ;
 		if (do_action(&stacks, line))
 		{
-			ft_printf("KO\n");
+			ft_printf("Error\n");
 			free(line);
-			break ;
+			free(stacks.a);
+			free(stacks.b);
+			exit(1);
 		}
 		free(line);
 	}

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:49:22 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 02:28:26 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 07:17:27 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,12 @@ void	rrr(t_stacks *stacks, int non_print)
 
 void	sort_smallsize(t_stacks *stacks)
 {
-	while (stacks->size_a > 7)
+	while (stacks->size_a > 6)
 	{
-		if (stacks->a[0].coord < stacks->sizeof_args - 7)
+		if (stacks->a[0].coord < stacks->sizeof_args - 6)
 			pb(stacks, 0);
 		ra(stacks, 0, 0);
 	}
-	if (stacks->size_a == 7)
-		sort_ele7(stacks);
 	if (stacks->size_a == 6)
 		sort_ele6(stacks);
 	if (stacks->size_a == 5)
