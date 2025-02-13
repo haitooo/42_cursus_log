@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:49:12 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 00:49:19 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 20:06:24 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	pa(t_stacks *stacks, int non_print)
 		(stacks->b)[i] = (stacks->b)[i + 1];
 		i++;
 	}
-	(stacks->b)[i].num = 9000000000;
+	(stacks->b)[i].num = EMPTY_INDEX_NUM;
 	(stacks->b)[i].coord = -1;
 	stacks->size_a += 1;
 	stacks->size_b -= 1;
@@ -92,7 +92,7 @@ void	pb(t_stacks *stacks, int non_print)
 		(stacks->a)[i] = (stacks->a)[i + 1];
 		i++;
 	}
-	(stacks->a)[i].num = 9000000000;
+	(stacks->a)[i].num = EMPTY_INDEX_NUM;
 	(stacks->a)[i].coord = -1;
 	stacks->size_b += 1;
 	stacks->size_a -= 1;

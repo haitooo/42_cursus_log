@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:57:04 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 07:02:20 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 20:05:28 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <limits.h>
 # include "ft_printf.h"
+
+# define EMPTY_INDEX_NUM 9000000000
 
 typedef struct s_date
 {

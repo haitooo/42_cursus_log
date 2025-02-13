@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:56:56 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 07:02:14 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 20:07:50 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	sort_ele4(t_stacks *stacks)
 	long	min_num_a;
 
 	min_index = -1;
-	min_num_a = 9000000000;
+	min_num_a = EMPTY_INDEX_NUM;
 	get_min(stacks, &min_num_a, &min_index);
 	if (min_index == 1 && stacks->a[2].num
 		< stacks->a[1].num && stacks->a[2].num < stacks->a[3].num)
@@ -72,7 +72,7 @@ void	sort_ele5(t_stacks *stacks)
 	long	min_num_a;
 
 	min_index = -1;
-	min_num_a = 9000000000;
+	min_num_a = EMPTY_INDEX_NUM;
 	get_min(stacks, &min_num_a, &min_index);
 	if (min_index == 1 || min_index == 2)
 		ra(stacks, 0, 0);
@@ -93,7 +93,7 @@ void	sort_ele6(t_stacks *stacks)
 	long	min_num_a;
 
 	min_index = -1;
-	min_num_a = 9000000000;
+	min_num_a = EMPTY_INDEX_NUM;
 	get_min(stacks, &min_num_a, &min_index);
 	if (min_index == 1 || min_index == 2 || min_index == 3)
 		ra(stacks, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:50:07 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 04:13:54 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 20:05:55 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_date	*init_stack_a(int argc, char **argv, int n, int i)
 	while ((argc - 1) > n)
 	{
 		i = -1;
-		min_num = 9000000000;
+		min_num = EMPTY_INDEX_NUM;
 		while (++i < (argc - 1))
 			if (min_num > date[i].num && date[i].coord == -1)
 				min_num = date[i].num;
@@ -52,7 +52,7 @@ t_date	*init_stack_b(int argc)
 		return (NULL);
 	while ((argc - 1) > n)
 	{
-		date[n].num = 9000000000;
+		date[n].num = EMPTY_INDEX_NUM;
 		date[n].coord = -1;
 		n++;
 	}

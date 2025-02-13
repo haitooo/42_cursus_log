@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 00:56:59 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 02:01:13 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/13 20:07:06 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	bigger(int a, int b)
 
 long	is_biggest(long a, long b, long stack_b_num)
 {
-	if (stack_b_num == 9000000000)
+	if (stack_b_num == EMPTY_INDEX_NUM)
 		return (a);
 	if (a <= b)
 		return (b);
@@ -47,7 +47,7 @@ long	get_min_num(t_date *date, int sizeof_stack)
 	long	min_num;
 	int		i;
 
-	min_num = 900000000000;
+	min_num = EMPTY_INDEX_NUM;
 	i = 0;
 	while (i < sizeof_stack)
 	{
@@ -63,7 +63,7 @@ long	get_max_num(t_date *date, int sizeof_stack)
 	long	max_num;
 	int		i;
 
-	max_num = -900000000000;
+	max_num = -EMPTY_INDEX_NUM;
 	i = 0;
 	while (i < sizeof_stack)
 	{
