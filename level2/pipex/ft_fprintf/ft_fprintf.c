@@ -12,23 +12,26 @@
 
 #include "ft_fprintf.h"
 
-int	ft_fputstr(const char *s)
+int	fprint_param(const char c, va_list args)
 {
-	int	result;
-
-	result = 0;
-	while (*s)
-	{
-		if (write(2, s++, 1) == -1)
-			return (-1);
-		result += 1;
-	}
-	return (result);
-}
-
-int	ft_fputchar(char c)
-{
-	return (write(2, &c, 1));
+	if (c == 'c')
+		return (fcase_c(args));
+	else if (c == 's')
+		return (fcase_s(args));
+	else if (c == 'p')
+		return (fcase_p(args));
+	else if (c == 'd' || c == 'i')
+		return (fcase_d_i(args));
+	else if (c == 'l')
+		return (fcase_ld(args));
+	else if (c == 'u')
+		return (fcase_u(args));
+	else if (c == 'x')
+		return (fcase_x(args));
+	else if (c == 'X')
+		return (fcase_large_x(args));
+	else
+		return (ft_fputchar(c), 1);
 }
 
 int	ft_fprintf(const char *str, ...)
@@ -44,13 +47,13 @@ int	ft_fprintf(const char *str, ...)
 		if (*str == '%' && *(str + 1) != '\0')
 		{
 			str++;
-			bytes_written = print_param(*str++, args);
+			bytes_written = fprint_param(*str++, args);
 			if (bytes_written == -1)
 				return (-1);
 			result += bytes_written;
 			continue ;
 		}
-		if (ft_putchar(*str) == -1)
+		if (ft_fputchar(*str) == -1)
 			return (-1);
 		str++;
 		result += 1;

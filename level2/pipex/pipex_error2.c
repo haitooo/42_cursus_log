@@ -6,7 +6,9 @@ void	error_open(t_cmd arg, int **pipefd, int *fd, int errornum)
 
 	n = 0;
 	if (errornum == 1)
-		perror("Error opening infile");
+		ft_fprintf("bash: %s: %s\n", arg.infile_name, strerror(errno));
+	if (errornum == 6)
+		ft_fprintf("bash: %s: %s\n", arg.outfile_name, strerror(errno));
 	if (errornum == 2 || errornum == 4)
 		perror("dup2 failed (stdin)");
 	if (errornum == 3 || errornum == 5)
@@ -52,7 +54,7 @@ void	execve_from_path(t_cmd arg, char **cmd, int errornum)
 		free(cmd);
 	if (errornum == 1 || errornum == 2 || errornum == 3)
 	{
-		perror("malloc error");
+		ft_fprintf("malloc failed: %s\n", strerror(errno));
 		exit(1);
 	}
 	perror("exec failed");

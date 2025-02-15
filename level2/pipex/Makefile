@@ -27,6 +27,10 @@ SRCS =	pipex_main.c \
 		ft_printf/ft_printf_utils.c \
 		ft_printf/ft_printf_utils2.c \
 		ft_fprintf/ft_fprintf.c \
+		ft_fprintf/ft_fprintf_option.c \
+		ft_fprintf/ft_fprintf_option2.c \
+		ft_fprintf/ft_fprintf_utils.c \
+		ft_fprintf/ft_fprintf_utils2.c \
 		gnl/get_next_line.c \
 		gnl/get_next_line_utils.c \
 		ft_split.c

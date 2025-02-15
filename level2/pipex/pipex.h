@@ -23,6 +23,7 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <stddef.h>
+# include <errno.h>
 # include "ft_printf/ft_printf.h"
 # include "ft_fprintf/ft_fprintf.h"
 # include "gnl/get_next_line.h"

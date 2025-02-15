@@ -26,7 +26,7 @@ void	execute_command(t_cmd arg, char **envp, int i)
 	}
 	if (arg.path[i] == NULL || ft_strlen(arg.cmds[i]) == 0)
 	{
-		perror("command not found");
+		ft_fprintf("%s: command not found\n", arg.cmds[i]);
 		path_free(arg);
 		exit(127);
 	}

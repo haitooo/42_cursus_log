@@ -29,7 +29,7 @@ char	**error_in_get_path(char **path, int errornum, int n)
 		ft_fprintf("Error: PATH is not set\n");
 	if (errornum == 2)
 	{
-		perror("malloc error");
+		ft_fprintf("malloc failed: %s\n", strerror(errno));
 		while (--n > 0)
 			free(path[n]);
 	}
@@ -45,7 +45,7 @@ void	error_init_pipefd(t_cmd arg, int i, int **pipefd, int errornum)
 
 	n = 0;
 	if (errornum == 1 || errornum == 2)
-		perror("malloc error");
+		ft_fprintf("malloc failed: %s\n", strerror(errno));
 	if (errornum == 3)
 		perror("pipe failed");
 	if (errornum == 2 || errornum == 3)
@@ -61,13 +61,13 @@ void	error_init_pipefd(t_cmd arg, int i, int **pipefd, int errornum)
 void	error_here_doc(int fd, int errornum)
 {
 	if (errornum == 1)
-		perror("Error opening here_doc");
+		ft_fprintf("bash: here_doc: %s\n", strerror(errno));
 	if (errornum == 2)
 	{
-		perror("Error writing to here_doc");
+		ft_fprintf("bash: here_doc: %s\n", strerror(errno));
 		close(fd);
 	}
 	if (errornum == 3)
-		perror("Error reading from stdin");
+		ft_fprintf("bash: here_doc: %s\n", strerror(errno));
 	exit (1);
 }

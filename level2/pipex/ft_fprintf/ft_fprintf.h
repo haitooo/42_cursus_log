@@ -18,25 +18,21 @@
 # include <stdarg.h>
 # include <limits.h>
 
-int	ft_printf(const char *str, ...);
-int	print_param(const char c, va_list args);
-int	ft_putchar(char c);
-int	ft_putstr(const char *s);
-int	ft_putnbr(int n);
-int	ft_putnbr_long(long n);
-int	ft_putunbr(unsigned int n);
-int	ft_print_addr(unsigned char *addr_hex);
-int	case_c(va_list args);
-int	case_s(va_list args);
-int	case_p(va_list args);
-int	case_d_i(va_list args);
-int	case_ld(va_list args);
-int	case_u(va_list args);
-int	case_x(va_list args);
-int	case_large_x(va_list args);
-
 int	ft_fprintf(const char *str, ...);
+int	fprint_param(const char c, va_list args);
 int	ft_fputchar(char c);
 int	ft_fputstr(const char *s);
+int	ft_fputnbr(int n);
+int	ft_fputnbr_long(long n);
+int	ft_fputunbr(unsigned int n);
+int	ft_fprint_addr(unsigned char *addr_hex);
+int	fcase_c(va_list args);
+int	fcase_s(va_list args);
+int	fcase_p(va_list args);
+int	fcase_d_i(va_list args);
+int	fcase_ld(va_list args);
+int	fcase_u(va_list args);
+int	fcase_x(va_list args);
+int	fcase_large_x(va_list args);
 
 #endif
