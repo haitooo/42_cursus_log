@@ -47,12 +47,12 @@ typedef struct s_param
 
 char	**get_path(t_cmd arg, char **envp);
 void	free_pipefd(int **pipefd, int i);
-//void	close_pipefd(int **pipefd, int i);
 void	after_call_child(t_cmd arg, int **pipefd);
 int		**init_pipefd(t_cmd arg);
 pid_t	*init_pids(t_cmd arg, int **pipefd);
 void	continue_child(int **pipefd, t_cmd arg, int i, char **envp);
 void	execute_command(t_cmd arg, char **envp, int i);
+int		wait_child(t_cmd arg, pid_t *pids);
 
 void	error_fork(t_cmd arg, int **pipefd, pid_t *pids);
 void	error_get_path(t_cmd arg);
@@ -62,6 +62,7 @@ void	error_here_doc(int fd, int errornum);
 void	error_open(t_cmd arg, int **pipefd, int *fd, int errornum);
 void	path_free(t_cmd arg);
 void	execve_free(t_cmd arg, char **cmd, int i);
+void	execve_from_path(t_cmd arg, char **cmd, int errornum);
 
 size_t	ft_strlen(const char *str);
 int		ft_strlen_sep(const char *str, const char c);
@@ -70,5 +71,6 @@ int		ft_strncmp(const char *s1, const char *s2, int n);
 char	*get_next_line(int fd);
 char	**ft_split(const char *str, char c);
 int		count_words(const char *str, char c);
+char	**cmd_from_path(t_cmd arg, int i);
 
 #endif

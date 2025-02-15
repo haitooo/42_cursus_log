@@ -63,3 +63,47 @@ char	**get_path(t_cmd arg, char **envp)
 	path[arg.size_cmd] = NULL;
 	return (path);
 }
+
+char	*get_cmd(t_cmd arg, int i, int cmd_length)
+{
+	int		length;
+	char	*cmd;
+	int		count;
+
+	cmd = malloc(sizeof(char) * (cmd_length + 1));
+	if (!cmd)
+		return (NULL);
+	length = ft_strlen(arg.cmds[i]);
+	count = -1;
+	while (++count < cmd_length)
+		cmd[count] = arg.cmds[i][length - cmd_length + count];
+	cmd[count] = '\0';
+	return (cmd);
+}
+
+char	**cmd_from_path(t_cmd arg, int i)
+{
+	int		length;
+	int		cmd_length;
+	char	**cmd;
+
+	cmd_length = 0;
+	length = ft_strlen(arg.cmds[i]);
+	while (--length >= 0)
+	{
+		if (arg.cmds[i][length] == '/')
+			break ;
+		cmd_length++;
+	}
+	cmd = malloc(sizeof(char *) * 2);
+	if (!cmd)
+		execve_from_path(arg, cmd, 1);
+	cmd[0] = get_cmd(arg, i, cmd_length);
+	if (!cmd)
+		execve_from_path(arg, cmd, 2);
+	cmd[1] = malloc(sizeof(char) * 1);
+	if (!cmd)
+		execve_from_path(arg, cmd, 3);
+	cmd[1] = NULL;
+	return (cmd);
+}

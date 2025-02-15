@@ -45,3 +45,20 @@ void	continue_child(int **pipefd, t_cmd arg, int i, char **envp)
 	free_pipefd(pipefd, arg.size_cmd - 1);
 	execute_command(arg, envp, i);
 }
+
+int	wait_child(t_cmd arg, pid_t *pids)
+{
+	int	status;
+	int	i;
+	int	exit_num;
+
+	i = -1;
+	exit_num = 1;
+	while (++i < arg.size_cmd)
+	{
+		if (waitpid(pids[i], &status, 0) > 0)
+			if (WIFEXITED(status))
+				exit_num = WEXITSTATUS(status);
+	}
+	return (exit_num);
+}

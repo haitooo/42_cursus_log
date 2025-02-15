@@ -36,6 +36,29 @@ void	execve_free(t_cmd arg, char **cmd, int i)
 	free(cmd);
 }
 
+void	execve_from_path(t_cmd arg, char **cmd, int errornum)
+{
+	int	n;
+
+	n = 0;
+	while (n < arg.size_cmd)
+		free(arg.path[n++]);
+	free(arg.path);
+	if (errornum == 4)
+		free(cmd[1]);
+	if (errornum == 3 || errornum == 4)
+		free(cmd[0]);
+	if (errornum == 2 || errornum == 3 || errornum == 4)
+		free(cmd);
+	if (errornum == 1 || errornum == 2 || errornum == 3)
+	{
+		perror("malloc error");
+		exit(1);
+	}
+	perror("exec failed");
+	exit(127);
+}
+
 void	path_free(t_cmd arg)
 {
 	int	n;

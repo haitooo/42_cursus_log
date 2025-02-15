@@ -17,8 +17,16 @@ void	execute_command(t_cmd arg, char **envp, int i)
 	char	**cmd;
 	char	*path;
 
+	if (arg.path[i] == NULL && access(arg.cmds[i], X_OK) == 0)
+	{
+		cmd = cmd_from_path(arg, i);
+		path = arg.cmds[i];
+		execve(path, cmd, envp);
+		execve_from_path(arg, cmd, 4);
+	}
 	if (arg.path[i] == NULL || ft_strlen(arg.cmds[i]) == 0)
 	{
+		perror("command not found");
 		path_free(arg);
 		exit(127);
 	}
@@ -30,27 +38,6 @@ void	execute_command(t_cmd arg, char **envp, int i)
 	perror("exec failed");
 	execve_free(arg, cmd, i);
 	exit(1);
-}
-
-int	wait_child(t_cmd arg)
-{
-	int	status;
-	int	i;
-	int	has_error;
-
-	i = -1;
-	has_error = 0;
-	while (++i < arg.size_cmd)
-	{
-		wait(&status);
-		if (status != 0)
-			has_error = 1;
-	}
-	if (status == 13)
-		return (127);
-	if (has_error && status != 0)
-		return (1);
-	return (0);
 }
 
 int	make_pipe(t_cmd arg, char **envp)
@@ -75,7 +62,7 @@ int	make_pipe(t_cmd arg, char **envp)
 		}
 	}
 	after_call_child(arg, pipefd);
-	ret = wait_child(arg);
+	ret = wait_child(arg, pids);
 	free(pids);
 	return (ret);
 }
