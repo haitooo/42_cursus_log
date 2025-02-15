@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 16:09:42 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 05:25:00 by haito            ###   ########.fr       */
+/*   Created: 2024/11/23 14:22:43 by haito             #+#    #+#             */
+/*   Updated: 2024/11/23 19:27:25 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 256
-
-# endif
-
-typedef struct s_buffers
+int	ft_print_addr(unsigned char *addr_hex)
 {
-	char	buf[BUFFER_SIZE + 1];
-	int		buf_index;
-	int		read_bytes;
-}	t_buffers;
+	int		i;
+	int		result;
+	int		has_num;
 
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*add_chr(char *line, char c);
-void	gnl_my_free(char **str);
-
-#endif
+	result = 0;
+	has_num = 0;
+	if (ft_putstr("0x") == -1)
+		return (-1);
+	result += 2;
+	i = -1;
+	while (i++ < 15)
+	{
+		if (addr_hex[i] != '0' || has_num)
+		{
+			has_num = 1;
+			if (ft_putchar(addr_hex[i]) == -1)
+				return (-1);
+			result += 1;
+		}
+	}
+	return (result);
+}

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:09:42 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 05:25:00 by haito            ###   ########.fr       */
+/*   Updated: 2024/11/18 07:04:15 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_buffers
 }	t_buffers;
 
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
+size_t	ft_strlen(const char *str);
 char	*add_chr(char *line, char c);
 void	gnl_my_free(char **str);
 
