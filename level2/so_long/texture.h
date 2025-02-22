@@ -16,10 +16,10 @@
 # define IMG_WIDTH 96
 # define IMG_HEIGHT 96
 
-# define MAX_WIDTH 1824
-# define MAX_HEIGHT 960
-# define DEFAULT_WIDTH 1824
+# define DEFAULT_WIDTH 1920
 # define DEFAULT_HEIGHT 960
+# define NUM_OF_TILEX 20
+# define NUM_OF_TILEY 10
 
 # define TEX_BACK "green.xpm"
 # define TEX_PLAYER_UP "player_up.xpm"

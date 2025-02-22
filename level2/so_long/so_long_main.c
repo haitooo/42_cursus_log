@@ -31,6 +31,10 @@ void	setting_key_hook(t_window *win, t_texture *tex, t_map *map, t_st *st)
 	deta->st = st;
 	st->count_got_item = 0;
 	st->count_step = 0;
+	tex->img_width = IMG_WIDTH;
+	tex->img_height = IMG_HEIGHT;
+	map->current_map_x = (map->x / NUM_OF_TILEX) * NUM_OF_TILEX;
+	map->current_map_y = (map->y / NUM_OF_TILEY) * NUM_OF_TILEY;
 	mlx_key_hook(win->wind, (void *)call_keypress_func, deta);
 	start_game(deta);
 }
@@ -71,7 +75,7 @@ void	import_texture(t_window *win, t_texture *tex)
 		return ;
 }
 
-void	*select_texture(t_texture *tex, t_map *map, char c)
+void	*select_tex(t_texture *tex, t_map *map, char c)
 {
 	if (c == '0')
 		return (tex->back_img);
@@ -95,44 +99,52 @@ void	*select_texture(t_texture *tex, t_map *map, char c)
 	return (NULL);
 }
 
+void	update_location(t_deta *d)
+{
+	if (d->map->x < d->map->current_map_x
+		|| d->map->x >= d->map->current_map_x + NUM_OF_TILEX
+		|| d->map->y < d->map->current_map_y
+		|| d->map->y >= d->map->current_map_y + NUM_OF_TILEY)
+	{
+		d->map->current_map_x = (d->map->x / NUM_OF_TILEX) * NUM_OF_TILEX;
+		d->map->current_map_y = (d->map->y / NUM_OF_TILEY) * NUM_OF_TILEY;
+	}
+	d->st->w = d->map->current_map_x;
+	d->st->h = d->map->current_map_y;
+	d->st->end_x = d->st->w + NUM_OF_TILEX;
+	d->st->end_y = d->st->h + NUM_OF_TILEX;
+	if (d->st->end_x > d->map->map_width)
+		d->st->end_x = d->map->map_width;
+	if (d->st->end_y > d->map->map_height)
+		d->st->end_y = d->map->map_height;
+}
+
 int	draw_map(t_deta *d)
 {
-	int		h;
-	int		w;
 	void	*t;
 
-	d->tex->img_width = IMG_WIDTH;
-	d->tex->img_height = IMG_HEIGHT;
-	h = 0;
-	w = 0;
-	while (h < d->map->map_height && h < 10)
+	update_location(d);
+	mlx_clear_window(d->win->mlx, d->win->wind);
+	while (d->st->h < d->st->end_y)
 	{
-		while (w < d-> map->map_width && w < 20)
+		while (d->st->w < d->st->end_x)
 		{
-			t = select_texture(d->tex, d->map, d->map->objs[h][w]);
+			t = select_tex(d->tex, d->map, d->map->objs[d->st->h][d->st->w]);
 			mlx_put_image_to_window(d->win->mlx, d->win->wind,
-				t, w * IMG_WIDTH, h * IMG_HEIGHT);
-			w++;
+				t, (d->st->w - d->map->current_map_x) * IMG_WIDTH,
+				(d->st->h - d->map->current_map_y) * IMG_HEIGHT);
+			d->st->w++;
 		}
-		w = 0;
-		h++;
+		d->st->w = d->map->current_map_x;
+		d->st->h++;
 	}
 	return (0);
 }
 
-void	make_window(t_window *win, t_map *map)
+void	make_window(t_window *win)
 {
-	// if (map->map_width > MAX_WIDTH / IMG_WIDTH
-	// 	|| map->map_height > MAX_HEIGHT / IMG_HEIGHT)
-	// {
-	// 	win->win_w = DEFAULT_WIDTH;
-	// 	win->win_h = DEFAULT_HEIGHT;
-	// }
-	// else
-	// {
-		win->win_w = map->map_width * IMG_WIDTH;
-		win->win_h = map->map_height * IMG_HEIGHT;
-	// }
+	win->win_w = DEFAULT_WIDTH;
+	win->win_h = DEFAULT_HEIGHT;
 	win->mlx = mlx_init();
 	if (!win->mlx)
 		return ;
@@ -152,7 +164,7 @@ int	main(int argc, char **argv)
 		return (1);
 	init_objs_count(&map);
 	check_map_error(&map, argv[1]);
-	make_window(&win, &map);
+	make_window(&win);
 	map.direction = DOWN;
 	setting_key_hook(&win, &tex, &map, &st);
 	free_objs(&map, map.map_height);

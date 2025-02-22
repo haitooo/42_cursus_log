@@ -58,6 +58,8 @@ typedef struct s_map
 	int		map_height;
 	int		x;
 	int		y;
+	int		current_map_x;
+	int		current_map_y;
 	int		direction;
 	char	**objs;
 	int		num_c;
@@ -67,8 +69,12 @@ typedef struct s_map
 
 typedef struct s_status
 {
-	int	count_step;
-	int	count_got_item;
+	int		count_step;
+	int		count_got_item;
+	int		h;
+	int		w;
+	int		end_x;
+	int		end_y;
 }	t_st;
 
 typedef struct s_deta
