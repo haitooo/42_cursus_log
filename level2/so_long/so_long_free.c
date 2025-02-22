@@ -1,38 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fprintf_utils.c                                 :+:      :+:    :+:   */
+/*   so_long_free.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 18:00:04 by haito             #+#    #+#             */
-/*   Updated: 2025/02/18 18:00:05 by haito            ###   ########.fr       */
+/*   Created: 2025/02/22 05:31:26 by haito             #+#    #+#             */
+/*   Updated: 2025/02/22 09:32:46 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_fprintf.h"
+#include "so_long.h"
 
-int	ft_fprint_addr(unsigned char *addr_hex)
+void	free_objs(t_map *map, int obj_size)
 {
-	int		i;
-	int		result;
-	int		has_num;
+	int	n;
 
-	result = 0;
-	has_num = 0;
-	if (ft_fputstr("0x") == -1)
-		return (-1);
-	result += 2;
-	i = -1;
-	while (i++ < 15)
+	n = 0;
+	if (!map->objs)
+		return ;
+	while (n < map->map_height && n < obj_size)
 	{
-		if (addr_hex[i] != '0' || has_num)
+		if (map->objs[n])
 		{
-			has_num = 1;
-			if (ft_fputchar(addr_hex[i]) == -1)
-				return (-1);
-			result += 1;
+			free(map->objs[n]);
+			map->objs[n] = NULL;
 		}
+		n++;
 	}
-	return (result);
+	free(map->objs);
+	map->objs = NULL;
+}
+
+void	free_tmp_map(t_map *map, char **tmp_map)
+{
+	int	n;
+
+	n = -1;
+	while (++n < map->map_height)
+		free(tmp_map[n]);
+	free(tmp_map);
+	tmp_map = NULL;
+	exit(1);
 }

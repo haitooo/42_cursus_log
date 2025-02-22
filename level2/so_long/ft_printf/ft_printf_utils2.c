@@ -1,94 +1,94 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fprintf_utils2.c                                :+:      :+:    :+:   */
+/*   ft_printf_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 18:00:08 by haito             #+#    #+#             */
-/*   Updated: 2025/02/18 18:00:09 by haito            ###   ########.fr       */
+/*   Created: 2024/11/23 18:38:21 by haito             #+#    #+#             */
+/*   Updated: 2024/11/23 19:02:27 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_fprintf.h"
+#include "ft_printf.h"
 
-int	ft_fputstr(const char *s)
+int	ft_putstr(const char *s)
 {
 	int	result;
 
 	result = 0;
 	while (*s)
 	{
-		if (write(2, s++, 1) == -1)
+		if (write(1, s++, 1) == -1)
 			return (-1);
 		result += 1;
 	}
 	return (result);
 }
 
-int	ft_fputchar(char c)
+int	ft_putchar(char c)
 {
-	return (write(2, &c, 1));
+	return (write(1, &c, 1));
 }
 
-int	ft_fputunbr(unsigned int n)
+int	ft_putunbr(unsigned int n)
 {
 	char	c;
 	int		result;
 
 	result = 0;
 	if (n > 9)
-		result += ft_fputunbr(n / 10);
+		result += ft_putunbr(n / 10);
 	c = (n % 10) + '0';
-	if (ft_fputchar(c) == -1)
+	if (ft_putchar(c) == -1)
 		return (-1);
 	result += 1;
 	return (result);
 }
 
-int	ft_fputnbr(int n)
+int	ft_putnbr(int n)
 {
 	char	c;
 	int		result;
 
 	result = 0;
 	if (n == -2147483648)
-		return (ft_fputstr("-2147483648"));
+		return (ft_putstr("-2147483648"));
 	if (n < 0)
 	{
-		if (ft_fputchar('-') == -1)
+		if (ft_putchar('-') == -1)
 			return (-1);
 		result += 1;
 		n = -n;
 	}
 	if (n > 9)
-		result += ft_fputnbr(n / 10);
+		result += ft_putnbr(n / 10);
 	c = (n % 10) + '0';
-	if (ft_fputchar(c) == -1)
+	if (ft_putchar(c) == -1)
 		return (-1);
 	result += 1;
 	return (result);
 }
 
-int	ft_fputnbr_long(long n)
+int	ft_putnbr_long(long n)
 {
 	char	c;
 	int		result;
 
 	result = 0;
 	if (n == LONG_MIN)
-		return (ft_fputstr("-9223372036854775808"));
+		return (ft_putstr("-9223372036854775808"));
 	if (n < 0)
 	{
-		if (ft_fputchar('-') == -1)
+		if (ft_putchar('-') == -1)
 			return (-1);
 		result += 1;
 		n = -n;
 	}
 	if (n > 9)
-		result += ft_fputnbr(n / 10);
+		result += ft_putnbr(n / 10);
 	c = (n % 10) + '0';
-	if (ft_fputchar(c) == -1)
+	if (ft_putchar(c) == -1)
 		return (-1);
 	result += 1;
 	return (result);

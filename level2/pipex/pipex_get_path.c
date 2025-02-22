@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_get_path.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/18 17:59:12 by haito             #+#    #+#             */
+/*   Updated: 2025/02/18 19:00:35 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 int	make_path(t_cmd arg, t_param prm, char **path)
@@ -30,7 +42,7 @@ char	**find_path(t_cmd arg, char **path)
 			prm.size = ft_strlen_sep(arg.env_path + prm.j, ':');
 			prm.size_cmd_len = ft_strlen_sep(arg.cmds[prm.n], ' ') + 1;
 			if (make_path(arg, prm, path) == 1)
-				error_in_get_path(path, 2, prm.n);
+				error_in_get_path(path, 1, prm.n);
 			if (access(path[prm.n], X_OK) == 0)
 				break ;
 			else
@@ -56,7 +68,7 @@ char	**get_path(t_cmd arg, char **envp)
 	while (envp[i] != NULL && ft_strncmp(envp[i], "PATH=", 5) != 0)
 		i++;
 	if (envp[i] == NULL)
-		return (error_in_get_path(path, 1, 0));
+		return (error_in_get_path(path, 0, 0));
 	arg.env_path = envp[i] + 5;
 	if (!find_path(arg, path))
 		return (NULL);

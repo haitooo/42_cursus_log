@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:31:04 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 19:32:33 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/18 19:39:20 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	execute_command(t_cmd arg, char **envp, int i)
 	char	**cmd;
 	char	*path;
 
-	if (arg.path[i] == NULL && access(arg.cmds[i], X_OK) == 0)
+	if (arg.path != NULL
+		&& arg.path[i] == NULL && access(arg.cmds[i], X_OK) == 0)
 	{
 		cmd = cmd_from_path(arg, i);
 		path = arg.cmds[i];
@@ -74,11 +75,11 @@ void	get_from_stdin(const char *lmt)
 
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		error_here_doc(-1, 1);
+		error_here_doc(-1, lmt, 1);
 	while (1)
 	{
 		write(1, "> ", 2);
-		line = get_next_line(0);
+		line = get_next_line(0, lmt);
 		if (!line)
 			break ;
 		if (!ft_strncmp(line, lmt, ft_strlen(lmt))
@@ -88,7 +89,7 @@ void	get_from_stdin(const char *lmt)
 			break ;
 		}
 		if (write(fd, line, ft_strlen(line)) == -1)
-			error_here_doc(fd, 2);
+			error_here_doc(fd, lmt, 2);
 		free(line);
 	}
 	close(fd);
@@ -125,8 +126,6 @@ int	main(int argc, char **argv, char **envp)
 	arg.infile_name = argv[1];
 	arg.outfile_name = argv[argc - 1];
 	arg.path = get_path(arg, envp);
-	if (!arg.path)
-		error_get_path(arg);
 	ret = make_pipe(arg, envp);
 	if (has_access_error)
 		return (1);

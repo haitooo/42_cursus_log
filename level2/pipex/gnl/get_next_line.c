@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 23:33:32 by haito             #+#    #+#             */
-/*   Updated: 2024/11/18 07:05:49 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/18 19:41:50 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	read_text(t_buffers *s, char **line, int fd)
 		s->read_bytes = read(fd, s->buf, BUFFER_SIZE);
 		if (s->read_bytes <= 0)
 		{
+			if (*line && **line && s->read_bytes == 0)
+				return (2);
+			if (s->read_bytes == 0)
+				return (3);
 			if (*line && **line)
 				return (0);
 			else
@@ -52,7 +56,7 @@ void	add_endl(char **line)
 	*line = tmp;
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, const char *lmt)
 {
 	static t_buffers	s;
 	char				*line;
@@ -64,6 +68,10 @@ char	*get_next_line(int fd)
 		result = read_text(&s, &line, fd);
 		if (result == 1)
 			return (gnl_my_free(&line), NULL);
+		if (result == 2)
+			return (error_here_doc(fd, lmt, 3), gnl_my_free(&line), NULL);
+		if (result == 3)
+			return (error_here_doc(fd, lmt, 3), line);
 		if (result == 0)
 			return (line);
 		while (s.buf_index < s.read_bytes && s.buf[s.buf_index] != '\n')
@@ -75,32 +83,3 @@ char	*get_next_line(int fd)
 	add_endl(&line);
 	return (line);
 }
-
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*current_line;
-
-// 	fd = open("test.txt", O_RDONLY);
-// 	if (fd == -1)
-// 	{
-// 		perror("Error opening file");
-// 		return (1);
-// 	}
-// 	current_line = NULL;
-// 	while (1)
-// 	{
-// 		current_line = get_next_line(fd);
-// 		if (current_line == NULL)
-// 			break ;
-// 		printf("%s", current_line);
-// 		free(current_line);
-// 	}
-// 	// current_line = get_next_line(fd);
-// 	// printf("%s", current_line);
-// 	// free(current_line);
-// 	close(fd);
-// 	return (0);
-// }

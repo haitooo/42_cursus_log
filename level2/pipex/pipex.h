@@ -6,14 +6,13 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:31:07 by haito             #+#    #+#             */
-/*   Updated: 2025/02/13 16:31:08 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/18 19:42:03 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-//# define ENV_PATH "/proc/self/environ"
 # define BUF_SIZE 4096
 
 # include <stdio.h>
@@ -56,10 +55,9 @@ void	execute_command(t_cmd arg, char **envp, int i);
 int		wait_child(t_cmd arg, pid_t *pids);
 
 void	error_fork(t_cmd arg, int **pipefd, pid_t *pids);
-void	error_get_path(t_cmd arg);
 char	**error_in_get_path(char **path, int errornum, int n);
 void	error_init_pipefd(t_cmd arg, int i, int **pipefd, int errrornum);
-void	error_here_doc(int fd, int errornum);
+void	error_here_doc(int fd, const char *lmt, int errornum);
 void	error_open(t_cmd arg, int **pipefd, int *fd, int errornum);
 void	path_free(t_cmd arg);
 void	execve_free(t_cmd arg, char **cmd, int i);
@@ -69,7 +67,7 @@ size_t	ft_strlen(const char *str);
 int		ft_strlen_sep(const char *str, const char c);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, int n);
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, const char *lmt);
 char	**ft_split(const char *str, char c);
 int		count_words(const char *str, char c);
 char	**cmd_from_path(t_cmd arg, int i);

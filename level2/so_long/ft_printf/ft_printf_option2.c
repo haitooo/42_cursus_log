@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fprintf_option2.c                               :+:      :+:    :+:   */
+/*   ft_printf_option2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 18:00:02 by haito             #+#    #+#             */
-/*   Updated: 2025/02/18 18:00:03 by haito            ###   ########.fr       */
+/*   Created: 2024/11/23 18:11:28 by haito             #+#    #+#             */
+/*   Updated: 2024/11/23 19:07:12 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_fprintf.h"
+#include "ft_printf.h"
 
-int	fcase_u(va_list args)
+int	case_u(va_list args)
 {
 	unsigned int	num;
 
 	num = va_arg(args, unsigned int);
-	return (ft_fputunbr(num));
+	return (ft_putunbr(num));
 }
 
-int	fcase_x(va_list args)
+int	case_x(va_list args)
 {
 	unsigned char	*hex;
 	unsigned int	num;
@@ -31,17 +31,17 @@ int	fcase_x(va_list args)
 	num = va_arg(args, unsigned int);
 	num_hex[8] = '\0';
 	if (num == 0)
-		return (ft_fputchar('0'));
+		return (ft_putchar('0'));
 	hex = (unsigned char *)"0123456789abcdef";
 	while (num != 0)
 	{
 		num_hex[--i] = hex[num % 16];
 		num /= 16;
 	}
-	return (ft_fputstr((const char *)&num_hex[i]));
+	return (ft_putstr((const char *)&num_hex[i]));
 }
 
-int	fcase_large_x(va_list args)
+int	case_large_x(va_list args)
 {
 	unsigned char	*hex;
 	unsigned int	num;
@@ -52,12 +52,12 @@ int	fcase_large_x(va_list args)
 	num = va_arg(args, unsigned int);
 	num_hex[8] = '\0';
 	if (num == 0)
-		return (ft_fputchar('0'));
+		return (ft_putchar('0'));
 	hex = (unsigned char *)"0123456789ABCDEF";
 	while (num != 0)
 	{
 		num_hex[--i] = hex[num % 16];
 		num /= 16;
 	}
-	return (ft_fputstr((const char *)&num_hex[i]));
+	return (ft_putstr((const char *)&num_hex[i]));
 }

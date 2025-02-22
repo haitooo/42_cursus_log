@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fprintf_utils.c                                 :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 18:00:04 by haito             #+#    #+#             */
-/*   Updated: 2025/02/18 18:00:05 by haito            ###   ########.fr       */
+/*   Created: 2024/11/23 14:22:43 by haito             #+#    #+#             */
+/*   Updated: 2024/11/23 19:27:25 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_fprintf.h"
+#include "ft_printf.h"
 
-int	ft_fprint_addr(unsigned char *addr_hex)
+int	ft_print_addr(unsigned char *addr_hex)
 {
 	int		i;
 	int		result;
@@ -20,7 +20,7 @@ int	ft_fprint_addr(unsigned char *addr_hex)
 
 	result = 0;
 	has_num = 0;
-	if (ft_fputstr("0x") == -1)
+	if (ft_putstr("0x") == -1)
 		return (-1);
 	result += 2;
 	i = -1;
@@ -29,7 +29,7 @@ int	ft_fprint_addr(unsigned char *addr_hex)
 		if (addr_hex[i] != '0' || has_num)
 		{
 			has_num = 1;
-			if (ft_fputchar(addr_hex[i]) == -1)
+			if (ft_putchar(addr_hex[i]) == -1)
 				return (-1);
 			result += 1;
 		}

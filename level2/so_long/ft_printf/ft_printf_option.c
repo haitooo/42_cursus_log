@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fprintf_option.c                                :+:      :+:    :+:   */
+/*   ft_printf_option.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 17:59:59 by haito             #+#    #+#             */
-/*   Updated: 2025/02/18 18:00:00 by haito            ###   ########.fr       */
+/*   Created: 2024/11/23 14:42:31 by haito             #+#    #+#             */
+/*   Updated: 2024/11/23 19:21:00 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_fprintf.h"
+#include "ft_printf.h"
 
-int	fcase_c(va_list args)
+int	case_c(va_list args)
 {
 	int	c;
 
 	c = va_arg(args, int);
-	return (ft_fputchar(c));
+	return (ft_putchar(c));
 }
 
-int	fcase_s(va_list args)
+int	case_s(va_list args)
 {
 	const char	*str;
 	int			result;
@@ -28,17 +28,17 @@ int	fcase_s(va_list args)
 	result = 0;
 	str = va_arg(args, const char *);
 	if (str == NULL)
-		return (ft_fputstr("(null)"));
+		return (ft_putstr("(null)"));
 	while (*str)
 	{
-		if (ft_fputchar(*(str++)) == -1)
+		if (ft_putchar(*(str++)) == -1)
 			return (-1);
 		result += 1;
 	}
 	return (result);
 }
 
-int	fcase_p(va_list args)
+int	case_p(va_list args)
 {
 	void			*addr;
 	unsigned char	*hex;
@@ -49,7 +49,7 @@ int	fcase_p(va_list args)
 	addr = va_arg(args, void *);
 	address = (unsigned long)addr;
 	if (address == 0)
-		return (ft_fputstr("(nil)"));
+		return (ft_putstr("(nil)"));
 	hex = (unsigned char *)"0123456789abcdef";
 	i = 15;
 	while (i >= 0)
@@ -57,21 +57,21 @@ int	fcase_p(va_list args)
 		addr_hex[i--] = hex[address % 16];
 		address /= 16;
 	}
-	return (ft_fprint_addr(addr_hex));
+	return (ft_print_addr(addr_hex));
 }
 
-int	fcase_d_i(va_list args)
+int	case_d_i(va_list args)
 {
 	int	num;
 
 	num = va_arg(args, int);
-	return (ft_fputnbr(num));
+	return (ft_putnbr(num));
 }
 
-int	fcase_ld(va_list args)
+int	case_ld(va_list args)
 {
 	long	num;
 
 	num = va_arg(args, long);
-	return (ft_fputnbr_long(num));
+	return (ft_putnbr_long(num));
 }

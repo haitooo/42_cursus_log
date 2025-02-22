@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_child_process.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/18 17:59:16 by haito             #+#    #+#             */
+/*   Updated: 2025/02/18 18:56:08 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 void	case_first_cmd(int	*fd, t_cmd arg, int **pipefd)
@@ -43,6 +55,8 @@ void	continue_child(int **pipefd, t_cmd arg, int i, char **envp)
 	else
 		case_last_cmd(&fd, arg, pipefd);
 	free_pipefd(pipefd, arg.size_cmd - 1);
+	if (arg.path == NULL)
+		ft_fprintf("bash: %s: No such file or directory\n", arg.cmds[i]);
 	execute_command(arg, envp, i);
 }
 

@@ -6,11 +6,11 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 18:00:08 by haito             #+#    #+#             */
-/*   Updated: 2025/02/18 18:00:09 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/22 01:07:24 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_fprintf.h"
+#include "ft_dprintf.h"
 
 int	ft_fputstr(const char *s)
 {
