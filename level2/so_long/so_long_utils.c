@@ -31,3 +31,16 @@ int	ft_int_strlen(const char *s)
 		count++;
 	return (count);
 }
+
+int	my_power(int base, int exp)
+{
+	int	result;
+
+	result = 1;
+	while (exp > 0)
+	{
+		result *= base;
+		exp--;
+	}
+	return (result);
+}

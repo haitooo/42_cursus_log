@@ -29,7 +29,6 @@ void	map_explore(t_map *map, char **tmp_map, int x, int y)
 	return ;
 }
 
-
 void	has_item(t_map *map, char **tmp_map)
 {
 	int	n;

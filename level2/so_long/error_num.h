@@ -18,5 +18,4 @@
 # define ERRNO_SHAPE 3
 # define ERRNO_FEW_C 4
 
-
 #endif

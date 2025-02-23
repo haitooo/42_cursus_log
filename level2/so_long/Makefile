@@ -15,10 +15,15 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRCS = 	so_long_main.c \
 		so_long_utils.c \
+		so_long_draw.c \
+		so_long_select_tex.c \
 		so_long_free.c \
 		so_long_error.c \
 		map_make.c \
 		map_error.c \
+		import_texture.c \
+		import_texture2.c \
+		destroy_texture.c \
 		hook_key.c \
 		key_up.c \
 		key_down.c \

@@ -33,112 +33,12 @@ void	setting_key_hook(t_window *win, t_texture *tex, t_map *map, t_st *st)
 	st->count_step = 0;
 	tex->img_width = IMG_WIDTH;
 	tex->img_height = IMG_HEIGHT;
+	tex->status_width = STATUS_WIDTH;
+	tex->status_height = STATUS_HEIGHT;
 	map->current_map_x = (map->x / NUM_OF_TILEX) * NUM_OF_TILEX;
 	map->current_map_y = (map->y / NUM_OF_TILEY) * NUM_OF_TILEY;
 	mlx_key_hook(win->wind, (void *)call_keypress_func, deta);
 	start_game(deta);
-}
-
-void	import_texture(t_window *win, t_texture *tex)
-{
-	tex->back_img = mlx_xpm_file_to_image(win->mlx, TEX_BACK,
-			&tex->img_width, &tex->img_height);
-	if (!tex->back_img)
-		return ;
-	tex->player_up_img = mlx_xpm_file_to_image(win->mlx, TEX_PLAYER_UP,
-			&tex->img_width, &tex->img_height);
-	if (!tex->player_up_img)
-		return ;
-	tex->player_down_img = mlx_xpm_file_to_image(win->mlx, TEX_PLAYER_DOWN,
-			&tex->img_width, &tex->img_height);
-	if (!tex->player_down_img)
-		return ;
-	tex->player_left_img = mlx_xpm_file_to_image(win->mlx, TEX_PLAYER_LEFT,
-			&tex->img_width, &tex->img_height);
-	if (!tex->player_left_img)
-		return ;
-	tex->player_right_img = mlx_xpm_file_to_image(win->mlx, TEX_PLAYER_RIGHT,
-			&tex->img_width, &tex->img_height);
-	if (!tex->player_right_img)
-		return ;
-	tex->exit_img = mlx_xpm_file_to_image(win->mlx, TEX_EXIT,
-			&tex->img_width, &tex->img_height);
-	if (!tex->exit_img)
-		return ;
-	tex->item_img = mlx_xpm_file_to_image(win->mlx, TEX_ITEM,
-			&tex->img_width, &tex->img_height);
-	if (!tex->item_img)
-		return ;
-	tex->wall_img = mlx_xpm_file_to_image(win->mlx, TEX_WALL,
-			&tex->img_width, &tex->img_height);
-	if (!tex->wall_img)
-		return ;
-}
-
-void	*select_tex(t_texture *tex, t_map *map, char c)
-{
-	if (c == '0')
-		return (tex->back_img);
-	if (c == '1')
-		return (tex->wall_img);
-	if (c == 'P')
-	{
-		if (map->direction == UP)
-			return (tex->player_up_img);
-		if (map->direction == DOWN)
-			return (tex->player_down_img);
-		if (map->direction == LEFT)
-			return (tex->player_left_img);
-		if (map->direction == RIGHT)
-			return (tex->player_right_img);
-	}
-	if (c == 'C')
-		return (tex->item_img);
-	if (c == 'E')
-		return (tex->exit_img);
-	return (NULL);
-}
-
-void	update_location(t_deta *d)
-{
-	if (d->map->x < d->map->current_map_x
-		|| d->map->x >= d->map->current_map_x + NUM_OF_TILEX
-		|| d->map->y < d->map->current_map_y
-		|| d->map->y >= d->map->current_map_y + NUM_OF_TILEY)
-	{
-		d->map->current_map_x = (d->map->x / NUM_OF_TILEX) * NUM_OF_TILEX;
-		d->map->current_map_y = (d->map->y / NUM_OF_TILEY) * NUM_OF_TILEY;
-	}
-	d->st->w = d->map->current_map_x;
-	d->st->h = d->map->current_map_y;
-	d->st->end_x = d->st->w + NUM_OF_TILEX;
-	d->st->end_y = d->st->h + NUM_OF_TILEX;
-	if (d->st->end_x > d->map->map_width)
-		d->st->end_x = d->map->map_width;
-	if (d->st->end_y > d->map->map_height)
-		d->st->end_y = d->map->map_height;
-}
-
-int	draw_map(t_deta *d)
-{
-	void	*t;
-
-	update_location(d);
-	mlx_clear_window(d->win->mlx, d->win->wind);
-	while (d->st->h < d->st->end_y)
-	{
-		while (d->st->w < d->st->end_x)
-		{
-			t = select_tex(d->tex, d->map, d->map->objs[d->st->h][d->st->w]);
-			mlx_put_image_to_window(d->win->mlx, d->win->wind,
-				t, (d->st->w - d->map->current_map_x) * IMG_WIDTH,
-				(d->st->h - d->map->current_map_y) * IMG_HEIGHT);
-			d->st->w++;
-		}
-		d->st->w = d->map->current_map_x;
-		d->st->h++;
-	}
-	return (0);
 }
 
 void	make_window(t_window *win)
@@ -148,7 +48,8 @@ void	make_window(t_window *win)
 	win->mlx = mlx_init();
 	if (!win->mlx)
 		return ;
-	win->wind = mlx_new_window(win->mlx, win->win_w, win->win_h, "so_long");
+	win->wind = mlx_new_window(win->mlx, win->win_w,
+			win->win_h + STATUS_HEIGHT, "so_long");
 	if (!win)
 		return ;
 }

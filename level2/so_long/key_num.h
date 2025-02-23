@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef KEY_HOOK_H
-# define KEY_HOOK_H
+#ifndef KEY_NUM_H
+# define KEY_NUM_H
 
 # define ESC_KEY 65307
 # define X_CLICK 17
