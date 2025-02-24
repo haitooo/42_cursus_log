@@ -24,19 +24,22 @@ void	setting_key_hook(t_window *win, t_texture *tex, t_map *map, t_st *st)
 {
 	t_deta	*deta;
 
-	deta = malloc(sizeof(t_deta));
-	deta->win = win;
-	deta->tex = tex;
-	deta->map = map;
-	deta->st = st;
 	st->count_got_item = 0;
 	st->count_step = 0;
+	st->hp = 10;
 	tex->img_width = IMG_WIDTH;
 	tex->img_height = IMG_HEIGHT;
 	tex->status_width = STATUS_WIDTH;
 	tex->status_height = STATUS_HEIGHT;
 	map->current_map_x = (map->x / NUM_OF_TILEX) * NUM_OF_TILEX;
 	map->current_map_y = (map->y / NUM_OF_TILEY) * NUM_OF_TILEY;
+	deta = malloc(sizeof(t_deta));
+	if (!deta)
+		return ;
+	deta->win = win;
+	deta->tex = tex;
+	deta->map = map;
+	deta->st = st;
 	mlx_key_hook(win->wind, (void *)call_keypress_func, deta);
 	start_game(deta);
 }
@@ -57,12 +60,14 @@ void	make_window(t_window *win)
 int	main(int argc, char **argv)
 {
 	t_window	win;
+	t_tex_num	n;
 	t_texture	tex;
 	t_map		map;
 	t_st		st;
 
 	if (argc >= 3)
 		return (1);
+	tex.n = &n;
 	init_objs_count(&map);
 	check_map_error(&map, argv[1]);
 	make_window(&win);

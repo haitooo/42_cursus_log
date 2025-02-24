@@ -1,5 +1,23 @@
 #include "so_long.h"
 
+void	draw_heart(t_deta *d)
+{
+	void	*t;
+	int		count;
+
+	count = 1;
+	while (count < 6)
+	{
+		t = select_heart_tex(d, count);
+		if (!t)
+			return ;
+		mlx_put_image_to_window(d->win->mlx, d->win->wind,
+			t, (10 * STATUS_WIDTH) - 95 + (count * IMG_WIDTH) - (count * 8),
+			NUM_OF_TILEY * IMG_HEIGHT + (STATUS_HEIGHT / 6));
+		count++;
+	}
+}
+
 void	draw_total_item(t_deta *d)
 {
 	void	*t;
@@ -21,7 +39,7 @@ void	draw_total_item(t_deta *d)
 		if (!t)
 			return ;
 		mlx_put_image_to_window(d->win->mlx, d->win->wind,
-			t, (8 * STATUS_WIDTH) + 80 + (count * IMG_WIDTH) - (count * 23),
+			t, (8 * STATUS_WIDTH) + 53 + (count * IMG_WIDTH) - (count * 23),
 			NUM_OF_TILEY * IMG_HEIGHT + (STATUS_HEIGHT / 6));
 		count++;
 		locate--;
@@ -49,7 +67,7 @@ void	draw_got_item(t_deta *d)
 		if (!t)
 			return ;
 		mlx_put_image_to_window(d->win->mlx, d->win->wind,
-			t, (7 * STATUS_WIDTH) + (count * IMG_WIDTH) - (53 + count * 23),
+			t, (7 * STATUS_WIDTH) + (count * IMG_WIDTH) - (75 + count * 23),
 			NUM_OF_TILEY * IMG_HEIGHT + (STATUS_HEIGHT / 6));
 		count++;
 		locate--;
@@ -66,13 +84,13 @@ void	draw_item(t_deta *d)
 	{
 		t = select_status2_tex(d->tex, count);
 		mlx_put_image_to_window(d->win->mlx, d->win->wind,
-			t, ((count + 4) * STATUS_WIDTH + 70),
+			t, ((count + 4) * STATUS_WIDTH + 48),
 			NUM_OF_TILEY * IMG_HEIGHT);
 		count++;
 	}
 	mlx_put_image_to_window(d->win->mlx, d->win->wind,
 		(void *)d->tex->par_img,
-		8 * STATUS_WIDTH + 10, NUM_OF_TILEY * IMG_HEIGHT);
+		8 * STATUS_WIDTH - 16, NUM_OF_TILEY * IMG_HEIGHT);
 	draw_got_item(d);
 	draw_total_item(d);
 }
@@ -121,9 +139,7 @@ void	draw_status(t_deta *d)
 	}
 	draw_item(d);
 	draw_score(d);
-	//char	str[] = "1";
-	//mlx_string_put(d->win->mlx, d->win->wind, IMG_WIDTH * 5, NUM_OF_TILEY * IMG_HEIGHT + 45, 0xFFFFFF, str);
-	//mlx_put_image_to_window(d->win->mlx, d->win->wind, (void *)d->tex->heart_img, IMG_WIDTH * 6, NUM_OF_TILEY * IMG_HEIGHT + (STATUS_HEIGHT / 6));
+	draw_heart(d);
 }
 
 void	update_location(t_deta *d)

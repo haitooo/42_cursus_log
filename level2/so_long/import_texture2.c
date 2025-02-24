@@ -18,49 +18,49 @@ void	import_heart(t_window *win, t_texture *tex)
 
 void	import_numbers2(t_window *win, t_texture *tex)
 {
-	tex->six_img = mlx_xpm_file_to_image(win->mlx, TEX_SIX,
+	tex->n->six_img = mlx_xpm_file_to_image(win->mlx, TEX_SIX,
 			&tex->img_width, &tex->img_height);
-	if (!tex->six_img)
+	if (!tex->n->six_img)
 		return ;
-	tex->seven_img = mlx_xpm_file_to_image(win->mlx, TEX_SEVEN,
+	tex->n->seven_img = mlx_xpm_file_to_image(win->mlx, TEX_SEVEN,
 			&tex->img_width, &tex->img_height);
-	if (!tex->seven_img)
+	if (!tex->n->seven_img)
 		return ;
-	tex->eight_img = mlx_xpm_file_to_image(win->mlx, TEX_EIGHT,
+	tex->n->eight_img = mlx_xpm_file_to_image(win->mlx, TEX_EIGHT,
 			&tex->img_width, &tex->img_height);
-	if (!tex->eight_img)
+	if (!tex->n->eight_img)
 		return ;
-	tex->nine_img = mlx_xpm_file_to_image(win->mlx, TEX_NINE,
+	tex->n->nine_img = mlx_xpm_file_to_image(win->mlx, TEX_NINE,
 			&tex->img_width, &tex->img_height);
-	if (!tex->nine_img)
+	if (!tex->n->nine_img)
 		return ;
 }
 
 void	import_numbers(t_window *win, t_texture *tex)
 {
-	tex->zero_img = mlx_xpm_file_to_image(win->mlx, TEX_ZERO,
+	tex->n->zero_img = mlx_xpm_file_to_image(win->mlx, TEX_ZERO,
 			&tex->img_width, &tex->img_height);
-	if (!tex->zero_img)
+	if (!tex->n->zero_img)
 		return ;
-	tex->one_img = mlx_xpm_file_to_image(win->mlx, TEX_ONE,
+	tex->n->one_img = mlx_xpm_file_to_image(win->mlx, TEX_ONE,
 			&tex->img_width, &tex->img_height);
-	if (!tex->one_img)
+	if (!tex->n->one_img)
 		return ;
-	tex->two_img = mlx_xpm_file_to_image(win->mlx, TEX_TWO,
+	tex->n->two_img = mlx_xpm_file_to_image(win->mlx, TEX_TWO,
 			&tex->img_width, &tex->img_height);
-	if (!tex->two_img)
+	if (!tex->n->two_img)
 		return ;
-	tex->three_img = mlx_xpm_file_to_image(win->mlx, TEX_THREE,
+	tex->n->three_img = mlx_xpm_file_to_image(win->mlx, TEX_THREE,
 			&tex->img_width, &tex->img_height);
-	if (!tex->three_img)
+	if (!tex->n->three_img)
 		return ;
-	tex->four_img = mlx_xpm_file_to_image(win->mlx, TEX_FOUR,
+	tex->n->four_img = mlx_xpm_file_to_image(win->mlx, TEX_FOUR,
 			&tex->img_width, &tex->img_height);
-	if (!tex->four_img)
+	if (!tex->n->four_img)
 		return ;
-	tex->five_img = mlx_xpm_file_to_image(win->mlx, TEX_FIVE,
+	tex->n->five_img = mlx_xpm_file_to_image(win->mlx, TEX_FIVE,
 			&tex->img_width, &tex->img_height);
-	if (!tex->five_img)
+	if (!tex->n->five_img)
 		return ;
 	import_numbers2(win, tex);
 }

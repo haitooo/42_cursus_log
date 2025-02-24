@@ -48,27 +48,38 @@ void	*select_status_tex(t_texture *tex, int count)
 		return (tex->status_img);
 }
 
+void	*select_heart_tex(t_deta *d, int count)
+{
+	if (d->st->hp - count * 2 >= 0)
+		return (d->tex->heart_img);
+	if (d->st->hp - count * 2 == -1)
+		return (d->tex->heart_half_img);
+	if (d->st->hp - count * 2 <= -2)
+		return (d->tex->heart_zero_img);
+	return (NULL);
+}
+
 void	*select_num_tex(t_deta *d, int num)
 {
 	if (num == 0)
-		return (d->tex->zero_img);
+		return (d->tex->n->zero_img);
 	if (num == 1)
-		return (d->tex->one_img);
+		return (d->tex->n->one_img);
 	if (num == 2)
-		return (d->tex->two_img);
+		return (d->tex->n->two_img);
 	if (num == 3)
-		return (d->tex->three_img);
+		return (d->tex->n->three_img);
 	if (num == 4)
-		return (d->tex->four_img);
+		return (d->tex->n->four_img);
 	if (num == 5)
-		return (d->tex->five_img);
+		return (d->tex->n->five_img);
 	if (num == 6)
-		return (d->tex->six_img);
+		return (d->tex->n->six_img);
 	if (num == 7)
-		return (d->tex->seven_img);
+		return (d->tex->n->seven_img);
 	if (num == 8)
-		return (d->tex->eight_img);
+		return (d->tex->n->eight_img);
 	if (num == 9)
-		return (d->tex->nine_img);
+		return (d->tex->n->nine_img);
 	return (NULL);
 }

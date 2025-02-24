@@ -38,27 +38,8 @@ typedef struct s_window
 	int		win_h;
 }	t_window;
 
-typedef struct s_texture
+typedef struct s_tex_num
 {
-	void	*back_img;
-	void	*exit_img;
-	void	*item_img;
-	void	*wall_img;
-	void	*player_up_img;
-	void	*player_down_img;
-	void	*player_left_img;
-	void	*player_right_img;
-	void	*status_img;
-	void	*status1_img;
-	void	*status2_img;
-	void	*status3_img;
-	void	*status4_img;
-	void	*status5_img;
-	void	*status6_img;
-	void	*par_img;
-	void	*heart_img;
-	void	*heart_half_img;
-	void	*heart_zero_img;
 	void	*zero_img;
 	void	*one_img;
 	void	*two_img;
@@ -69,10 +50,34 @@ typedef struct s_texture
 	void	*seven_img;
 	void	*eight_img;
 	void	*nine_img;
-	int		img_width;
-	int		img_height;
-	int		status_width;
-	int		status_height;
+}	t_tex_num;
+
+typedef struct s_texture
+{
+	void		*back_img;
+	void		*exit_img;
+	void		*item_img;
+	void		*wall_img;
+	void		*player_up_img;
+	void		*player_down_img;
+	void		*player_left_img;
+	void		*player_right_img;
+	void		*status_img;
+	void		*status1_img;
+	void		*status2_img;
+	void		*status3_img;
+	void		*status4_img;
+	void		*status5_img;
+	void		*status6_img;
+	void		*par_img;
+	void		*heart_img;
+	void		*heart_half_img;
+	void		*heart_zero_img;
+	int			img_width;
+	int			img_height;
+	int			status_width;
+	int			status_height;
+	t_tex_num	*n;
 }	t_texture;
 
 typedef struct s_map
@@ -94,6 +99,7 @@ typedef struct s_status
 {
 	int		count_step;
 	int		count_got_item;
+	int		hp;
 	int		h;
 	int		w;
 	int		end_x;
@@ -122,6 +128,7 @@ void	*select_num_tex(t_deta *d, int num);
 void	*select_status_tex(t_texture *tex, int count);
 void	*select_status2_tex(t_texture *tex, int count);
 void	*select_tex(t_texture *tex, t_map *map, char c);
+void	*select_heart_tex(t_deta *d, int count);
 
 void	key_up(t_deta *d);
 void	key_down(t_deta *d);

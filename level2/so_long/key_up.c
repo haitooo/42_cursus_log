@@ -43,6 +43,8 @@ void	key_up(t_deta *d)
 			{
 				d->map->objs[d->map->y - 1][d->map->x] = '0';
 				d->st->count_got_item++;
+				if (d->st->count_got_item % 10 == 0 && d->st->hp < 10)
+					d->st->hp++;
 			}
 			if (d->map->objs[d->map->y - 1][d->map->x] == 'E')
 			{
