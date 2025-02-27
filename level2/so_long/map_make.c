@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 00:53:59 by haito             #+#    #+#             */
-/*   Updated: 2025/02/22 09:50:08 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 05:11:49 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,16 @@ char	**read_map(t_map *map, char *mapname)
 	return (objs);
 }
 
-int	count_object(t_map *map, int n)
+int	count_object(t_map *map, int n, int i)
 {
-	int	i;
-
-	i = -1;
 	while (++i < map->map_width)
 	{
 		if (map->objs[n][i] == 'C')
 			map->num_c++;
 		if (map->objs[n][i] == 'E')
 		{
+			map->exit_x = i;
+			map->exit_y = n;
 			if (++map->num_e > 1)
 				return (-1);
 		}

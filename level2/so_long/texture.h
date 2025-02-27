@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:18:07 by haito             #+#    #+#             */
-/*   Updated: 2025/02/22 13:58:46 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 08:01:11 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,20 @@
 # define NUM_OF_TILEX 20
 # define NUM_OF_TILEY 10
 
-# define TEX_BACK "green.xpm"
-# define TEX_PLAYER_UP "player_up.xpm"
-# define TEX_PLAYER_DOWN "player_down.xpm"
-# define TEX_PLAYER_LEFT "player_left.xpm"
-# define TEX_PLAYER_RIGHT "player_right.xpm"
-# define TEX_ITEM "blue.xpm"
-# define TEX_EXIT "white.xpm"
-# define TEX_WALL "yellow.xpm"
+# define TEX_BACK "textures/back.xpm"
+# define TEX_PLAYER_UP "textures/player_up.xpm"
+# define TEX_PLAYER_DOWN "textures/player_down.xpm"
+# define TEX_PLAYER_EYE "textures/player_down_eye.xpm"
+# define TEX_PLAYER_LEFT "textures/player_left.xpm"
+# define TEX_PLAYER_RIGHT "textures/player_right.xpm"
+# define TEX_ITEM "textures/item.xpm"
+# define TEX_ITEM_ "textures/item2.xpm"
+# define TEX_ITEM__ "textures/item3.xpm"
+# define TEX_ITEM___ "textures/item4.xpm"
+# define TEX_ITEM____ "textures/item5.xpm"
+# define TEX_EXIT_CLOSE "textures/exit_close.xpm"
+# define TEX_EXIT_OPEN "textures/exit_open.xpm"
+# define TEX_WALL "textures/wall.xpm"
 # define TEX_STATUS_BACK "texture_status/status.xpm"
 # define TEX_STATUS_ONE "texture_status/status1.xpm"
 # define TEX_STATUS_TWO "texture_status/status2.xpm"
@@ -52,5 +58,10 @@
 # define TEX_SEVEN "texture_numbers/seven.xpm"
 # define TEX_EIGHT "texture_numbers/eight.xpm"
 # define TEX_NINE "texture_numbers/nine.xpm"
+# define TEX_TRAP "textures/trap1.xpm"
+# define TEX_TRAP_ "textures/trap2.xpm"
+# define TEX_ENEMY_STOP "textures/enemy_stop.xpm"
+# define TEX_ENEMY_MOVE "textures/enemy_move1.xpm"
+# define TEX_ENEMY_MOVE_ "textures/enemy_move2.xpm"
 
 #endif

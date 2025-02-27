@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fprintf.h                                       :+:      :+:    :+:   */
+/*   ft_dprintf.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 13:37:03 by haito             #+#    #+#             */
-/*   Updated: 2025/02/22 01:07:24 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 00:44:55 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_dprintf_H
-# define FT_dprintf_H
+#ifndef FT_DPRINTF_H
+# define FT_DPRINTF_H
 
 # include <unistd.h>
 # include <stdlib.h>

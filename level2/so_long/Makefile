@@ -6,7 +6,7 @@
 #    By: haito <haito@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/13 14:15:47 by haito             #+#    #+#              #
-#    Updated: 2025/02/22 15:03:31 by haito            ###   ########.fr        #
+#    Updated: 2025/02/28 06:42:13 by haito            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,17 @@ CFLAGS = -Wall -Wextra -Werror
 SRCS = 	so_long_main.c \
 		so_long_utils.c \
 		so_long_draw.c \
+		so_long_draw2.c \
 		so_long_select_tex.c \
+		so_long_select_tex2.c \
 		so_long_free.c \
 		so_long_error.c \
 		map_make.c \
 		map_error.c \
+		put_enemy.c \
+		enemy_check.c \
+		enemy_move.c \
+		init_texture.c \
 		import_texture.c \
 		import_texture2.c \
 		destroy_texture.c \

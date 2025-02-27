@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 09:02:11 by haito             #+#    #+#             */
-/*   Updated: 2025/02/22 10:04:19 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 06:08:42 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@
 # define ERRNO_DUP 2
 # define ERRNO_SHAPE 3
 # define ERRNO_FEW_C 4
+# define ERRNO_MALLOC 5
+# define ERRNO_HOOK 6
 
 #endif

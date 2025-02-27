@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 07:05:30 by haito             #+#    #+#             */
-/*   Updated: 2025/02/22 12:59:37 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 05:42:06 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	has_item(t_map *map, char **tmp_map)
 			if (tmp_map[n][i] == 'E' || tmp_map[n][i] == 'P'
 				|| tmp_map[n][i] == 'C')
 			{
-				ft_dprintf("The map has unreachable object\n");
+				ft_dprintf("Map error: The map has unreachable object\n");
 				free_objs(map, map->map_height);
 				free_tmp_map(map, tmp_map);
 			}
@@ -111,7 +111,7 @@ void	check_map_error(t_map *map, char *mapname)
 			error_map(map, map->map_height, ERRNO_SHAPE);
 		if (map->objs[n][0] != '1' || map->objs[n][map->map_width - 1] != '1')
 			error_map(map, map->map_height, ERRNO_WALL);
-		if (count_object(map, n) == -1)
+		if (count_object(map, n, -1) == -1)
 			error_map(map, map->map_height, ERRNO_DUP);
 		n++;
 	}

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 22:18:07 by haito             #+#    #+#             */
-/*   Updated: 2025/02/22 15:52:01 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/27 20:22:36 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define DOWN_KEY 65364
 # define LEFT_KEY 65361
 # define RIGHT_KEY 65363
+# define ENTER_KEY 65293
+# define SPACE_KEY 32
 
 # define UP 1
 # define DOWN 2

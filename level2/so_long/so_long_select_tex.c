@@ -1,37 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long_select_tex.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/28 00:25:12 by haito             #+#    #+#             */
+/*   Updated: 2025/02/28 08:03:49 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-void	*select_tex(t_texture *tex, t_map *map, char c)
+void	*select_tex(t_deta *d, char c)
 {
 	if (c == '0')
-		return (tex->back_img);
+		return (d->tex->back_img);
 	if (c == '1')
-		return (tex->wall_img);
+		return (d->tex->wall_img);
 	if (c == 'P')
-	{
-		if (map->direction == UP)
-			return (tex->player_up_img);
-		if (map->direction == DOWN)
-			return (tex->player_down_img);
-		if (map->direction == LEFT)
-			return (tex->player_left_img);
-		if (map->direction == RIGHT)
-			return (tex->player_right_img);
-	}
+		return (case_player(d));
 	if (c == 'C')
-		return (tex->item_img);
+		return (case_item(d));
+	if (c == 'O')
+		return (d->tex->exit_open_img);
 	if (c == 'E')
-		return (tex->exit_img);
+		return (d->tex->exit_close_img);
+	if (c == 'T')
+		return (case_trap(d));
+	if (c == 'M')
+		return (d->tex->enemy_stop_img);
+	if (c == 'D')
+		return (case_enemy(d));
 	return (NULL);
 }
 
 void	*select_status2_tex(t_texture *tex, int count)
 {
 	if (count == 0)
-		return (tex->status4_img);
+		return (tex->n->status4_img);
 	if (count == 1)
-		return (tex->status5_img);
+		return (tex->n->status5_img);
 	if (count == 2)
-		return (tex->status6_img);
+		return (tex->n->status6_img);
 	else
 		return (NULL);
 }
@@ -39,13 +50,13 @@ void	*select_status2_tex(t_texture *tex, int count)
 void	*select_status_tex(t_texture *tex, int count)
 {
 	if (count == 0)
-		return (tex->status1_img);
+		return (tex->n->status1_img);
 	if (count == 1)
-		return (tex->status2_img);
+		return (tex->n->status2_img);
 	if (count == 2)
-		return (tex->status3_img);
+		return (tex->n->status3_img);
 	else
-		return (tex->status_img);
+		return (tex->n->status_img);
 }
 
 void	*select_heart_tex(t_deta *d, int count)
