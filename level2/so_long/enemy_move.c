@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:14:41 by haito             #+#    #+#             */
-/*   Updated: 2025/02/28 07:30:31 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 09:08:56 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ void	p_down(t_map *map)
 	map->objs[map->pat_y][map->pat_x] = '0';
 	map->pat_direction = DOWN;
 	map->pat_y++;
+}
+
+void	check_patrol(t_deta *d)
+{
+	if (MODE != HARD)
+		return ;
+	search_player(d->map);
 }

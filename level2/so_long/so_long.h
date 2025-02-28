@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 14:15:42 by haito             #+#    #+#             */
-/*   Updated: 2025/02/28 08:11:44 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 09:15:13 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # define PEACE 0
 # define EASY 1
 # define HARD 2
-# define MODE EASY
+// # define MODE PEACE
+// # define MODE EASY
+# define MODE HARD
 
 # include "ft_printf/ft_printf.h"
 # include "ft_dprintf/ft_dprintf.h"
@@ -109,6 +111,7 @@ typedef struct s_map
 	int		num_c;
 	int		num_e;
 	int		num_p;
+	int		num_m;
 	int		exit_x;
 	int		exit_y;
 	int		pat_x;
@@ -159,6 +162,7 @@ void	*select_status_tex(t_texture *tex, int count);
 void	*select_status2_tex(t_texture *tex, int count);
 void	*select_tex(t_deta *d, char c);
 void	*select_heart_tex(t_deta *d, int count);
+void	search_player(t_map *map);
 void	*case_player(t_deta *d);
 void	*case_enemy(t_deta *d);
 void	*case_trap(t_deta *d);

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 18:52:50 by haito             #+#    #+#             */
-/*   Updated: 2025/02/28 01:41:44 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 08:53:17 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	put_patrol(t_map *map)
 	try = 0;
 	while (map->objs[num_y][num_x] != '0' && try++ <= MAX_TRY)
 	{
-		num_x = (num_x + (__TIME__[6] - '0')) % map->map_width;
-		num_y = (num_y + (__TIME__[7] - '0')) % map->map_height;
+		num_x++;
+		num_x %= map->map_width;
+		num_y++;
+		num_y %= map->map_height;
 	}
 	if (try >= MAX_TRY)
 		return ;
@@ -37,6 +39,7 @@ void	put_patrol(t_map *map)
 	map->pat_direction = DOWN;
 	map->pat_x = num_x;
 	map->pat_y = num_y;
+	map->num_m++;
 }
 
 void	put_trap(t_map *map)
@@ -54,7 +57,8 @@ void	put_trap(t_map *map)
 		try = 0;
 		while (map->objs[num_y][num_x] != '0' && try++ <= MAX_TRY)
 		{
-			num_x = (num_x + (__TIME__[6] - '0')) % map->map_width;
+			num_x++;
+			num_x %= map->map_width;
 			num_y = (num_y + (__TIME__[7] - '0')) % map->map_height;
 		}
 		if (try >= MAX_TRY)
@@ -69,6 +73,7 @@ void	put_trap(t_map *map)
 
 void	put_enemy(t_map *map)
 {
+	map->num_m = 0;
 	if (MODE == HARD)
 		put_patrol(map);
 	if (MODE != PEACE)

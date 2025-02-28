@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 00:16:53 by haito             #+#    #+#             */
-/*   Updated: 2025/02/28 04:52:56 by haito            ###   ########.fr       */
+/*   Updated: 2025/02/28 09:08:44 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,38 +88,52 @@ void	found_player(t_map *map)
 		found_player2(map);
 }
 
-void	search_player(t_map *map)
+int	search_player_x(t_map *map, int search_y)
 {
+	int	x_min;
+	int	x_max;
 	int	search_x;
-	int	search_y;
 
-	search_y = map->pat_y - 3;
-	while (search_y < 0)
-		search_y = 0;
-	while (search_y < map->pat_y + 3)
+	if (map->pat_x - 3 < 0)
+		x_min = 0;
+	else
+		x_min = map->pat_x - 3;
+	if (map->pat_x + 3 >= map->map_width)
+		x_max = map->map_width - 1;
+	else
+		x_max = map->pat_x + 3;
+	search_x = x_min;
+	while (++search_x <= x_max)
 	{
-		search_x = map->pat_x - 3;
-		while (search_x < 0)
-			search_x = 0;
-		while (search_x < map->pat_x + 3)
+		if (map->objs[search_y][search_x] == 'P')
 		{
-			if (map->objs[search_y][search_x] == 'P')
-			{
+			if (map->objs[map->pat_y][map->pat_x] != '1')
 				map->objs[map->pat_y][map->pat_x] = 'D';
-				found_player(map);
-				return ;
-			}
-			if (++search_x > map->map_width)
-				break ;
+			found_player(map);
+			return (1);
 		}
-		if (++search_y > map->map_height)
-			break ;
 	}
+	return (0);
 }
 
-void	check_patrol(t_deta *d)
+void	search_player(t_map *map)
 {
-	if (MODE != HARD)
-		return ;
-	search_player(d->map);
+	int	search_y;
+	int	y_min;
+	int	y_max;
+
+	if (map->pat_y - 3 < 0)
+		y_min = 0;
+	else
+		y_min = map->pat_y - 3;
+	if (map->pat_y + 3 >= map->map_height)
+		y_max = map->map_height - 1;
+	else
+		y_max = map->pat_y + 3;
+	search_y = y_min;
+	while (++search_y <= y_max)
+	{
+		if (search_player_x(map, search_y) == 1)
+			return ;
+	}
 }
