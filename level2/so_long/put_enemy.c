@@ -18,10 +18,8 @@ void	put_patrol(t_map *map)
 {
 	int	num_x;
 	int	num_y;
-	int	count;
 	int	try;
 
-	count = 0;
 	num_x = ((__TIME__[7] - '0') + (__TIME__[6] - '0') * 10) % map->map_width;
 	num_y = ((__TIME__[4] - '0') + (__TIME__[3] - '0') * 10) % map->map_height;
 	try = 0;
