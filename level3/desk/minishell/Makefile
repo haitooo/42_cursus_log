@@ -6,7 +6,7 @@
 #    By: haito <haito@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/07 06:53:24 by haito             #+#    #+#              #
-#    Updated: 2025/03/24 11:58:24 by tssaito          ###   ########.fr        #
+#    Updated: 2025/03/23 11:59:43 by tssaito          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,21 +14,16 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 OBJDIR = objs
-SRCDIR = srcs
-SRCS =	main/minishell_main.c \
-		main/minishell_init.c \
-		main/minishell_free.c \
-		main/minishell_error.c \
-		main/signal.c \
-		utils/minishell_utils.c \
-		utils/minishell_utils2.c \
-		utils/minishell_utils3.c \
-		utils/minishell_utils4.c \
-		utils/minishell_utils5.c \
-		utils/ft_split.c \
-		utils/free_utils.c \
+SRCS =	minishell_main.c \
+		minishell_init.c \
+		minishell_free.c \
+		minishell_error.c \
+		minishell_utils.c \
+		minishell_utils2.c \
+		minishell_utils3.c \
+		minishell_utils4.c \
+		minishell_utils5.c \
 		builtin/builtin.c \
-		builtin/builtin_check_syntax.c \
 		builtin/builtin_error.c \
 		builtin/builtin_set_stdio.c \
 		builtin/builtin_redirect.c \
@@ -41,7 +36,6 @@ SRCS =	main/minishell_main.c \
 		builtin/builtin_unset.c \
 		builtin/builtin_cd.c \
 		builtin/builtin_exit.c \
-		builtin/builtin_exit_utils.c \
 		parent_process/find_brackets_pair.c \
 		parent_process/sep_input_to_cmds.c \
 		parent_process/handle_node.c \
@@ -52,17 +46,17 @@ SRCS =	main/minishell_main.c \
 		parent_process/wait.c \
 		parent_process/help.c \
 		parent_process/recursive.c \
-		manage_varlist/manage_varlist.c \
-		manage_varlist/init_varlist.c \
+		ft_split.c \
+		export_utils.c \
+		init_varlist.c \
 		expander/expander.c \
 		expander/pre_tokenizer.c \
 		expander/more_tokenizer.c \
 		expander/tokenize_split.c \
 		expander/replace_vars.c \
 		expander/replace_vars_count.c \
-		expander/get_words.c \
-		expander/get_words_utils1.c \
-		expander/get_words_utils2.c \
+		expander/replace_vars_split.c \
+		expander/replace_vars_split2.c \
 		expander/wildcard/expand_wildcard.c \
 		expander/wildcard/search_same_file.c \
 		expander/wildcard/get_files.c \
@@ -70,9 +64,7 @@ SRCS =	main/minishell_main.c \
 		expander/wildcard/split_wildcard.c \
 		expander/wildcard/wildcard_free.c \
 		expander/wildcard/wildcard_utils.c \
-		expander/wildcard/trim_word.c \
-		expander/wildcard/manage_flag.c \
-		expander/wildcard/open_wildcard.c \
+		expander/wildcard/check_edge.c \
 		ft_eprintf/ft_eprintf.c \
 		ft_eprintf/ft_eprintf_option.c \
 		ft_eprintf/ft_eprintf_option2.c \
@@ -87,10 +79,12 @@ SRCS =	main/minishell_main.c \
 		continue_child/here_doc.c \
 		here_doc/heredoc_expand_vars.c \
 		here_doc/heredoc_vars_count.c \
-		here_doc/heredoc_vars_split.c 
+		here_doc/heredoc_vars_split.c \
+		signal.c \
+		free_utils.c
 
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
-INC = -Iincs  -Isrcs/ft_eprintf
+INC = -I . -I ft_eprintf
 
 all: $(NAME)
 
@@ -107,6 +101,6 @@ fclean: clean
 
 re: fclean all
 
-$(OBJDIR)/%.o:$(SRCDIR)/%.c
+$(OBJDIR)/%.o:%.c
 	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
