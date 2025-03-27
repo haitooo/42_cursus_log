@@ -6,7 +6,7 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 16:30:29 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/23 23:36:54 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/26 20:16:51 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_tokens	*add_new_tokens(t_tokens **prev_token, char **words)
 	return (new);
 }
 
-int	more_tokenizer(t_tokens **tokens, t_type type)
+int	remove_quotes_and_split_tokens(t_tokens **tokens, t_type type)
 {
 	t_tokens	*head;
 	char		**words;

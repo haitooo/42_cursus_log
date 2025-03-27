@@ -1,0 +1,12 @@
+echo -n hello && echo world
+echo hello
+echo -n hello
+echo -nnnnn hello
+echo -n -n hello
+echo -n
+echo -n ""
+echo "no option or with option -n"
+echo -n -x hello      # -nとみなされない
+echo -- hello
+echo - hello
+echo

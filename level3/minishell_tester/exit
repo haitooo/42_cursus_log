@@ -1,0 +1,53 @@
+exit
+exit 0
+exit 1
+exit 255
+exit 256
+exit -1
+exit +1
+exit "+42"
+exit "-42"
+exit " 42"
+exit "42 "
+exit "042"
+exit a
+exit 42a
+exit --
+exit -- 42
+exit - 
+exit + 
+exit 42 43
+exit 42 hello
+exit "hello world"
+exit --42      # numeric error
+exit -- 42     # OK (only one argument)
+exit -- abc    # numeric error
+exit -- 42 43  # too many arguments
+exit 1 && echo should_not_print
+exit 0 && echo yes
+exit 1 || echo fallback
+exit 0 || echo no
+false && exit 1 || echo fallback_after_fail
+true || exit 1 && echo not_run
+exit 42; echo not_reached
+echo before; exit 0
+exit 99; exit 1; exit 2
+exit | echo piped
+echo test | exit
+exit 42 | cat
+(exit 42)
+(echo hello; exit 1)
+(exit 1) && echo after
+(exit 0) || echo not shown
+(echo A && exit 1) || echo recovered
+(echo A && exit 0) && echo B
+(exit 1) || (echo fallback && exit 2)
+(exit 0) && (echo A; exit 3)
+exit && exit && exit
+exit || exit || exit
+exit ''
+exit "   "
+exit $?
+exit $UNDEFINED
+export TEST=42; exit $TEST
+export TEST="abc"; exit $TEST  # numeric error

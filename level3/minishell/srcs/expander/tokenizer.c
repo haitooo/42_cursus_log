@@ -6,13 +6,13 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 20:09:16 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/23 23:36:55 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/26 20:29:26 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_token_size(char *str)
+static char	*get_token_end(char *str)
 {
 	char	ope;
 
@@ -86,7 +86,7 @@ static t_tokens	*make_new_token(char *str, int len, t_tokens *last)
 	return (new_token);
 }
 
-t_tokens	*pre_tokenizer(char *str)
+t_tokens	*tokenizer(char *str)
 {
 	t_tokens	*tokens;
 	t_tokens	*last_token;
@@ -101,7 +101,7 @@ t_tokens	*pre_tokenizer(char *str)
 		if (!*str)
 			break ;
 		start = str;
-		str = get_token_size(start);
+		str = get_token_end(start);
 		last_token = make_new_token(start, str - start, last_token);
 		if (!last_token)
 			return (free_tokens(&tokens), NULL);

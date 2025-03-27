@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:37:48 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/24 11:05:53 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/27 19:59:22 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,14 @@ typedef struct s_status
 	pid_t			pid;
 	pid_t			input_pipefd;
 	pid_t			output_pipefd;
+	int saved;
 	int				has_brackets;
 	int				has_or;
 	int				has_and;
 	int				has_and_single;
 	int				has_semicolon;
 	int				is_builtin;
+	int				done;
 	struct s_status	*next;
 }					t_status;
 
@@ -127,6 +129,7 @@ typedef struct s_last_process
 	int				result;
 	int				count_forked;
 	char			*input;
+	int				is_first;
 }					t_lp;
 
 #endif

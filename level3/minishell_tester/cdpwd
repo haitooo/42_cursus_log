@@ -1,0 +1,46 @@
+pwd
+cd /
+pwd
+cd ~
+pwd
+cd -
+pwd
+cd ..
+pwd
+cd . 
+pwd
+cd does_not_exist
+cd /
+cd too many args here
+cd /
+cd /root/secret
+cd / && pwd
+cd /not_found || pwd
+(cd /tmp && pwd)
+(cd /doesnotexist || echo fallback) && pwd
+cd /; pwd
+cd .. && cd .. && pwd
+(cd / && cd ..); pwd
+cd ~ && echo home && pwd
+export OLDPWD=$PWD
+cd /
+cd -
+cd "$HOME"
+cd "$PWD"
+cd / && export TEST=123 && echo $TEST
+cd / && unset TEST && echo $TEST
+cd / && exit 42
+pwd
+pwd && echo success
+(pwd)
+(pwd) && echo hello
+pwd || echo fail
+pwd ; echo done
+cd
+cd --
+cd ///tmp
+cd /tmp/./../tmp
+(cd /tmp; cd /usr)
+cd ""
+cd ''
+cd "$UNDEFINED_VAR"

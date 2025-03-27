@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 22:01:01 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/23 23:35:35 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/27 20:03:10 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	redirect(t_child *child, int oldfd, t_type type, char *file)
 		exit_child(child, EXIT_FAILURE, errno, file);
 }
 
-void	call_heredoc(t_child *child, t_tokens **tokens, t_var **varlist)
+void	call_heredoc(t_child *child, t_tokens **tokens, t_var **varlist, pid_t outfd)
 {
 	t_tokens	*head;
 	t_tokens	*next;
@@ -60,8 +60,16 @@ void	call_heredoc(t_child *child, t_tokens **tokens, t_var **varlist)
 	{
 		next = head->next;
 		if (head->type == HEREDOC)
+		{
 			child->tmpfile = child_heredoc(child, next->token, next->type,
 					varlist);
+
+
+			dup2(outfd, STDOUT_FILENO);
+
+
+			
+		}
 		head = head->next;
 	}
 }
