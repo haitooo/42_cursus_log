@@ -6,7 +6,7 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 14:21:12 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/26 20:36:01 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:11:23 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static t_tokens	*remove_empty_top_tokens(t_tokens **tokens)
 
 	while (*tokens && !(*tokens)->token[0])
 	{
+		if (!(*tokens)->next)
+			break ;
 		tmp = *tokens;
 		*tokens = (*tokens)->next;
 		free(tmp->token);
@@ -38,7 +40,7 @@ static t_tokens	*remove_empty_tokens_in_between(t_tokens **tokens)
 		return (NULL);
 	while (head)
 	{
-		if (!head->token || !head->token[0])
+		if (!head->token && prev)
 		{
 			tmp = head;
 			prev->next = head->next;
@@ -58,8 +60,18 @@ static t_tokens	*remove_empty_tokens_in_between(t_tokens **tokens)
 t_tokens	*remove_empty_tokens(t_tokens **tokens)
 {
 	t_tokens	*new_head;
+	t_tokens	*tmp;
 
-	new_head = remove_empty_top_tokens(tokens);
+	new_head = *tokens;
+	while (new_head && !new_head->token)
+	{
+		tmp = new_head;
+		new_head = new_head->next;
+		free(tmp);
+	}
+	if (!new_head || (!new_head->token[0] && !new_head->next))
+		return (new_head);
+	new_head = remove_empty_top_tokens(&new_head);
 	new_head = remove_empty_tokens_in_between(&new_head);
 	return (new_head);
 }

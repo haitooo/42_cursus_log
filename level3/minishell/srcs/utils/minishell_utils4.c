@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:40:36 by haito             #+#    #+#             */
-/*   Updated: 2025/03/22 18:40:51 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/03 15:00:32 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	unsigned char		*copy_dest;
 	const unsigned char	*copy_src;
 
-	if (!dest && !src)
+	if (!dest || !src)
 		return (NULL);
 	copy_dest = (unsigned char *)dest;
 	copy_src = (unsigned char *)src;

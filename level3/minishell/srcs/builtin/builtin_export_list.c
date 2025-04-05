@@ -6,7 +6,7 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 15:47:51 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/26 13:12:53 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/30 17:50:00 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,20 @@ static t_var	*get_next_var(t_var **varlist, t_var *prev)
 	return (next);
 }
 
+int	is_printable_var(char *name)
+{
+	if (!ft_strcmp(name, "_") || !ft_strcmp(name, "?"))
+		return (0);
+	return (1);
+}
+
 int	builtin_export_list(t_var **varlist)
 {
 	t_var	*prev;
 	t_var	*now;
 
 	now = get_first_var(varlist);
-	if (ft_strcmp(now->name, "?") && print_var(now) == ERROR)
+	if (is_printable_var(now->name) && print_var(now) == ERROR)
 		return (ERROR);
 	while (1)
 	{
@@ -88,7 +95,7 @@ int	builtin_export_list(t_var **varlist)
 		now = get_next_var(varlist, prev);
 		if (now == prev)
 			break ;
-		if (ft_strcmp(now->name, "?") && print_var(now) == ERROR)
+		if (is_printable_var(now->name) && print_var(now) == ERROR)
 			return (ERROR);
 	}
 	return (SUCCESS);

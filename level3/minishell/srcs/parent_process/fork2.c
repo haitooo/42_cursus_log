@@ -1,108 +1,62 @@
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   fork2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/16 17:08:44 by haito             #+#    #+#             */
-/*   Updated: 2025/03/27 19:59:10 by tssaito          ###   ########.fr       */
+/*   Created: 2025/03/27 19:59:10 by tssaito           #+#    #+#             */
+/*   Updated: 2025/03/31 05:10:17 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_and_or(t_status *st, t_lp *lp, t_var **var)
-{
-	int			status;
-	t_status	*st_tmp;
-	int			sig;
-	int			exit_code;
-
-	if (st->next && (st->next->has_and || st->next->has_or
-			|| st->next->has_semicolon))
-	{
-		st_tmp = st;
-		while (st_tmp->input_pipefd != -1)
-		{
-			st_tmp = st_tmp->previous;
-			if (st_tmp && st_tmp->pid > 0)
-			{
-				waitpid(st_tmp->pid, &status, 0);
-				if (WIFSIGNALED(status))
-				{
-					sig = WTERMSIG(status);
-					if (sig == SIGINT)
-						ft_eprintf("\n");
-					lp->result = 128 + WTERMSIG(status);
-				}
-				else
-					lp->result = WEXITSTATUS(status);
-				lp->count_forked--;
-			}
-		}
-		waitpid(st->pid, &status, 0);
-		if (WIFSIGNALED(status))
-		{
-			sig = WTERMSIG(status);
-			if (sig == SIGQUIT)
-				ft_eprintf("Quit (core dumped)\n");
-			else if (sig == SIGINT)
-				ft_eprintf("\n");
-			exit_code = 128 + sig;
-		}
-		else
-			exit_code = WEXITSTATUS(status);
-		if (exit_code != 0)
-			lp->result = exit_code;
-
-		lp->count_forked--;
-	}
-
-	if (st->next && st->next->has_semicolon)
-		update_exit_code(lp->result, var);
-	g_signal = 0;
-}
-
-void	handle_parent_process(t_status *st)
-{
-	if (st->input_pipefd != -1)
-		close(st->input_pipefd);
-	if (st->output_pipefd != -1)
-		close(st->output_pipefd);
-}
-
-void	handle_child_process(t_status *st, t_var **varlist, t_status *st_head)
+void	handle_child_process(t_status *st, t_var **varlist, t_status *st_head,
+		char *heredoc)
 {
 	t_tokens	*token;
 	int			result;
 	char		*cmds;
+	int			is_builtin;
 
-	if (st->input_pipefd != -1 && !has_heredoc(st))
+	if (st->input_pipefd != -1)
 		dup2(st->input_pipefd, STDIN_FILENO);
-	if (st->output_pipefd != -1 && !has_heredoc(st))
+	if (st->output_pipefd != -1)
 		dup2(st->output_pipefd, STDOUT_FILENO);
-	else if (st->output_pipefd != -1)
-	{
-		st->saved = dup(st->output_pipefd);
-		dup2(st->output_pipefd, STDERR_FILENO);
-	}
 	if (st->has_brackets)
 	{
 		cmds = st->cmds;
-		free_lst_status_(st_head, st->cmds);
-		result = recursive_continue_line(cmds, varlist);
+		free_lst_status_(st_head, st->cmds, heredoc);
+		result = recursive_continue_line(cmds, varlist, heredoc);
 		exit(result);
 	}
-	if (st->is_builtin)
-	{
-		token = st->token;
-		free_lst_status(st_head, st);
-		exit(child_call_builtin(&token, varlist));
-	}
+	token = st->token;
+	is_builtin = st->is_builtin;
+	free_lst_status(st_head, st);
+	if (is_builtin)
+		exit(child_call_builtin(&token, varlist, heredoc));
 	else
+		continue_child(&token, varlist, heredoc);
+}
+
+void	fork_process(t_status *st, t_var **varlist,
+	t_lp *lp, t_status *st_head)
+{
+	if (st->has_and_single)
+		return ;
+	st->pid = fork();
+	if (st->pid == -1)
 	{
-		token = st->token;
-		free_lst_status(st_head, st);
-		continue_child(&token, varlist, st->saved);
+		perror("minishell: fork: ");
+		lp->result = FAILED;
+		return ;
 	}
+	lp->count_forked++;
+	if (st->pid == 0)
+	{
+		handle_child_process(st, varlist, st_head, st->heredoc);
+	}
+	handle_parent_process(st);
+	handle_and_or(st, lp, varlist);
 }

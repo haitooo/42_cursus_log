@@ -6,7 +6,7 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 20:58:59 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/23 23:36:49 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:12:35 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ t_wild	*remove_filename(t_wild **files)
 
 	start = remove_top_filename(files);
 	head = start;
-	prev = start;
+	prev = NULL;
 	while (head)
 	{
-		if (!head->flag || is_invalid_name(head->name) == ERROR)
+		if (prev && (!head->flag || is_invalid_name(head->name) == ERROR))
 		{
 			prev->next = head->next;
 			tmp = head;

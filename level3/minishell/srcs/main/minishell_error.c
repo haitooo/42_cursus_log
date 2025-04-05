@@ -6,11 +6,18 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 23:32:04 by haito             #+#    #+#             */
-/*   Updated: 2025/03/26 01:34:14 by haito            ###   ########.fr       */
+/*   Updated: 2025/03/31 10:53:47 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	error_check_heredoc(t_var **var)
+{
+	ft_eprintf("minishell: syntax error near unexpected token `newline'\n");
+	update_exit_code(2, var);
+	return (ERROR);
+}
 
 void	*error_add_char(int *i, char *cmds)
 {
@@ -67,7 +74,7 @@ int	error_pipe(int error_num, t_var **var, int ope, char *cmds)
 		cmd = ft_strdup("||");
 	else if (ope == IS_SEMI)
 		cmd = ft_strdup(";");
-	else if (ope == IS_CMD)
+	else
 		cmd = ft_strdup(cmds);
 	if (error_num == ERRNO_ONE)
 	{

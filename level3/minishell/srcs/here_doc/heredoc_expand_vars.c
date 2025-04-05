@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 13:41:50 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/22 06:34:45 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/03 15:08:28 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static char	*concat_words(char **words, int size)
 			ft_strlcat(expanded_token, words[i], total_len + 1);
 		i++;
 	}
-	free_words(words, size);
 	return (expanded_token);
 }
 
@@ -74,6 +73,7 @@ char	*heredoc_expand_var(char *buf, t_var **varlist)
 		return (NULL);
 	free(buf);
 	buf = concat_words(words, words_size);
+	free_words(words, words_size);
 	if (!buf)
 		return (NULL);
 	return (buf);

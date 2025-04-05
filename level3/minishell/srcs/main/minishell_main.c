@@ -6,25 +6,13 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:40:23 by haito             #+#    #+#             */
-/*   Updated: 2025/03/26 15:48:11 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/04 00:12:14 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 volatile sig_atomic_t	g_signal = 0;
-
-static void	init_tokens(t_status **status)
-{
-	t_status	*st;
-
-	st = *status;
-	while (st)
-	{
-		st->token = NULL;
-		st = st->next;
-	}
-}
 
 int	continue_line(char *input, t_var **varlist)
 {
@@ -45,29 +33,14 @@ int	continue_line(char *input, t_var **varlist)
 	state = sep_input_to_cmds(input, &brackets, NULL, varlist);
 	if (!state)
 		return (ERROR);
-	init_tokens(&state);
 	if (make_pipe(&state, varlist) == ERROR)
+		return (free_lst_status(state, NULL), ERROR);
+	if (check_heredoc(&state, varlist) == ERROR)
 		return (free_lst_status(state, NULL), ERROR);
 	if (fork_and_wait(&state, varlist) == ERROR)
 		return (free_lst_status(state, NULL), ERROR);
-	free_lst_status(state, NULL);
-	return (SUCCESS);
-}
-
-static void	setup_signal_handlers(t_var **varlist)
-{
-	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-	{
-		perror("minishell: signal");
-		free_varlist(varlist);
-		exit(1);
-	}
-	if (signal(SIGINT, sigint_handler) == SIG_ERR)
-	{
-		perror("minishell: signal");
-		free_varlist(varlist);
-		exit(1);
-	}
+	delete_tmpfile(state);
+	return (free_lst_status(state, NULL), SUCCESS);
 }
 
 void	main_loop(t_var **varlist)
@@ -78,8 +51,10 @@ void	main_loop(t_var **varlist)
 	while (1)
 	{
 		setup_signal_handlers(varlist);
-		g_signal = 0;
 		input = readline("minishell$ ");
+		if (g_signal == SIGINT)
+			update_exit_code(130, varlist);
+		g_signal = 0;
 		if (!input)
 		{
 			printf("exit\n");
@@ -98,15 +73,19 @@ void	main_loop(t_var **varlist)
 int	main(int argc, char **argv, char **envp)
 {
 	t_var	*varlist;
+	char	*name_dup;
+	char	*value_dup;
 
 	if (argc != 1)
 		return (ft_eprintf("minishell: too many argument\n"), FAILED);
 	(void)argv;
-	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-		return (perror("minishell: signal"), 1);
-	varlist = init_varlist(envp, ft_strdup("?"), ft_strdup("0"));
-	if (!varlist)
-		return (FAILED);
+	name_dup = ft_strdup("?");
+	if (!name_dup)
+		return (error_node(ERRNO_ONE));
+	value_dup = ft_strdup("0");
+	if (!value_dup)
+		return (free(name_dup), error_node(ERRNO_ONE));
+	varlist = init_varlist(envp, name_dup, value_dup);
 	count_up_shlvl(&varlist);
 	main_loop(&varlist);
 	return (free_varlist(&varlist), 0);

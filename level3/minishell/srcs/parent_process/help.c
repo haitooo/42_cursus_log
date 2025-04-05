@@ -6,43 +6,27 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 03:44:48 by haito             #+#    #+#             */
-/*   Updated: 2025/03/26 15:21:35 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/31 02:13:51 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_built_in(t_status *st)
+int	update_exit_code(int exit_code, t_var **varlist)
 {
-	char	**builtin_cmds;
-	int		i;
-	t_tokens *head;
+	t_var	*var;
 
-	if (!st)
-		return (ERROR);
-	if (!st->token)
-		return (SUCCESS);
-	builtin_cmds = init_builtin_cmds();
-	if (!builtin_cmds)
-		return (error_node(ERRNO_ONE), ERROR);
-	i = -1;
-	head = st->token;
-	while(head && (head->type >= TRUNC && head->type <= HEREDOC))
-	{
-		if(head->next)
-			head = head->next->next;
-		else
-			break;
-	}
-	while (head && builtin_cmds[++i])
-	{
-		if (!ft_strcmp(head->token, builtin_cmds[i]))
-		{
-			st->is_builtin = 1;
-			break ;
-		}
-	}
-	free_builtin_cmds(builtin_cmds);
+	if (!varlist || !*varlist)
+		return (ft_eprintf("minishell: not found exit status\n"), ERROR);
+	var = *varlist;
+	while (var && ft_strcmp(var->name, "?") != 0)
+		var = var->next;
+	if (!var)
+		return (ft_eprintf("minishell: not found exit status\n"), ERROR);
+	free(var->value);
+	var->value = ft_itoa(exit_code);
+	if (!var->value)
+		return (error_node(ERRNO_ONE));
 	return (SUCCESS);
 }
 

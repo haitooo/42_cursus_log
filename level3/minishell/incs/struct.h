@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 10:37:48 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/27 19:59:22 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/31 11:37:39 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,22 @@
 
 # define MAX_STACK_BRACKETS 500
 
-typedef enum e_wtype
+typedef enum e_stype
 {
-	WILD,
-	SLASH,
-	ELSE,
-}					t_wtype;
+	PLAIN,
+	WILDS,
+	PLAINVAR,
+	QUOTEVAR,
+	SINGLE,
+	DOUBLE,
+}						t_stype;
 
-typedef struct s_words
+typedef struct s_splited
 {
-	char			*name;
-	t_wtype			type;
-	struct s_words	*next;
-}					t_words;
+	char				*str;
+	t_stype				type;
+	struct s_splited	*next;
+}						t_splited;
 
 typedef struct s_wild
 {
@@ -62,6 +65,16 @@ typedef enum e_type
 	HAVE_QUOTE,
 	VAR,
 }					t_type;
+
+typedef enum r_type
+{
+	IS_OR,
+	IS_ANDAND,
+	IS_AND,
+	IS_SEMI,
+	IS_PIPE,
+	IS_CMD,
+}					t_ope;
 
 typedef struct s_tokens
 {
@@ -96,14 +109,14 @@ typedef struct s_status
 	pid_t			pid;
 	pid_t			input_pipefd;
 	pid_t			output_pipefd;
-	int saved;
+	int				saved;
 	int				has_brackets;
 	int				has_or;
 	int				has_and;
 	int				has_and_single;
 	int				has_semicolon;
 	int				is_builtin;
-	int				done;
+	char			*heredoc;
 	struct s_status	*next;
 }					t_status;
 
@@ -119,7 +132,9 @@ typedef struct s_brackets
 typedef struct s_parser
 {
 	int				i;
+	int				j;
 	char			*cmds;
+	const char		*input;
 	t_var			**var;
 }					t_parser;
 
@@ -128,8 +143,15 @@ typedef struct s_last_process
 	pid_t			last_pid;
 	int				result;
 	int				count_forked;
+	char			*heredoc;
+	char			*heredoc_tmp;
 	char			*input;
-	int				is_first;
 }					t_lp;
+
+typedef struct s_heredoc
+{
+	int			filefd;
+	char		*file;
+}				t_heredoc;
 
 #endif

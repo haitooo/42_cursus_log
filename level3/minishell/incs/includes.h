@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   includes.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 11:03:24 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/26 15:03:09 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/31 06:56:31 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@
 # include "builtin.h"
 # include "utils.h"
 # include "ft_eprintf.h"
-# include "get_next_line.h"
+# include "heredoc.h"
+# include "my_signal.h"
 
 extern volatile sig_atomic_t	g_signal;
 

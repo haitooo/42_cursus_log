@@ -6,7 +6,7 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 22:00:48 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/18 18:46:25 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:45:17 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	**concat_name_with_value(t_child *child, t_var **varlist, int size)
 		exit_child(child, EXIT_FAILURE, errno, "malloc error");
 	i = 0;
 	head = *varlist;
-	while (head)
+	while (envp && head)
 	{
 		if (head->name && head->value)
 		{
@@ -50,7 +50,8 @@ static char	**concat_name_with_value(t_child *child, t_var **varlist, int size)
 		}
 		head = head->next;
 	}
-	envp[i] = NULL;
+	if (envp)
+		envp[i] = NULL;
 	return (envp);
 }
 

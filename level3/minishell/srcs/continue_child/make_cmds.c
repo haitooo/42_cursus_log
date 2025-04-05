@@ -6,7 +6,7 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 22:00:45 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/25 11:13:07 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:45:15 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	**copy_cmds(t_child *child, t_tokens **tokens, int malloc_size)
 		exit_child(child, EXIT_FAILURE, errno, "malloc error");
 	i = 0;
 	head = *tokens;
-	while (head)
+	while (cmds && head)
 	{
 		if (head->type != WORD && head->type != HAVE_QUOTE)
 			head = head->next->next;
@@ -58,7 +58,8 @@ static char	**copy_cmds(t_child *child, t_tokens **tokens, int malloc_size)
 		else
 			head = head->next;
 	}
-	cmds[i] = NULL;
+	if (cmds)
+		cmds[i] = NULL;
 	return (cmds);
 }
 

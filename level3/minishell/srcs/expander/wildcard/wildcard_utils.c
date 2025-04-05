@@ -6,7 +6,7 @@
 /*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 20:33:16 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/23 23:41:19 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/04/03 16:44:59 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void	connect_to_the_end(t_wild **files, t_wild **new_files)
 	head = *files;
 	while (head && head->next)
 		head = head->next;
-	head->next = *new_files;
+	if (head)
+		head->next = *new_files;
 }

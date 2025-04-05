@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_redirect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 23:08:52 by tssaito           #+#    #+#             */
-/*   Updated: 2025/03/26 16:23:23 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/31 04:40:31 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,14 @@ static int	redirects(t_tokens **tokens, char *tmpfile)
 	return (SUCCESS);
 }
 
-int	redirect_builtin(t_tokens **tokens, t_saved *saved, t_var **varlist)
+int	redirect_builtin(t_tokens **tokens, t_saved *saved, char *tmpfile)
 {
 	int		status;
-	char	*tmpfile;
 
-	tmpfile = NULL;
 	status = check_builtin_redirect_syntax(tokens);
 	if (status != SUCCESS)
 		return (EXIT_FAILURE);
 	status = builtin_save_stdio(tokens, saved);
-	if (status != SUCCESS)
-		return (EXIT_FAILURE);
-	status = check_here_doc(tokens, &tmpfile, varlist);
 	if (status != SUCCESS)
 		return (EXIT_FAILURE);
 	status = redirects(tokens, tmpfile);
@@ -135,6 +130,7 @@ int	redirect_builtin(t_tokens **tokens, t_saved *saved, t_var **varlist)
 	{
 		unlink(tmpfile);
 		free(tmpfile);
+		tmpfile = NULL;
 	}
 	if (status != SUCCESS)
 		return (EXIT_FAILURE);

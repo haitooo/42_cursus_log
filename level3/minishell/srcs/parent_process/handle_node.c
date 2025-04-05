@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 02:24:14 by haito             #+#    #+#             */
-/*   Updated: 2025/03/27 02:20:11 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/03 16:38:44 by tssaito          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ t_status	*ft_new_node(const char *cmds, int has_brackets)
 		return (NULL);
 	new_node->cmds = ft_strdup(cmds);
 	if (!new_node->cmds)
-		return (NULL);
+		return (free(new_node), NULL);
 	new_node->token = NULL;
+	new_node->heredoc = NULL;
 	new_node->pid = 0;
 	new_node->input_pipefd = -1;
 	new_node->output_pipefd = -1;
@@ -34,7 +35,6 @@ t_status	*ft_new_node(const char *cmds, int has_brackets)
 	new_node->has_and_single = 0;
 	new_node->has_semicolon = 0;
 	new_node->is_builtin = 0;
-	new_node->done = 0;
 	new_node->previous = NULL;
 	new_node->next = NULL;
 	return (new_node);

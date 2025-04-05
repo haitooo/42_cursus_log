@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 12:39:02 by haito             #+#    #+#             */
-/*   Updated: 2025/03/16 15:30:36 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/04 01:26:01 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,13 @@ char	**init_builtin_cmds(void)
 	if (init_builtin_cmds2(cmds) == ERROR)
 		return (free_builtin_cmds(cmds), NULL);
 	return (cmds);
+}
+
+void	init_ps(t_parser *ps, const char *input, t_var **var)
+{
+	ps->i = -1;
+	ps->j = 1;
+	ps->cmds = NULL;
+	ps->var = var;
+	ps->input = input;
 }

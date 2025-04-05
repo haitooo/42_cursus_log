@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 19:02:05 by haito             #+#    #+#             */
-/*   Updated: 2025/03/26 16:03:11 by haito            ###   ########.fr       */
+/*   Updated: 2025/03/31 07:28:07 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,37 @@ static void	wait_for_all_processes(t_lp *lp, t_status *st)
 	}
 }
 
+void	update_last_token(t_status *st, t_var **varlist)
+{
+	t_tokens	*token;
+	char		*name_dup;
+	char		*value_dup;
+
+	if (!st || !st->token)
+		return ;
+	token = st->token;
+	while (token->next)
+		token = token->next;
+	name_dup = ft_strdup("_");
+	if (!name_dup)
+	{
+		error_node(ERRNO_ONE);
+		return ;
+	}
+	value_dup = ft_strdup(token->token);
+	if (!value_dup)
+	{
+		free(name_dup);
+		error_node(ERRNO_ONE);
+		return ;
+	}
+	add_var(varlist, name_dup, value_dup);
+}
+
 int	wait_process(t_lp *lp, t_var **varlist, t_status **st_head)
 {
 	int			exit_code;
 	t_status	*st;
-	t_tokens	*token;
-	char		*name_dup;
-	char		*value_dup;
 
 	st = *st_head;
 	if (lp->count_forked != 0)
@@ -95,21 +119,9 @@ int	wait_process(t_lp *lp, t_var **varlist, t_status **st_head)
 	else
 	{
 		exit_code = lp->result;
-		if (!st || !st->token)
-			return (update_exit_code(exit_code, varlist));
-		token = st->token;
-		while (token->next)
-			token = token->next;
-		name_dup = ft_strdup("_");
-		if (!name_dup)
-			error_node(ERRNO_ONE);
-		value_dup = ft_strdup(token->token);
-		if (!value_dup)
-			error_node(ERRNO_ONE);
-		add_var(varlist, name_dup, value_dup);
+		update_last_token(st, varlist);
 	}
 	wait_for_all_processes(lp, st);
 	g_signal = 0;
 	return (update_exit_code(exit_code, varlist));
 }
-

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 01:44:14 by haito             #+#    #+#             */
-/*   Updated: 2025/03/26 17:35:58 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/03/31 11:38:08 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define ERROR -1
 # define FAILED 1
 # define SUCCESS 0
+# define BREAK 4
+# define CONTINUE 5
 # define SYNERR 2
 # define CHANGE 3
 # define STAY 3
@@ -24,13 +26,6 @@
 # define ERRNO_TWO 2
 # define ERRNO_THREE 3
 # define ERRNO_FOUR 4
-
-# define IS_OR 1
-# define IS_ANDAND 2
-# define IS_AND 3
-# define IS_SEMI 4
-# define IS_PIPE 5
-# define IS_CMD 6
 
 /* my errno */
 # define REDIRECTERROR -400
