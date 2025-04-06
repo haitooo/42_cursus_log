@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 01:34:29 by hito             ###   ########.fr       */
+/*   Updated: 2025/04/06 22:25:25 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,34 @@ typedef enum e_result
 
 typedef struct s_share
 {
-	int				thread_id;
-	pthread_mutex_t	m_print;
 	int				start;
-	pthread_mutex_t	m_start;
 	int				nof_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nof_must_eat;
+	pthread_mutex_t	m_print;
+	pthread_mutex_t	m_start;
+	pthread_mutex_t	*m_fork;
 }	t_share;
+
+typedef struct s_status
+{
+	int				id;
+	t_share			*share;
+	pthread_mutex_t	*my_fork_r;
+	pthread_mutex_t	*my_fork_l;
+}	t_status;
 
 bool	my_is_digit(int c);
 int		ft_atoi(const char *str);
 int		init_structs(t_share **share, int ac, char **av);
-void	free_structs(t_share **share);
+void	free_structs(t_share **share, int errnum);
 void	error_malloc(void);
+void	error_mutex_init(void);
 void	error_invalid_arg(void);
 
 void	*routine(void *arg);
+long	get_time_in_ms(void);
 
 #endif

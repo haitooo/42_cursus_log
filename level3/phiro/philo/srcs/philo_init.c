@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:42:00 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 01:32:23 by hito             ###   ########.fr       */
+/*   Updated: 2025/04/06 18:35:54 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,37 @@ int	check_overflow(t_share *share)
 	return (SUCCESS);
 }
 
+int	init_mutexes(t_share *share)
+{
+	int	i;
+
+	share->m_fork = malloc(sizeof(pthread_mutex_t) * share->nof_philo);
+	if (!share->m_fork)
+		return (error_malloc(), ERROR);
+	i = -1;
+	while (++i < share->nof_philo)
+	{
+		if (pthread_mutex_init(&share->m_fork[i], NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&share->m_fork[i]);
+			free(share->m_fork);
+			return (error_mutex_init(), ERROR);
+		}
+	}
+	if (pthread_mutex_init(&share->m_print, NULL) != 0)
+		return (error_mutex_init(), free_structs(&share, 1), ERROR);
+	if (pthread_mutex_init(&share->m_start, NULL) != 0)
+		return (error_mutex_init(), free_structs(&share, 2), ERROR);
+	return (SUCCESS);
+}
+
 int	init_structs(t_share **share, int ac, char **av)
 {
 	*share = malloc(sizeof(t_share));
 	if (!*share)
 		return (error_malloc(), ERROR);
-	pthread_mutex_init(&(*share)->m_print, NULL);
 	(*share)->start = 0;
-	pthread_mutex_init(&(*share)->m_start, NULL);
 	(*share)->nof_philo = ft_atoi(av[0]);
 	(*share)->time_to_die = ft_atoi(av[1]);
 	(*share)->time_to_eat = ft_atoi(av[2]);
@@ -42,6 +65,8 @@ int	init_structs(t_share **share, int ac, char **av)
 	else
 		(*share)->nof_must_eat = -1;
 	if (check_overflow(*share) == INVALID)
-		return (write(2, "philo: arg overflow\n", 20), free_structs(share), ERROR);
+		return (write(2, "philo: arg overflow\n", 20), free(*share), ERROR);
+	if (init_mutexes(*share) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 02:01:03 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 00:13:23 by hito             ###   ########.fr       */
+/*   Updated: 2025/04/06 22:36:42 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,13 @@ int	ft_atoi(const char *str)
 	}
 	return ((int)(result * is_nega));
 }
+
+// long	get_time_in_ms(void)
+// {
+// 	struct timeval	tv;
+
+// 	gettimeofday(&tv, NULL);
+// 	printf("%ld\n", tv.tv_sec);
+// 	printf("%ld\n", tv.tv_usec);
+// 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+// }
