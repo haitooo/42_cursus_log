@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: haito <haito@student.42.fr>                +#+  +:+       +#+         #
+#    By: hito <hito@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 01:46:46 by haito             #+#    #+#              #
-#    Updated: 2025/04/04 02:03:23 by haito            ###   ########.fr        #
+#    Updated: 2025/04/06 01:34:44 by hito             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,11 @@ CFLAGS = -Wall -Wextra -Werror
 OBJDIR = objs
 SRCDIR = srcs
 SRCS =	philo_main.c \
-		philo_utils.c
+		philo_utils.c \
+		philo_init.c \
+		philo_free.c \
+		philo_error.c \
+		routines.c
 
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 INC = -Iincs

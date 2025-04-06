@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:13:42 by hito              #+#    #+#             */
-/*   Updated: 2025/04/04 01:12:45 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/05 23:45:17 by hito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,13 @@ char	*get_cd_target(t_tokens *token, t_var **varlist)
 	dir = NULL;
 	if (token->next && token->next->next)
 		return (ft_eprintf("minishell: cd: too many arguments\n"), NULL);
-	if ((token->next && (!ft_strcmp(token->next->token, "--")
-				|| !ft_strcmp(token->next->token, "~"))) || !token->next)
+	if (!token->next || (token->next && (!ft_strcmp(token->next->token, "--")
+				|| !ft_strcmp(token->next->token, "~"))))
 	{
 		dir = get_path(varlist, "HOME");
 		if (!dir)
 			return (ft_eprintf("minishell: cd: HOME not set\n"), NULL);
+		return (dir);
 	}
 	else if (!ft_strcmp(token->next->token, "-"))
 	{

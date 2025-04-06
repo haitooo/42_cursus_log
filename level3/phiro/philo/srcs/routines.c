@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_free.c                                       :+:      :+:    :+:   */
+/*   routines.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/04 10:43:48 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 00:53:20 by hito             ###   ########.fr       */
+/*   Created: 2025/04/06 01:34:03 by hito              #+#    #+#             */
+/*   Updated: 2025/04/06 01:34:20 by hito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_structs(t_share **share)
+void	*routine(void *arg)
 {
-	pthread_mutex_destroy(&(*share)->m_print);
-	pthread_mutex_destroy(&(*share)->m_start);
-	free(*share);
+	t_share *share;
+
+	share = (t_share *)arg;
+	pthread_mutex_lock(&share->m_print);
+	printf("share:%d\n", share->nof_philo);
+	pthread_mutex_unlock(&share->m_print);
+	return (NULL);
 }

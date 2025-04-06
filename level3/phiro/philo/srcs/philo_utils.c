@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 02:01:03 by haito             #+#    #+#             */
-/*   Updated: 2025/04/04 11:03:34 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/06 00:13:23 by hito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_atoi(const char *str)
 		if (*str++ == '-')
 			is_nega *= -1;
 	}
-	while (ft_isdigit(*str))
+	while (my_is_digit(*str))
 	{
 		result = result * 10 + *str++ - '0';
 		if (result > LONG_MAX)
