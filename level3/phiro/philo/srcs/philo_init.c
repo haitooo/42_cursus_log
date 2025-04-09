@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:42:00 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 18:35:54 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/07 23:18:46 by hito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ int	init_mutexes(t_share *share)
 		}
 	}
 	if (pthread_mutex_init(&share->m_print, NULL) != 0)
-		return (error_mutex_init(), free_structs(&share, 1), ERROR);
+		return (error_mutex_init(), free_share(&share, 1), ERROR);
 	if (pthread_mutex_init(&share->m_start, NULL) != 0)
-		return (error_mutex_init(), free_structs(&share, 2), ERROR);
+		return (error_mutex_init(), free_share(&share, 2), ERROR);
+	if (pthread_mutex_init(&share->m_survival_check, NULL) != 0)
+		return (error_mutex_init(), free_share(&share, 3), ERROR);
 	return (SUCCESS);
 }
 
@@ -55,7 +57,9 @@ int	init_structs(t_share **share, int ac, char **av)
 	*share = malloc(sizeof(t_share));
 	if (!*share)
 		return (error_malloc(), ERROR);
-	(*share)->start = 0;
+	(*share)->start_flag = 0;
+	(*share)->create_error = 0;
+	(*share)->someone_die = 0;
 	(*share)->nof_philo = ft_atoi(av[0]);
 	(*share)->time_to_die = ft_atoi(av[1]);
 	(*share)->time_to_eat = ft_atoi(av[2]);
@@ -68,5 +72,26 @@ int	init_structs(t_share **share, int ac, char **av)
 		return (write(2, "philo: arg overflow\n", 20), free(*share), ERROR);
 	if (init_mutexes(*share) == ERROR)
 		return (ERROR);
+	return (SUCCESS);
+}
+
+int	init_statuses(t_status *statuses, t_share *share)
+{
+	int	i;
+
+	i = -1;
+	while (++i < share->nof_philo)
+	{
+		statuses[i].id = i + 1;
+		statuses[i].share = share;
+		statuses[i].last_meal = 0;
+		statuses[i].print_request = 0;
+		if (pthread_mutex_init(&statuses[i].m_last_meal, NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&statuses[i].m_last_meal);
+			return (ERROR);
+		}
+	}
 	return (SUCCESS);
 }

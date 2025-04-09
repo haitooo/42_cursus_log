@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 02:01:03 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 22:36:42 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/07 23:58:01 by hito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,40 @@ int	ft_atoi(const char *str)
 	return ((int)(result * is_nega));
 }
 
-// long	get_time_in_ms(void)
-// {
-// 	struct timeval	tv;
+long	get_time_in_ms(void)
+{
+	struct timeval	tv;
 
-// 	gettimeofday(&tv, NULL);
-// 	printf("%ld\n", tv.tv_sec);
-// 	printf("%ld\n", tv.tv_usec);
-// 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-// }
+	gettimeofday(&tv, NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dest;
+	int		i;
+	int		srclen;
+
+	i = 0;
+	srclen = ft_strlen(s);
+	dest = (char *)malloc(sizeof(char) * (srclen + 1));
+	if (dest == NULL)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	int	count;
+
+	count = 0;
+	while (s && s[count])
+		count++;
+	return (count);
+}

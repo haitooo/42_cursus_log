@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:35:10 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 22:36:23 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/08 22:55:34 by hito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,38 @@ int	check_invalid_args(int argc, char **argv)
 	return (SUCCESS);
 }
 
-int	create_threads(t_share *share, pthread_t **threads, t_status *philos)
+int	create_threads(t_share *share, pthread_t **threads, t_status *statuses)
 {
-	int			i;
+	int	i;
 
 	*threads = malloc(sizeof(pthread_t) * share->nof_philo);
 	if (!*threads)
 		return (error_malloc(), ERROR);
+	if (init_statuses(statuses, share) == ERROR)
+		return (free(*threads), free(statuses), ERROR);
+	// if (pthread_create(&(*threads)[0], NULL, printer, &statuses) != 0)
+	// {
+	// 	share->create_error = ERROR;
+	// 	free(*threads);
+	// 	free_statuses(&statuses, share);
+	// 	return (write(2, "philo: thread_create failed\n", 28), ERROR);
+	// }
 	i = -1;
 	while (++i < share->nof_philo)
 	{
-		philos[i].id = i + 1;
-		philos[i].share = share;
-		if (pthread_create(&(*threads)[i], NULL, routine, &philos[i]) != 0)
+		if (pthread_create(&(*threads)[i], NULL, routine, &statuses[i]) != 0)
+		{
+			while (--i >= 0)
+				pthread_detach((*threads)[i]);
+			share->create_error = ERROR;
+			free(*threads);
+			free_statuses(&statuses, share);
 			return (write(2, "philo: thread_create failed\n", 28), ERROR);
-		usleep(100);
-		share->start = 1;
+		}
 	}
+	usleep(100000);
+	share->start_time = get_time_in_ms();
+	share->start_flag = START;
 	return (SUCCESS);
 }
 
@@ -60,26 +75,26 @@ int	join_threads(t_share **share, pthread_t **threads)
 	while (++i < (*share)->nof_philo)
 		pthread_join((*threads)[i], NULL);
 	free(*threads);
-	return (0);
+	return (SUCCESS);
 }
 
 int	main(int argc, char **argv)
 {
 	t_share		*share;
 	pthread_t	*threads;
-	t_status	*philos;
+	t_status	*statuses;
 
 	if (check_invalid_args(argc, argv) == INVALID)
 		return (FAILED);
 	if (init_structs(&share, --argc, ++argv) == ERROR)
 		return (FAILED);
-	philos = malloc(sizeof(t_status) * share->nof_philo);
-	if (!philos)
-		return (error_malloc(), ERROR);
-	if (create_threads(share, &threads, philos) == ERROR)
-		return (FAILED);
+	statuses = malloc(sizeof(t_status) * share->nof_philo);
+	if (!statuses)
+		return (error_malloc(), free_share(&share, 0), ERROR);
+	if (create_threads(share, &threads, statuses) == ERROR)
+		return (free_share(&share, 0), FAILED);
 	join_threads(&share, &threads);
-	free_structs(&share, 0);
-	free(philos);
+	free_statuses(&statuses, share);
+	free_share(&share, 0);
 	return (0);
 }

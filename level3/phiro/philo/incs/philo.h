@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/04/06 22:25:25 by haito            ###   ########.fr       */
+/*   Updated: 2025/04/07 23:58:09 by hito             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,32 @@
 # include <pthread.h>
 # include <sys/time.h>
 
+# define START 1
+
 typedef enum e_result
 {
 	SUCCESS = 0,
 	FAILED = 1,
 	ERROR = -1,
 	INVALID = 1,
+	DIE = 1,
+	SURVIVED = 0,
 }	t_result;
+
+typedef enum e_print
+{
+	EAT = 1,
+	SLEEP = 2,
+	THINK = 3,
+	FORK = 4,
+}	t_print;
 
 typedef struct s_share
 {
-	int				start;
+	int				start_flag;
+	int				create_error;
+	long			start_time;
+	int				someone_die;
 	int				nof_philo;
 	int				time_to_die;
 	int				time_to_eat;
@@ -40,26 +55,35 @@ typedef struct s_share
 	int				nof_must_eat;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_start;
+	pthread_mutex_t	m_survival_check;
 	pthread_mutex_t	*m_fork;
 }	t_share;
 
 typedef struct s_status
 {
 	int				id;
-	t_share			*share;
+	long			last_meal;
+	int				print_request;
+	pthread_mutex_t	m_last_meal;
 	pthread_mutex_t	*my_fork_r;
 	pthread_mutex_t	*my_fork_l;
+	t_share			*share;
 }	t_status;
 
 bool	my_is_digit(int c);
 int		ft_atoi(const char *str);
+char	*ft_strdup(const char *s);
+size_t	ft_strlen(const char *s);
 int		init_structs(t_share **share, int ac, char **av);
-void	free_structs(t_share **share, int errnum);
+int		init_statuses(t_status *statuses, t_share *share);
+void	free_share(t_share **share, int errnum);
+void	free_statuses(t_status **statuses, t_share *share);
 void	error_malloc(void);
 void	error_mutex_init(void);
 void	error_invalid_arg(void);
 
 void	*routine(void *arg);
+void	*printer(void *arg);
 long	get_time_in_ms(void);
 
 #endif

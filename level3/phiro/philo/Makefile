@@ -6,7 +6,7 @@
 #    By: hito <hito@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 01:46:46 by haito             #+#    #+#              #
-#    Updated: 2025/04/06 01:34:44 by hito             ###   ########.fr        #
+#    Updated: 2025/04/07 23:51:20 by hito             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS =	philo_main.c \
 		philo_init.c \
 		philo_free.c \
 		philo_error.c \
-		routines.c
+		routines.c \
+		printer.c
 
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 INC = -Iincs
