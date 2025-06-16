@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:35:10 by haito             #+#    #+#             */
-/*   Updated: 2025/04/08 22:55:34 by hito             ###   ########.fr       */
+/*   Updated: 2025/06/15 18:34:51 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ int	create_threads(t_share *share, pthread_t **threads, t_status *statuses)
 		return (error_malloc(), ERROR);
 	if (init_statuses(statuses, share) == ERROR)
 		return (free(*threads), free(statuses), ERROR);
-	// if (pthread_create(&(*threads)[0], NULL, printer, &statuses) != 0)
-	// {
-	// 	share->create_error = ERROR;
-	// 	free(*threads);
-	// 	free_statuses(&statuses, share);
-	// 	return (write(2, "philo: thread_create failed\n", 28), ERROR);
-	// }
 	i = -1;
 	while (++i < share->nof_philo)
 	{
@@ -61,7 +54,7 @@ int	create_threads(t_share *share, pthread_t **threads, t_status *statuses)
 			return (write(2, "philo: thread_create failed\n", 28), ERROR);
 		}
 	}
-	usleep(100000);
+	usleep(1000000);
 	share->start_time = get_time_in_ms();
 	share->start_flag = START;
 	return (SUCCESS);

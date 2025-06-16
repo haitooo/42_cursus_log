@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hito <hito@student.42.fr>                  +#+  +:+       +#+         #
+#    By: haito <haito@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 01:46:46 by haito             #+#    #+#              #
-#    Updated: 2025/04/07 23:51:20 by hito             ###   ########.fr        #
+#    Updated: 2025/04/11 11:49:53 by haito            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRCS =	philo_main.c \
 		philo_free.c \
 		philo_error.c \
 		routines.c \
-		printer.c
+		moves.c
 
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 INC = -Iincs

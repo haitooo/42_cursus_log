@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/04/07 23:58:09 by hito             ###   ########.fr       */
+/*   Updated: 2025/04/11 11:49:36 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ void	error_mutex_init(void);
 void	error_invalid_arg(void);
 
 void	*routine(void *arg);
-void	*printer(void *arg);
+void	thinking(t_share *share, t_status *status, long time_to_think);
+int		eating(t_share *share, t_status *status);
+void	sleeping(t_share *share, t_status *status);
+int		survival_check(t_share *share, t_status *status);
 long	get_time_in_ms(void);
 
 #endif
