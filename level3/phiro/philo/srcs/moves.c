@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:48:42 by haito             #+#    #+#             */
-/*   Updated: 2025/04/11 11:49:13 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/20 20:46:13 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,20 @@ int	survival_check(t_share *share, t_status *status)
 		pthread_mutex_unlock(&share->m_survival_check);
 		return (DIE);
 	}
+	if (share->nof_cleared >= share->nof_philo)
+	{
+		if (share->nof_cleared == share->nof_philo)
+		{
+			pthread_mutex_lock(&share->m_nof_cleared);
+			share->nof_cleared++;
+			pthread_mutex_unlock(&share->m_nof_cleared);
+			pthread_mutex_lock(&share->m_print);
+			printf("%ld all philo avoid starving\n", get_time_in_ms() - share->start_time + 1);
+			pthread_mutex_unlock(&share->m_print);
+		}
+		pthread_mutex_unlock(&share->m_survival_check);
+		return (CLEAR);
+	}
 	pthread_mutex_unlock(&share->m_survival_check);
 	return (SURVIVED);
 }
@@ -50,6 +64,13 @@ void	sleeping(t_share *share, t_status *status)
 int	eating(t_share *share, t_status *status)
 {
 	pthread_mutex_lock(&status->m_last_meal);
+	pthread_mutex_lock(&status->m_timeof_eaten);
+	status->timeof_eaten++;
+	pthread_mutex_lock(&share->m_nof_cleared);
+	if (status->timeof_eaten == share->nof_must_eat)
+		share->nof_cleared++;
+	pthread_mutex_unlock(&share->m_nof_cleared);
+	pthread_mutex_unlock(&status->m_timeof_eaten);
 	status->last_meal = get_time_in_ms();
 	pthread_mutex_lock(&share->m_print);
 	if (share->someone_die == 0)

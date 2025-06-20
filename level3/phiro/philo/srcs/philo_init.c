@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hito <hito@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:42:00 by haito             #+#    #+#             */
-/*   Updated: 2025/04/07 23:18:46 by hito             ###   ########.fr       */
+/*   Updated: 2025/06/20 20:27:01 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	init_mutexes(t_share *share)
 		return (error_mutex_init(), free_share(&share, 2), ERROR);
 	if (pthread_mutex_init(&share->m_survival_check, NULL) != 0)
 		return (error_mutex_init(), free_share(&share, 3), ERROR);
+	if (pthread_mutex_init(&share->m_nof_cleared, NULL) != 0)
+		return (error_mutex_init(), free_share(&share, 4), ERROR);
 	return (SUCCESS);
 }
 
@@ -60,6 +62,7 @@ int	init_structs(t_share **share, int ac, char **av)
 	(*share)->start_flag = 0;
 	(*share)->create_error = 0;
 	(*share)->someone_die = 0;
+	(*share)->nof_cleared = 0;
 	(*share)->nof_philo = ft_atoi(av[0]);
 	(*share)->time_to_die = ft_atoi(av[1]);
 	(*share)->time_to_eat = ft_atoi(av[2]);
@@ -85,11 +88,17 @@ int	init_statuses(t_status *statuses, t_share *share)
 		statuses[i].id = i + 1;
 		statuses[i].share = share;
 		statuses[i].last_meal = 0;
+		statuses[i].timeof_eaten = 0;
+		statuses[i].clear = 0;
 		statuses[i].print_request = 0;
-		if (pthread_mutex_init(&statuses[i].m_last_meal, NULL) != 0)
+		if (pthread_mutex_init(&statuses[i].m_last_meal, NULL) != 0
+			|| pthread_mutex_init(&statuses[i].m_timeof_eaten, NULL) != 0)
 		{
 			while (--i >= 0)
+			{
 				pthread_mutex_destroy(&statuses[i].m_last_meal);
+				pthread_mutex_destroy(&statuses[i].m_timeof_eaten);
+			}
 			return (ERROR);
 		}
 	}
