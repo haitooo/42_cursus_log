@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 01:34:03 by hito              #+#    #+#             */
-/*   Updated: 2025/06/15 18:28:47 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/20 20:52:42 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,10 @@ int	case_oddphilos(t_share *share, t_status *status, int is_first, long time)
 	{
 		if (!is_first && survival_check(share, status) == DIE)
 			return (ERROR);
-		if (status->id % 3 == 1)
-		{
-			if (routine_(share, status) == ERROR)
-				return (ERROR);
-			thinking(share, status, time);
-		}
-		else if (status->id % 3 == 2)
-		{
+		if (status->id % 3 == 2)
 			thinking(share, status, (share->time_to_eat / 2));
+		else if (status->id % 3 == 1 || status->id % 3 == 2)
+		{
 			if (routine_(share, status) == ERROR)
 				return (ERROR);
 			thinking(share, status, time);
