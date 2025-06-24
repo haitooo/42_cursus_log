@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 05:21:45 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 09:01:21 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 13:48:42 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ void	routine(t_status *status, t_sem *sem, pid_t **pids)
 	free_sem(&sem, 0);
 	free(status);
 	free(*pids);
-	exit(-1);
+	exit(0);
 }

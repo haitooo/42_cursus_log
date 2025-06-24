@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:35:10 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 05:56:27 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 11:04:43 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,24 @@ int	create_threads(t_share *share, pthread_t **threads, t_status *statuses)
 	if (init_statuses(statuses, share) == ERROR)
 		return (free(*threads), free(statuses), ERROR);
 	i = -1;
+	pthread_mutex_lock(&share->m_start);
 	while (++i < share->nof_philo)
 	{
 		if (pthread_create(&(*threads)[i], NULL, routine, &statuses[i]) != 0)
 		{
+			pthread_mutex_unlock(&share->m_start);
 			while (--i >= 0)
 				pthread_detach((*threads)[i]);
 			share->create_error = ERROR;
 			free(*threads);
-			free_statuses(&statuses);
+			free_statuses(&statuses, share);
 			return (write(2, "philo: thread_create failed\n", 28), ERROR);
 		}
 	}
 	usleep(1000000);
 	share->start_time = get_time_in_ms();
 	share->start_flag = START;
+	pthread_mutex_unlock(&share->m_start);
 	return (SUCCESS);
 }
 
@@ -87,7 +90,7 @@ int	main(int argc, char **argv)
 	if (create_threads(share, &threads, statuses) == ERROR)
 		return (free_share(&share, 0), FAILED);
 	join_threads(&share, &threads);
-	free_statuses(&statuses);
+	free_statuses(&statuses, share);
 	free_share(&share, 0);
 	return (0);
 }

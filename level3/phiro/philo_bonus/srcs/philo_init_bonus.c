@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 00:55:15 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 06:42:52 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 13:48:03 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,14 @@ int	init_sem(t_sem **sem, t_status *status)
 	(*sem)->sem_start = sem_open("/start", O_CREAT | O_EXCL, 0644, 0);
 	if ((*sem)->sem_start == SEM_FAILED)
 		return (free_sem(sem, 2), error_sem_open(), FAILED);
-	(*sem)->sem_survival_check = sem_open("/check", O_CREAT | O_EXCL, 0644, 1);
+	(*sem)->sem_survival_check = sem_open("/scheck", O_CREAT | O_EXCL, 0644, 1);
 	if ((*sem)->sem_survival_check == SEM_FAILED)
 		return (free_sem(sem, 3), error_sem_open(), FAILED);
 	(*sem)->sem_cleared = sem_open("/cleared", O_CREAT | O_EXCL, 0644, 0);
 	if ((*sem)->sem_cleared == SEM_FAILED)
 		return (free_sem(sem, 4), error_sem_open(), FAILED);
+	(*sem)->sem_check = sem_open("/check", O_CREAT | O_EXCL, 0644, 1);
+	if ((*sem)->sem_cleared == SEM_FAILED)
+		return (free_sem(sem, 5), error_sem_open(), FAILED);
 	return (SUCCESS);
 }

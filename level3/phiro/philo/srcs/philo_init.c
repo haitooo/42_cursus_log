@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:42:00 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 09:01:39 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 11:09:30 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,14 @@ int	init_statuses(t_status *statuses, t_share *share)
 		statuses[i].share = share;
 		statuses[i].last_meal = 0;
 		statuses[i].timeof_eaten = 0;
+		if (pthread_mutex_init(&statuses[i].m_last_meal, NULL) != 0)
+		{
+			while (--i >= 0)
+			{
+				pthread_mutex_destroy(&statuses[i].m_last_meal);
+			}
+			return (ERROR);
+		}
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 05:59:32 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 12:45:30 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ typedef struct s_status
 	int				timeof_eaten;
 	pthread_mutex_t	*my_fork_r;
 	pthread_mutex_t	*my_fork_l;
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
+	pthread_mutex_t	m_last_meal;
 	t_share			*share;
 }	t_status;
 
@@ -71,7 +74,7 @@ size_t	ft_strlen(const char *s);
 int		init_structs(t_share **share, int ac, char **av);
 int		init_statuses(t_status *statuses, t_share *share);
 void	free_share(t_share **share, int errnum);
-void	free_statuses(t_status **statuses);
+void	free_statuses(t_status **statuses, t_share *share);
 void	error_malloc(void);
 void	error_mutex_init(void);
 void	error_invalid_arg(void);

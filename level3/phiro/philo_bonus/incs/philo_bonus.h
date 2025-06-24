@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 00:45:26 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 08:50:13 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 13:09:28 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_sem
 	sem_t		*sem_print;
 	sem_t		*sem_survival_check;
 	sem_t		*sem_cleared;
+	sem_t		*sem_check;
 }	t_sem;
 
 // main
