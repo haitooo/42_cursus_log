@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   moves_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/24 05:36:30 by haito             #+#    #+#             */
+/*   Updated: 2025/06/24 08:03:52 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo_bonus.h"
+
+void	survival_check(t_status *status, t_sem *sem, pid_t **pids)
+{
+	long	diff;
+	int		id;
+
+	sem_wait(sem->sem_survival_check);
+	diff = get_time_in_ms() - status->last_meal;
+	if (diff > status->time_to_die)
+	{
+		sem_wait(sem->sem_print);
+		id = status->id;
+		free_sem(&sem, 0);
+		free(status);
+		free(*pids);
+		exit (id);
+	}
+	sem_post(sem->sem_survival_check);
+}
+
+void	sleeping(t_status *status, t_sem *sem, pid_t **pids)
+{
+	sem_wait(sem->sem_print);
+	printf("%ld %d is sleeping\n",
+		get_time_in_ms() - status->start_time + 1, status->id);
+	sem_post(sem->sem_print);
+	usleep(status->time_to_sleep * 1000);
+	survival_check(status, sem, pids);
+}
+
+void	eating(t_status *status, t_sem *sem, pid_t **pids)
+{
+	status->timeof_eaten++;
+	if (status->timeof_eaten == status->nof_must_eat)
+		sem_post(sem->sem_cleared);
+	status->last_meal = get_time_in_ms();
+	sem_wait(sem->sem_print);
+	printf("%ld %d is eating\n",
+		get_time_in_ms() - status->start_time + 1, status->id);
+	sem_post(sem->sem_print);
+	usleep(status->time_to_eat * 1000);
+	survival_check(status, sem, pids);
+}
+
+void	thinking(t_status *status, t_sem *sem, long time_to_think, pid_t **pids)
+{
+	sem_wait(sem->sem_print);
+	printf("%ld %d is thinking\n",
+		get_time_in_ms() - status->start_time + 1, status->id);
+	sem_post(sem->sem_print);
+	usleep(time_to_think * 1000);
+	survival_check(status, sem, pids);
+}

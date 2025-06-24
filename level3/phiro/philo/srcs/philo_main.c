@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:35:10 by haito             #+#    #+#             */
-/*   Updated: 2025/06/15 18:34:51 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 05:56:27 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	create_threads(t_share *share, pthread_t **threads, t_status *statuses)
 				pthread_detach((*threads)[i]);
 			share->create_error = ERROR;
 			free(*threads);
-			free_statuses(&statuses, share);
+			free_statuses(&statuses);
 			return (write(2, "philo: thread_create failed\n", 28), ERROR);
 		}
 	}
@@ -87,7 +87,7 @@ int	main(int argc, char **argv)
 	if (create_threads(share, &threads, statuses) == ERROR)
 		return (free_share(&share, 0), FAILED);
 	join_threads(&share, &threads);
-	free_statuses(&statuses, share);
+	free_statuses(&statuses);
 	free_share(&share, 0);
 	return (0);
 }

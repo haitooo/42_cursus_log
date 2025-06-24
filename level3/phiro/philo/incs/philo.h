@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/06/20 20:36:57 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 05:59:32 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,6 @@ typedef enum e_result
 	SURVIVED = 0,
 }	t_result;
 
-typedef enum e_print
-{
-	EAT = 1,
-	SLEEP = 2,
-	THINK = 3,
-	FORK = 4,
-}	t_print;
-
 typedef struct s_share
 {
 	int				start_flag;
@@ -67,10 +59,6 @@ typedef struct s_status
 	int				id;
 	long			last_meal;
 	int				timeof_eaten;
-	int				clear;
-	int				print_request;
-	pthread_mutex_t	m_last_meal;
-	pthread_mutex_t	m_timeof_eaten;
 	pthread_mutex_t	*my_fork_r;
 	pthread_mutex_t	*my_fork_l;
 	t_share			*share;
@@ -83,7 +71,7 @@ size_t	ft_strlen(const char *s);
 int		init_structs(t_share **share, int ac, char **av);
 int		init_statuses(t_status *statuses, t_share *share);
 void	free_share(t_share **share, int errnum);
-void	free_statuses(t_status **statuses, t_share *share);
+void	free_statuses(t_status **statuses);
 void	error_malloc(void);
 void	error_mutex_init(void);
 void	error_invalid_arg(void);

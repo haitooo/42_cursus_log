@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:43:48 by haito             #+#    #+#             */
-/*   Updated: 2025/06/20 20:28:11 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/24 05:55:47 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,10 @@ void	free_share(t_share **share, int errnum)
 	*share = NULL;
 }
 
-void	free_statuses(t_status **statuses, t_share *share)
+void	free_statuses(t_status **statuses)
 {
-	int	i;
-
 	if (!statuses || !*statuses)
 		return ;
-	i = -1;
-	while (++i < share->nof_philo)
-	{
-		pthread_mutex_destroy(&(*statuses)[i].m_last_meal);
-		pthread_mutex_destroy(&(*statuses)[i].m_timeof_eaten);
-	}
 	free(*statuses);
 	*statuses = NULL;
 }
