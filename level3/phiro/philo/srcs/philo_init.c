@@ -6,13 +6,13 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:42:00 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 16:02:42 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:25:15 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_overflow(t_share *share)
+int	check_overflow(t_share *share, int ac)
 {
 	if (share->nof_philo <= 0)
 		return (INVALID);
@@ -22,7 +22,7 @@ int	check_overflow(t_share *share)
 		return (INVALID);
 	if (share->time_to_sleep <= 0)
 		return (INVALID);
-	if (share->nof_must_eat < 0)
+	if (ac == 5 && share->nof_must_eat < 0)
 		return (INVALID);
 	return (SUCCESS);
 }
@@ -73,7 +73,7 @@ int	init_structs(t_share **share, int ac, char **av)
 		(*share)->nof_must_eat = ft_atoi(av[4]);
 	else
 		(*share)->nof_must_eat = -1;
-	if (check_overflow(*share) == INVALID)
+	if (check_overflow(*share, ac) == INVALID)
 		return (write(2, "philo: arg overflow\n", 20), free(*share), ERROR);
 	if (init_mutexes(*share) == ERROR)
 		return (ERROR);

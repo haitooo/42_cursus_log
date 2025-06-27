@@ -6,13 +6,13 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 00:55:15 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 16:02:02 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:25:36 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	check_overflow(t_status *status)
+int	check_overflow(t_status *status, int ac)
 {
 	if (status->nof_philo <= 0)
 		return (INVALID);
@@ -22,7 +22,7 @@ int	check_overflow(t_status *status)
 		return (INVALID);
 	if (status->time_to_sleep <= 0)
 		return (INVALID);
-	if (status->nof_must_eat < 0)
+	if (ac == 5 && status->nof_must_eat < 0)
 		return (INVALID);
 	return (SUCCESS);
 }
@@ -41,7 +41,7 @@ int	init_structs(t_status **status, int ac, char **av)
 	else
 		(*status)->nof_must_eat = -1;
 	(*status)->timeof_eaten = 0;
-	if (check_overflow(*status) == INVALID)
+	if (check_overflow(*status, ac) == INVALID)
 		return (write(2, "philo: arg overflow\n", 20), free(*status), ERROR);
 	return (SUCCESS);
 }
