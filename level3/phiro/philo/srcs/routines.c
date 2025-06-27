@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 01:34:03 by hito              #+#    #+#             */
-/*   Updated: 2025/06/27 12:48:23 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:06:37 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	*routine(void *arg)
 	pthread_mutex_lock(&status->m_last_meal);
 	status->last_meal = get_time_in_ms();
 	pthread_mutex_unlock(&status->m_last_meal);
-	if (share->nof_philo == 1)
+	if (share->nof_philo == 1 || share->nof_must_eat == 0)
 		case_solo(share, status);
 	else if (share->nof_philo % 2 != 0)
 		case_oddphilos(share, status, 1,

@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:42:00 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 12:31:22 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:02:42 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	check_overflow(t_share *share)
 	if (share->time_to_die <= 0)
 		return (INVALID);
 	if (share->time_to_sleep <= 0)
+		return (INVALID);
+	if (share->nof_must_eat < 0)
 		return (INVALID);
 	return (SUCCESS);
 }

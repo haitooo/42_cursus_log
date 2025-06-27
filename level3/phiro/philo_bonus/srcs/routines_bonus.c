@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 05:21:45 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 13:48:42 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:05:00 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ int	case_oddphilos(t_status *status, t_sem *sem, int is_first, pid_t **pids)
 		}
 		else
 		{
-			if (is_first)
-				thinking(status, sem, ((status->time_to_eat / 3) * 2), pids);
+			thinking(status, sem, ((status->time_to_eat / 3) * 2), pids);
 			routine_(status, sem, pids);
 		}
 		is_first = 0;
@@ -109,7 +108,19 @@ int	case_evenphilos(t_status *status, t_sem *sem, int is_first, pid_t **pids)
 void	routine(t_status *status, t_sem *sem, pid_t **pids)
 {
 	status->last_meal = get_time_in_ms();
-	if (status->nof_philo % 2 != 0)
+	if (status->nof_must_eat == 0)
+		exit(status->nof_philo + 1);
+	if (status->nof_philo == 1)
+	{
+		printf("%ld %d has taken a fork\n",
+			get_time_in_ms() - status->start_time + 1, status->id);
+		usleep(status->time_to_die * 1000);
+		free_sem(&sem, 0);
+		free(status);
+		free(*pids);
+		exit(1);
+	}
+	else if (status->nof_philo % 2 != 0)
 		case_oddphilos(status, sem, 1, pids);
 	else
 		case_evenphilos(status, sem, 1, pids);

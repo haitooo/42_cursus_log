@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 00:55:15 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 13:48:03 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:02:02 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	check_overflow(t_status *status)
 	if (status->time_to_die <= 0)
 		return (INVALID);
 	if (status->time_to_sleep <= 0)
+		return (INVALID);
+	if (status->nof_must_eat < 0)
 		return (INVALID);
 	return (SUCCESS);
 }
@@ -65,8 +67,5 @@ int	init_sem(t_sem **sem, t_status *status)
 	(*sem)->sem_cleared = sem_open("/cleared", O_CREAT | O_EXCL, 0644, 0);
 	if ((*sem)->sem_cleared == SEM_FAILED)
 		return (free_sem(sem, 4), error_sem_open(), FAILED);
-	(*sem)->sem_check = sem_open("/check", O_CREAT | O_EXCL, 0644, 1);
-	if ((*sem)->sem_cleared == SEM_FAILED)
-		return (free_sem(sem, 5), error_sem_open(), FAILED);
 	return (SUCCESS);
 }

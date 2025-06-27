@@ -6,7 +6,7 @@
 #    By: haito <haito@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/04 01:46:46 by haito             #+#    #+#              #
-#    Updated: 2025/06/27 12:41:23 by haito            ###   ########.fr        #
+#    Updated: 2025/06/27 16:16:44 by haito            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS =	philo_main.c \
 		moves.c
 
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
-INC = -Iincs
+INC = -I incs
 
 all: $(NAME)
 

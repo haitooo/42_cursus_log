@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 00:45:26 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 13:09:28 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 15:57:38 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_sem
 	sem_t		*sem_print;
 	sem_t		*sem_survival_check;
 	sem_t		*sem_cleared;
-	sem_t		*sem_check;
 }	t_sem;
 
 // main
@@ -89,17 +88,5 @@ void	unlink_sem(void);
 void	error_invalid_arg(void);
 void	error_malloc(void);
 void	error_sem_open(void);
-
-// int		init_structs(t_share **share, int ac, char **av);
-// int		init_statuses(t_status *statuses, t_share *share);
-// void	free_share(t_share **share, int errnum);
-// void	free_statuses(t_status **statuses, t_share *share);
-// void	error_mutex_init(void);
-
-// void	*routine(void *arg);
-// void	thinking(t_share *share, t_status *status, long time_to_think);
-// int		eating(t_share *share, t_status *status);
-// void	sleeping(t_share *share, t_status *status);
-// int		survival_check(t_share *share, t_status *status);
 
 #endif

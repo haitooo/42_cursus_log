@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:40:35 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 12:53:20 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 16:14:36 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,28 @@ int	case_evenphilos(t_share *share, t_status *status, int is_first)
 
 void	case_solo(t_share *share, t_status *status)
 {
-	pthread_mutex_lock(&share->m_print);
-	printf("%ld %d has taken a fork\n",
-		get_time_in_ms() - share->start_time + 1, status->id);
-	pthread_mutex_unlock(&share->m_print);
-	usleep(share->time_to_die * 1000);
-	pthread_mutex_lock(&share->m_print);
-	share->someone_die = status->id;
-	printf("%ld %d died\n",
-		get_time_in_ms() - share->start_time + 1, status->id);
-	pthread_mutex_unlock(&share->m_print);
+	if (share->nof_must_eat == 0)
+	{
+		pthread_mutex_lock(&share->m_nof_cleared);
+		if (share->someone_die == 0)
+		{
+			share->someone_die = status->id;
+			pthread_mutex_lock(&share->m_print);
+			printf("%ld all philo avoid starving\n",
+				get_time_in_ms() - share->start_time + 1);
+			pthread_mutex_unlock(&share->m_print);
+		}
+		pthread_mutex_unlock(&share->m_nof_cleared);
+	}
+	else if (share->nof_philo == 1)
+	{
+		pthread_mutex_lock(&share->m_print);
+		printf("%ld %d has taken a fork\n",
+			get_time_in_ms() - share->start_time + 1, status->id);
+		usleep(share->time_to_die * 1000);
+		share->someone_die = status->id;
+		printf("%ld %d died\n",
+			get_time_in_ms() - share->start_time + 1, status->id);
+		pthread_mutex_unlock(&share->m_print);
+	}
 }
