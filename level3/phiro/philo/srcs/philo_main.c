@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:35:10 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 11:04:43 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 12:45:37 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,14 @@ int	check_invalid_args(int argc, char **argv)
 	return (SUCCESS);
 }
 
-int	create_threads(t_share *share, pthread_t **threads, t_status *statuses)
+int	create_threads(t_share *share, pthread_t **threads,
+		t_status *statuses, int i)
 {
-	int	i;
-
 	*threads = malloc(sizeof(pthread_t) * share->nof_philo);
 	if (!*threads)
 		return (error_malloc(), ERROR);
 	if (init_statuses(statuses, share) == ERROR)
 		return (free(*threads), free(statuses), ERROR);
-	i = -1;
 	pthread_mutex_lock(&share->m_start);
 	while (++i < share->nof_philo)
 	{
@@ -56,11 +54,10 @@ int	create_threads(t_share *share, pthread_t **threads, t_status *statuses)
 			return (write(2, "philo: thread_create failed\n", 28), ERROR);
 		}
 	}
-	usleep(1000000);
+	usleep(CREATE_WAITING);
 	share->start_time = get_time_in_ms();
 	share->start_flag = START;
-	pthread_mutex_unlock(&share->m_start);
-	return (SUCCESS);
+	return (pthread_mutex_unlock(&share->m_start), SUCCESS);
 }
 
 int	join_threads(t_share **share, pthread_t **threads)
@@ -87,7 +84,7 @@ int	main(int argc, char **argv)
 	statuses = malloc(sizeof(t_status) * share->nof_philo);
 	if (!statuses)
 		return (error_malloc(), free_share(&share, 0), ERROR);
-	if (create_threads(share, &threads, statuses) == ERROR)
+	if (create_threads(share, &threads, statuses, -1) == ERROR)
 		return (free_share(&share, 0), FAILED);
 	join_threads(&share, &threads);
 	free_statuses(&statuses, share);

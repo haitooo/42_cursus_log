@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 12:45:30 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 12:52:05 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/time.h>
 
 # define START 1
+# define CREATE_WAITING 1000000
 
 typedef enum e_result
 {
@@ -73,6 +74,7 @@ char	*ft_strdup(const char *s);
 size_t	ft_strlen(const char *s);
 int		init_structs(t_share **share, int ac, char **av);
 int		init_statuses(t_status *statuses, t_share *share);
+void	init_forks(t_share *share, t_status *status);
 void	free_share(t_share **share, int errnum);
 void	free_statuses(t_status **statuses, t_share *share);
 void	error_malloc(void);
@@ -80,6 +82,13 @@ void	error_mutex_init(void);
 void	error_invalid_arg(void);
 
 void	*routine(void *arg);
+int		routine_even(t_share *share, t_status *status);
+int		routine_(t_share *share, t_status *status);
+int		routine_odd(t_share *share, t_status *status);
+void	case_solo(t_share *share, t_status *status);
+int		case_evenphilos(t_share *share, t_status *status, int is_first);
+int		case_oddphilos(t_share *share, t_status *status, int is_first,
+			long time);
 void	thinking(t_share *share, t_status *status, long time_to_think);
 int		eating(t_share *share, t_status *status);
 void	sleeping(t_share *share, t_status *status);

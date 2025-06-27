@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:42:00 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 11:09:30 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 12:31:22 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,23 @@ int	init_statuses(t_status *statuses, t_share *share)
 		}
 	}
 	return (SUCCESS);
+}
+
+void	init_forks(t_share *share, t_status *status)
+{
+	status->my_fork_l = &share->m_fork[status->id - 1];
+	if (status->id == share->nof_philo)
+		status->my_fork_r = &share->m_fork[0];
+	else
+		status->my_fork_r = &share->m_fork[status->id];
+	if (status->my_fork_l < status->my_fork_r)
+	{
+		status->first = status->my_fork_l;
+		status->second = status->my_fork_r;
+	}
+	else
+	{
+		status->first = status->my_fork_r;
+		status->second = status->my_fork_l;
+	}
 }

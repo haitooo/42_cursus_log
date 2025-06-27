@@ -1,0 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   choose_case.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 12:40:35 by haito             #+#    #+#             */
+/*   Updated: 2025/06/27 12:53:20 by haito            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+int	case_oddphilos(t_share *share, t_status *status, int is_first, long time)
+{
+	while (1)
+	{
+		if (!is_first && survival_check(share, status) == DIE)
+			return (ERROR);
+		if (status->id % 3 == 2)
+			thinking(share, status, (share->time_to_eat / 2));
+		if (status->id % 3 == 1 || status->id % 3 == 2)
+		{
+			if (routine_odd(share, status) == ERROR)
+				return (ERROR);
+			thinking(share, status, time);
+		}
+		if (status->id % 3 == 0)
+		{
+			if (is_first)
+				thinking(share, status,
+					(share->time_to_eat) + (share->time_to_eat / 2));
+			else
+				thinking(share, status, time);
+			if (routine_odd(share, status) == ERROR)
+				return (ERROR);
+		}
+		is_first = 0;
+	}
+	return (0);
+}
+
+int	case_evenphilos(t_share *share, t_status *status, int is_first)
+{
+	while (1)
+	{
+		if (!is_first && survival_check(share, status) == DIE)
+			return (ERROR);
+		if (status->id % 2 != 0)
+		{
+			if (routine_(share, status) == ERROR)
+				return (ERROR);
+		}
+		else
+		{
+			if (is_first)
+				usleep(50);
+			if (routine_even(share, status) == ERROR)
+				return (ERROR);
+		}
+		if (share->time_to_eat > (share->time_to_sleep + 10))
+			thinking(share, status,
+				share->time_to_eat - (share->time_to_sleep + 10));
+		is_first = 0;
+	}
+	return (0);
+}
+
+void	case_solo(t_share *share, t_status *status)
+{
+	pthread_mutex_lock(&share->m_print);
+	printf("%ld %d has taken a fork\n",
+		get_time_in_ms() - share->start_time + 1, status->id);
+	pthread_mutex_unlock(&share->m_print);
+	usleep(share->time_to_die * 1000);
+	pthread_mutex_lock(&share->m_print);
+	share->someone_die = status->id;
+	printf("%ld %d died\n",
+		get_time_in_ms() - share->start_time + 1, status->id);
+	pthread_mutex_unlock(&share->m_print);
+}

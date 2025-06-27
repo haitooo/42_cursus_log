@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:48:42 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 12:16:55 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 12:30:34 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	must_eat_check(t_share *share)
 	pthread_mutex_lock(&share->m_nof_cleared);
 	if (share->nof_cleared >= share->nof_philo)
 	{
-		if (share->nof_cleared == share->nof_philo)
+		if (share->someone_die == 0 && share->nof_cleared == share->nof_philo)
 		{
 			share->nof_cleared++;
 			pthread_mutex_lock(&share->m_print);
@@ -64,11 +64,13 @@ int	survival_check(t_share *share, t_status *status)
 
 void	sleeping(t_share *share, t_status *status)
 {
+	pthread_mutex_lock(&share->m_nof_cleared);
 	pthread_mutex_lock(&share->m_print);
-	if (share->someone_die == 0)
+	if (share->someone_die == 0 && !(share->nof_cleared >= share->nof_philo))
 		printf("%ld %d is sleeping\n",
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
+	pthread_mutex_unlock(&share->m_nof_cleared);
 	usleep(share->time_to_sleep * 1000);
 }
 
@@ -82,11 +84,13 @@ int	eating(t_share *share, t_status *status)
 	pthread_mutex_lock(&status->m_last_meal);
 	status->last_meal = get_time_in_ms();
 	pthread_mutex_unlock(&status->m_last_meal);
+	pthread_mutex_lock(&share->m_nof_cleared);
 	pthread_mutex_lock(&share->m_print);
-	if (share->someone_die == 0)
+	if (share->someone_die == 0 && !(share->nof_cleared >= share->nof_philo))
 		printf("%ld %d is eating\n",
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
+	pthread_mutex_unlock(&share->m_nof_cleared);
 	usleep(share->time_to_eat * 1000);
 	if (survival_check(share, status) == DIE)
 		return (DIE);
@@ -95,10 +99,12 @@ int	eating(t_share *share, t_status *status)
 
 void	thinking(t_share *share, t_status *status, long time_to_think)
 {
+	pthread_mutex_lock(&share->m_nof_cleared);
 	pthread_mutex_lock(&share->m_print);
-	if (share->someone_die == 0)
+	if (share->someone_die == 0 && !(share->nof_cleared >= share->nof_philo))
 		printf("%ld %d is thinking\n",
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
+	pthread_mutex_unlock(&share->m_nof_cleared);
 	usleep(time_to_think * 1000);
 }
