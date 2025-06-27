@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/06 01:34:03 by hito              #+#    #+#             */
-/*   Updated: 2025/06/27 16:06:37 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 19:42:37 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,17 @@ int	routine_even(t_share *share, t_status *status)
 		printf("%ld %d has taken a fork\n",
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
-	if (eating(share, status) == DIE)
+	if (eating(share, status, share->time_to_eat * 1000) == DIE)
 		return (pthread_mutex_unlock(status->my_fork_l),
 			pthread_mutex_unlock(status->my_fork_r), ERROR);
 	pthread_mutex_unlock(status->my_fork_l);
 	pthread_mutex_unlock(status->my_fork_r);
-	sleeping(share, status);
+	if (sleeping(share, status) == DIE)
+		return (ERROR);
 	return (0);
 }
 
-int	routine_(t_share *share, t_status *status)
+int	routine_even_(t_share *share, t_status *status)
 {
 	pthread_mutex_lock(status->my_fork_l);
 	if (survival_check(share, status) == DIE)
@@ -59,12 +60,13 @@ int	routine_(t_share *share, t_status *status)
 		printf("%ld %d has taken a fork\n",
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
-	if (eating(share, status) == DIE)
+	if (eating(share, status, share->time_to_eat * 1000) == DIE)
 		return (pthread_mutex_unlock(status->my_fork_r),
 			pthread_mutex_unlock(status->my_fork_l), ERROR);
 	pthread_mutex_unlock(status->my_fork_r);
 	pthread_mutex_unlock(status->my_fork_l);
-	sleeping(share, status);
+	if (sleeping(share, status) == DIE)
+		return (ERROR);
 	return (0);
 }
 
@@ -87,12 +89,13 @@ int	routine_odd(t_share *share, t_status *status)
 		printf("%ld %d has taken a fork\n",
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
-	if (eating(share, status) == DIE)
+	if (eating(share, status, share->time_to_eat * 1000) == DIE)
 		return (pthread_mutex_unlock(status->second),
 			pthread_mutex_unlock(status->first), ERROR);
 	pthread_mutex_unlock(status->second);
 	pthread_mutex_unlock(status->first);
-	sleeping(share, status);
+	if (sleeping(share, status) == DIE)
+		return (ERROR);
 	return (0);
 }
 

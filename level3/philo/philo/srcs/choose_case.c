@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:40:35 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 16:14:36 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 18:28:24 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	case_evenphilos(t_share *share, t_status *status, int is_first)
 			return (ERROR);
 		if (status->id % 2 != 0)
 		{
-			if (routine_(share, status) == ERROR)
+			if (routine_even_(share, status) == ERROR)
 				return (ERROR);
 		}
 		else

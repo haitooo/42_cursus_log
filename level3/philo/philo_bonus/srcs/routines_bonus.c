@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 05:21:45 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 16:05:00 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 19:54:55 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	case_oddphilos(t_status *status, t_sem *sem, int is_first, pid_t **pids)
 		}
 		else
 		{
-			thinking(status, sem, ((status->time_to_eat / 3) * 2), pids);
+			thinking(status, sem, status->time_to_eat / 2, pids);
 			routine_(status, sem, pids);
 		}
 		is_first = 0;

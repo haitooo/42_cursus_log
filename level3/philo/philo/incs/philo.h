@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 12:52:05 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 20:11:44 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define START 1
 # define CREATE_WAITING 1000000
+# define SLEEP 8000
 
 typedef enum e_result
 {
@@ -83,15 +84,15 @@ void	error_invalid_arg(void);
 
 void	*routine(void *arg);
 int		routine_even(t_share *share, t_status *status);
-int		routine_(t_share *share, t_status *status);
+int		routine_even_(t_share *share, t_status *status);
 int		routine_odd(t_share *share, t_status *status);
 void	case_solo(t_share *share, t_status *status);
 int		case_evenphilos(t_share *share, t_status *status, int is_first);
 int		case_oddphilos(t_share *share, t_status *status, int is_first,
 			long time);
-void	thinking(t_share *share, t_status *status, long time_to_think);
-int		eating(t_share *share, t_status *status);
-void	sleeping(t_share *share, t_status *status);
+int		thinking(t_share *share, t_status *status, long time_to_think);
+int		eating(t_share *share, t_status *status, long time);
+int		sleeping(t_share *share, t_status *status);
 int		survival_check(t_share *share, t_status *status);
 long	get_time_in_ms(void);
 

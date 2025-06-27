@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:48:42 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 12:30:34 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/27 20:12:25 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ int	survival_check(t_share *share, t_status *status)
 	return (SURVIVED);
 }
 
-void	sleeping(t_share *share, t_status *status)
+int	sleeping(t_share *share, t_status *status)
 {
+	long	time;
+
 	pthread_mutex_lock(&share->m_nof_cleared);
 	pthread_mutex_lock(&share->m_print);
 	if (share->someone_die == 0 && !(share->nof_cleared >= share->nof_philo))
@@ -71,10 +73,18 @@ void	sleeping(t_share *share, t_status *status)
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
 	pthread_mutex_unlock(&share->m_nof_cleared);
-	usleep(share->time_to_sleep * 1000);
+	time = share->time_to_sleep * 1000;
+	while (time > 0)
+	{
+		if (survival_check(share, status) == DIE)
+			return (DIE);
+		usleep(SLEEP);
+		time -= SLEEP;
+	}
+	return (SURVIVED);
 }
 
-int	eating(t_share *share, t_status *status)
+int	eating(t_share *share, t_status *status, long time)
 {
 	status->timeof_eaten++;
 	pthread_mutex_lock(&share->m_nof_cleared);
@@ -91,14 +101,20 @@ int	eating(t_share *share, t_status *status)
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
 	pthread_mutex_unlock(&share->m_nof_cleared);
-	usleep(share->time_to_eat * 1000);
-	if (survival_check(share, status) == DIE)
-		return (DIE);
+	while (time > 0)
+	{
+		if (survival_check(share, status) == DIE)
+			return (DIE);
+		usleep(SLEEP);
+		time -= SLEEP;
+	}
 	return (SURVIVED);
 }
 
-void	thinking(t_share *share, t_status *status, long time_to_think)
+int	thinking(t_share *share, t_status *status, long time_to_think)
 {
+	long	time;
+
 	pthread_mutex_lock(&share->m_nof_cleared);
 	pthread_mutex_lock(&share->m_print);
 	if (share->someone_die == 0 && !(share->nof_cleared >= share->nof_philo))
@@ -106,5 +122,13 @@ void	thinking(t_share *share, t_status *status, long time_to_think)
 			get_time_in_ms() - share->start_time + 1, status->id);
 	pthread_mutex_unlock(&share->m_print);
 	pthread_mutex_unlock(&share->m_nof_cleared);
-	usleep(time_to_think * 1000);
+	time = time_to_think * 1000;
+	while (time > 0)
+	{
+		if (survival_check(share, status) == DIE)
+			return (DIE);
+		usleep(SLEEP);
+		time -= SLEEP;
+	}
+	return (SURVIVED);
 }
