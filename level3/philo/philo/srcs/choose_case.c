@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 12:40:35 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 18:28:24 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/30 21:59:08 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ int	case_evenphilos(t_share *share, t_status *status, int is_first)
 		}
 		else
 		{
-			if (is_first)
-				usleep(50);
+			usleep(1000);
 			if (routine_even(share, status) == ERROR)
 				return (ERROR);
 		}
@@ -93,4 +92,13 @@ void	case_solo(t_share *share, t_status *status)
 			get_time_in_ms() - share->start_time + 1, status->id);
 		pthread_mutex_unlock(&share->m_print);
 	}
+}
+
+void	after_eat(t_share *share, t_status *status)
+{
+	status->timeof_eaten++;
+	pthread_mutex_lock(&share->m_nof_cleared);
+	if (status->timeof_eaten == share->nof_must_eat)
+		share->nof_cleared++;
+	pthread_mutex_unlock(&share->m_nof_cleared);
 }

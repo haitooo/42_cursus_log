@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:48:42 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 20:12:25 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/30 21:58:25 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ int	sleeping(t_share *share, t_status *status)
 	{
 		if (survival_check(share, status) == DIE)
 			return (DIE);
+		if (time < SLEEP)
+		{
+			usleep(time);
+			return (SURVIVED);
+		}
 		usleep(SLEEP);
 		time -= SLEEP;
 	}
@@ -86,11 +91,6 @@ int	sleeping(t_share *share, t_status *status)
 
 int	eating(t_share *share, t_status *status, long time)
 {
-	status->timeof_eaten++;
-	pthread_mutex_lock(&share->m_nof_cleared);
-	if (status->timeof_eaten == share->nof_must_eat)
-		share->nof_cleared++;
-	pthread_mutex_unlock(&share->m_nof_cleared);
 	pthread_mutex_lock(&status->m_last_meal);
 	status->last_meal = get_time_in_ms();
 	pthread_mutex_unlock(&status->m_last_meal);
@@ -105,9 +105,15 @@ int	eating(t_share *share, t_status *status, long time)
 	{
 		if (survival_check(share, status) == DIE)
 			return (DIE);
+		if (time < SLEEP)
+		{
+			usleep(time);
+			break ;
+		}
 		usleep(SLEEP);
 		time -= SLEEP;
 	}
+	after_eat(share, status);
 	return (SURVIVED);
 }
 
@@ -127,6 +133,11 @@ int	thinking(t_share *share, t_status *status, long time_to_think)
 	{
 		if (survival_check(share, status) == DIE)
 			return (DIE);
+		if (time < SLEEP)
+		{
+			usleep(time);
+			return (SURVIVED);
+		}
 		usleep(SLEEP);
 		time -= SLEEP;
 	}

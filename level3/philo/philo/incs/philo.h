@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 01:36:21 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 20:11:44 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/30 21:59:53 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define START 1
 # define CREATE_WAITING 1000000
-# define SLEEP 8000
+# define SLEEP 13000
 
 typedef enum e_result
 {
@@ -90,6 +90,7 @@ void	case_solo(t_share *share, t_status *status);
 int		case_evenphilos(t_share *share, t_status *status, int is_first);
 int		case_oddphilos(t_share *share, t_status *status, int is_first,
 			long time);
+void	after_eat(t_share *share, t_status *status);
 int		thinking(t_share *share, t_status *status, long time_to_think);
 int		eating(t_share *share, t_status *status, long time);
 int		sleeping(t_share *share, t_status *status);

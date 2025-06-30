@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 00:45:26 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 20:10:29 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/30 22:04:19 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/stat.h>
 # include <sys/time.h>
 
-# define SLEEP 8000
+# define SLEEP 10000
 
 typedef enum e_result
 {

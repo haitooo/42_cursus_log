@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 05:36:30 by haito             #+#    #+#             */
-/*   Updated: 2025/06/27 20:11:14 by haito            ###   ########.fr       */
+/*   Updated: 2025/06/30 21:17:25 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ void	eating(t_status *status, t_sem *sem, pid_t **pids)
 {
 	long	time;
 
-	status->timeof_eaten++;
-	if (status->timeof_eaten == status->nof_must_eat)
-		sem_post(sem->sem_cleared);
 	status->last_meal = get_time_in_ms();
 	sem_wait(sem->sem_print);
 	printf("%ld %d is eating\n",
@@ -77,6 +74,9 @@ void	eating(t_status *status, t_sem *sem, pid_t **pids)
 		time -= SLEEP;
 		survival_check(status, sem, pids);
 	}
+	status->timeof_eaten++;
+	if (status->timeof_eaten == status->nof_must_eat)
+		sem_post(sem->sem_cleared);
 }
 
 void	thinking(t_status *status, t_sem *sem, long time_to_think, pid_t **pids)
