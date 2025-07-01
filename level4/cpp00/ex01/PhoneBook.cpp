@@ -35,19 +35,53 @@ void	PhoneBook::addcontact()
 	std::string	input;
 
 	std::cout << std::setw(WIDTH-40) << "Enter first name     >> ";
-	std::getline(std::cin >> std::ws, input);
+	std::getline(std::cin, input);
+	if (std::cin.eof())
+		return ;
+	if (input.empty())
+	{
+		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: first name cannot be empty.\033[m" << std::endl << std::endl;
+		return ;
+	}
 	contact.set_firstName(input);
 	std::cout << std::setw(WIDTH-40) << "Enter last name      >> ";
-	std::getline(std::cin >> std::ws, input);
+	std::getline(std::cin, input);
+	if (std::cin.eof())
+		return ;
+	if (input.empty()) {
+		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: last name cannot be empty.\033[m" << std::endl << std::endl;
+		return ;
+	}
 	contact.set_lastName(input);
 	std::cout << std::setw(WIDTH-40) << "Enter nickname       >> ";
-	std::getline(std::cin >> std::ws, input);
+	std::getline(std::cin, input);
+	if (std::cin.eof())
+		return ;
+	if (input.empty())
+	{
+		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: nickname cannot be empty.\033[m" << std::endl << std::endl;
+		return ;
+	}
 	contact.set_nickName(input);
 	std::cout << std::setw(WIDTH-40) << "Enter phone number   >> ";
-	std::getline(std::cin >> std::ws, input);
+	std::getline(std::cin, input);
+	if (std::cin.eof())
+		return ;
+	if (input.empty())
+	{
+		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: phone number cannot be empty.\033[m" << std::endl << std::endl;
+		return ;
+	}
 	contact.set_phoneNum(input);
 	std::cout << std::setw(WIDTH-40) << "Enter darkest secret >> ";
-	std::getline(std::cin >> std::ws, input);
+	std::getline(std::cin, input);
+	if (std::cin.eof())
+		return ;
+	if (input.empty())
+	{
+		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: secret cannot be empty.\033[m" << std::endl << std::endl;
+		return ;
+	}
 	contact.set_secret(input);
 	std::cout << std::endl;
 	if (this->_contactcount < 8)
@@ -87,16 +121,18 @@ void	PhoneBook::displaycontacts()
 	while (true)
 	{
 		std::cout << std::setw(WIDTH-40) << "Enter index         >> ";
-		std::getline(std::cin >> std::ws, input);
+		std::getline(std::cin, input);
+		if (std::cin.eof())
+			return ;
 		if (!is_all_digit(input))
 		{
-			std::cout << std::setw(WIDTH-5) << "Invalid input. Please enter (1 - "<< PhoneBook::_contactcount << ")" << std::endl;
+			std::cout << std::setw(WIDTH) << "\033[31mInvalid input. Please enter (1 - "<< PhoneBook::_contactcount << ")\033[m" << std::endl;
 			continue ;
 		}
 		index = std::atoi(input.c_str());
 		if (index < 1 || index > this->_contactcount)
 		{
-			std::cout << std::setw(WIDTH-5) << "Index out of range. Try again." << std::endl;
+			std::cout << std::setw(WIDTH) << "\033[31mIndex out of range. Try again.\033[m" << std::endl;
 			continue ;
 		}
 		this->_contacts[index - 1].show_detail();

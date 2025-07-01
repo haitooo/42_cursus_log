@@ -32,7 +32,14 @@ int	main(void)
 	while (true)
 	{
 		put_guide();
-		std::getline(std::cin >> std::ws, input);
+		std::getline(std::cin, input);
+		if (std::cin.eof())
+		{
+			std::cout << "\033[31mEOF detected.\033[m" << std::endl;
+			return (0) ;
+		}
+		if (input.empty())
+			continue ;
 		if (input == "ADD")
 			PB.addcontact();
 		else if (input == "SEARCH")
