@@ -8,7 +8,7 @@ class PhoneBook
 {
 	private:
 		Contact	_contacts[8];
-		int		_contactCount;
+		int		_contactcount;
 
 	public:
 		PhoneBook();

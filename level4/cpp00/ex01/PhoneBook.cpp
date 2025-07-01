@@ -4,7 +4,7 @@
 
 #define WIDTH 75
 
-PhoneBook::PhoneBook() : _contactCount(0) {}
+PhoneBook::PhoneBook() : _contactcount(0) {}
 
 bool	is_all_digit(const std::string& str)
 {
@@ -49,10 +49,11 @@ void	PhoneBook::addcontact()
 	std::cout << std::setw(WIDTH-40) << "Enter darkest secret >> ";
 	std::getline(std::cin >> std::ws, input);
 	contact.set_secret(input);
-	if (this->_contactCount < 8)
+	std::cout << std::endl;
+	if (this->_contactcount < 8)
 	{
-		this->_contactCount++;
-		this->_contacts[this->_contactCount - 1] = contact;
+		this->_contactcount++;
+		this->_contacts[this->_contactcount - 1] = contact;
 	}
 	else
 	{
@@ -71,7 +72,7 @@ void	PhoneBook::displaycontacts()
 
 	std::cout << std::endl;
 	std::cout << std::setw(WIDTH) << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
-	while (++i < PhoneBook::_contactCount)
+	while (++i < PhoneBook::_contactcount)
 	{
 		std::cout << std::setw(WIDTH-35) << "|         " << i + 1 << "|";
 		str = PhoneBook::_contacts[i].get_firstName();
@@ -89,11 +90,11 @@ void	PhoneBook::displaycontacts()
 		std::getline(std::cin >> std::ws, input);
 		if (!is_all_digit(input))
 		{
-			std::cout << std::setw(WIDTH-5) << "Invalid input. Please enter (1 - "<< PhoneBook::_contactCount << ")" << std::endl;
+			std::cout << std::setw(WIDTH-5) << "Invalid input. Please enter (1 - "<< PhoneBook::_contactcount << ")" << std::endl;
 			continue ;
 		}
 		index = std::atoi(input.c_str());
-		if (index < 1 || index > this->_contactCount)
+		if (index < 1 || index > this->_contactcount)
 		{
 			std::cout << std::setw(WIDTH-5) << "Index out of range. Try again." << std::endl;
 			continue ;
