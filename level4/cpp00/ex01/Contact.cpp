@@ -1,4 +1,7 @@
 #include "Contact.hpp"
+#include <iomanip>
+
+#define WIDTH 75
 
 void	Contact::set_firstName(const std::string& str)
 {
@@ -49,3 +52,14 @@ std::string	Contact::get_secret() const
 {
 	return (this->_secret);
 }
+
+void Contact::show_detail() const
+{
+	std::cout << std::endl;
+	std::cout << std::setw(WIDTH-20) << "First Name: " << this->_firstName << std::endl;
+	std::cout << std::setw(WIDTH-20) << "Last Name: " << this->_lastName << std::endl;
+	std::cout << std::setw(WIDTH-20) << "Nickname: " << this->_nickName << std::endl;
+	std::cout << std::setw(WIDTH-20) << "Phone Number: " << this->_phoneNum << std::endl;
+	std::cout << std::setw(WIDTH-20) << "Darkest Secret: " << this->_secret << std::endl << std::endl;
+}
+

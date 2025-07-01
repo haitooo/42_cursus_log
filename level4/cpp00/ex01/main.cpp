@@ -28,18 +28,18 @@ int	main(void)
 	while (i++ < 90)
 		std::cout << "\033[1;34m-\033[m";
 	std::cout << std::endl << std::endl;
-	std::cout << std::setw(WIDTH) << "\033[1;5;36mWelcome! PhoneBook\033[m" << std::endl;
+	std::cout << std::setw(WIDTH+3) << "\033[1;5;36mWelcome to PhoneBook!\033[m" << std::endl;
 	while (true)
 	{
 		put_guide();
-		std::cin >> input;
+		std::getline(std::cin >> std::ws, input);
 		if (input == "ADD")
 			PB.addcontact();
 		else if (input == "SEARCH")
 			PB.displaycontacts();
 		else if (input == "EXIT")
 		{
-			std::cout << "good bye" << std::endl;
+			std::cout << std::setw(WIDTH-6) << "\033[1;36mGood bye !\033[m" << std::endl;
 			return (0);
 		}
 	}
