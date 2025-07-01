@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 00:44:41 by haito             #+#    #+#             */
-/*   Updated: 2025/06/24 13:38:55 by haito            ###   ########.fr       */
+/*   Updated: 2025/07/01 09:00:09 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_invalid_args(int argc, char **argv)
 	i = 0;
 	if (argc < 5 || argc > 6)
 		return (error_invalid_arg(), INVALID);
-	while (++i < argc - 1)
+	while (++i < argc)
 	{
 		j = -1;
 		while (argv[i][++j])
