@@ -1,0 +1,18 @@
+NO ./map/pictures/north.xpm
+SO ./map/pictures/south.xpm
+WE ./map/pictures/west.xpm
+EA ./map/pictures/east.xpm
+F 220,100,0
+C 225,30,0
+DO ./map/pictures/door.xpm
+X1 ./map/pictures/img1.xpm
+X2 ./map/pictures/img2.xpm
+X3 ./map/pictures/img3.xpm
+
+111111111
+100000001
+100000001
+1000X0001
+11D111111
+100000001
+111111111

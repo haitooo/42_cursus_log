@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:48:42 by haito             #+#    #+#             */
-/*   Updated: 2025/06/30 21:58:25 by haito            ###   ########.fr       */
+/*   Updated: 2025/07/09 20:22:09 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	survival_check(t_share *share, t_status *status)
 		pthread_mutex_lock(&share->m_print);
 		share->someone_die = status->id;
 		printf("%ld %d died\n",
-			get_time_in_ms() - share->start_time + 1, status->id);
+			get_time_in_ms() - share->start_time, status->id);
 		pthread_mutex_unlock(&share->m_print);
 		pthread_mutex_unlock(&share->m_survival_check);
 		return (DIE);
