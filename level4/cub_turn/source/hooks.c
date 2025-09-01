@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tssaito <tssaito@student.42tokyo.jp>       +#+  +:+       +#+        */
+/*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 19:26:26 by tssaito           #+#    #+#             */
-/*   Updated: 2025/08/24 11:39:50 by tssaito          ###   ########.fr       */
+/*   Updated: 2025/09/01 13:22:50 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 // Handles key press events for player movement, rotation, and interaction.
 int	key_press_hook(int keycode, t_game *game)
 {
-	if (keycode == KEY_W || keycode == KEY_Z)
+	if (keycode == KEY_W || keycode == KEY_Z || keycode == KEY_UP)
 		move_forward(game);
-	else if (keycode == KEY_S)
+	else if (keycode == KEY_S || keycode == KEY_DOWN)
 		move_backward(game);
 	else if (keycode == KEY_A || keycode == KEY_Q)
 		move_left(game);
@@ -29,7 +29,7 @@ int	key_press_hook(int keycode, t_game *game)
 		rotate_right(game);
 	else if (keycode == KEY_ESC)
 		close_window_hook(game);
-	else if (keycode == KEY_E)
+	else if (keycode == KEY_E || keycode == KEY_SPACE)
 		handle_door_interaction(game);
 	else if (keycode == KEY_M)
 		game->show_minimap = !game->show_minimap;

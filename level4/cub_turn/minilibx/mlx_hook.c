@@ -12,8 +12,6 @@
 #include	"mlx_int.h"
 
 
-
-
 int	mlx_hook(t_win_list *win, int x_event, int x_mask, 
 		 int (*funct)(),void *param)
 {

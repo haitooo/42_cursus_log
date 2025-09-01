@@ -6,7 +6,7 @@
 /*   By: haito <haito@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 19:38:01 by tssaito           #+#    #+#             */
-/*   Updated: 2025/08/24 12:33:29 by haito            ###   ########.fr       */
+/*   Updated: 2025/09/01 13:22:39 by haito            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_SPACE 32
 
 // Minimap constants
 # define MINIMAP_SCALE 16
