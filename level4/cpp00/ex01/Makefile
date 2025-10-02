@@ -1,31 +1,29 @@
-NAME =	phonebook
-
-SRC =	main.cpp \
+NAME = phonebook
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+OBJDIR = objs
+SRCS =	main.cpp \
 		Contact.cpp \
 		PhoneBook.cpp
-
-INC =	Contact.hpp \
-		PhoneBook.hpp
-
-OBJ = $(SRC:.cpp=.o)
-
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -I.
+OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+INC = -I incs
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
-
-%.o: %.cpp $(INC)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+		$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	$(RM) -r $(OBJDIR)
 
 fclean: clean
-	rm -f $(NAME)
+		rm -f $(NAME)
 
 re: fclean all
 
+$(OBJDIR)/%.o:%.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+
 .PHONY: all clean fclean re
+

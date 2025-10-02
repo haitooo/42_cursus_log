@@ -1,29 +1,28 @@
-NAME =	account
-
-SRC =	tests.cpp \
-		Account.cpp
-
-INC =	Account.hpp
-
-OBJ = $(SRC:.cpp=.o)
-
+NAME = account
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -I.
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+OBJDIR = objs
+SRCS =	tests.cpp \
+		Account.cpp
+OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+INC = -I incs
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJ)
-
-%.o: %.cpp $(INC)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+		$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	$(RM) -r $(OBJDIR)
 
 fclean: clean
-	rm -f $(NAME)
+		rm -f $(NAME)
 
 re: fclean all
 
+$(OBJDIR)/%.o:%.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
+
 .PHONY: all clean fclean re
+
