@@ -31,13 +31,13 @@ void	Harl::complain(const std::string& level)
 		{
 			switch (i)
 			{
-				case 0:this->debug();
+				case 0:debug();
 					//fall through
-				case 1:this->info();
+				case 1:info();
 					//fall through
-				case 2:this->warning();
+				case 2:warning();
 					//fall through
-				case 3:this->error();
+				case 3:error();
 					break ;
 				default:
 					std::cout << "\033[32m        [ Probably complaining about insignificant problems ]\033[0m" << std::endl;

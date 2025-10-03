@@ -4,7 +4,9 @@
 
 #define WIDTH 75
 
-PhoneBook::PhoneBook() : _contactcount(0) {}
+PhoneBook::PhoneBook() : _contactcount(0)
+{
+}
 
 bool	is_all_digit(const std::string& str)
 {
