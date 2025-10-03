@@ -84,16 +84,16 @@ void	PhoneBook::addcontact()
 	}
 	contact.set_secret(input);
 	std::cout << std::endl;
-	if (this->_contactcount < 8)
+	if (_contactcount < 8)
 	{
-		this->_contactcount++;
-		this->_contacts[this->_contactcount - 1] = contact;
+		_contactcount++;
+		_contacts[_contactcount - 1] = contact;
 	}
 	else
 	{
 		while (++i < 7)
-			this->_contacts[i] = this->_contacts[i + 1];
-		this->_contacts[7] = contact;
+			_contacts[i] = _contacts[i + 1];
+		_contacts[7] = contact;
 	}
 }
 
@@ -106,14 +106,14 @@ void	PhoneBook::displaycontacts()
 
 	std::cout << std::endl;
 	std::cout << std::setw(WIDTH) << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
-	while (++i < PhoneBook::_contactcount)
+	while (++i < _contactcount)
 	{
 		std::cout << std::setw(WIDTH-35) << "|         " << i + 1 << "|";
-		str = PhoneBook::_contacts[i].get_firstName();
+		str = _contacts[i].get_firstName();
 		put_colum(str);
-		str = PhoneBook::_contacts[i].get_lastName();
+		str = _contacts[i].get_lastName();
 		put_colum(str);
-		str = PhoneBook::_contacts[i].get_nickName();
+		str = _contacts[i].get_nickName();
 		put_colum(str);
 		std::cout << std::endl;
 	}
@@ -130,12 +130,12 @@ void	PhoneBook::displaycontacts()
 			continue ;
 		}
 		index = std::atoi(input.c_str());
-		if (index < 1 || index > this->_contactcount)
+		if (index < 1 || index > _contactcount)
 		{
 			std::cout << std::setw(WIDTH) << "\033[31mIndex out of range. Try again.\033[m" << std::endl;
 			continue ;
 		}
-		this->_contacts[index - 1].show_detail();
+		_contacts[index - 1].show_detail();
 		break ;
 	}
 }
