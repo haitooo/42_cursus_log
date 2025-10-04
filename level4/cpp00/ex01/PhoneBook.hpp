@@ -12,8 +12,9 @@ class PhoneBook
 
 	public:
 		PhoneBook();
-		void	addcontact();
-		void	displaycontacts();
+		int		getContactCount();
+		void	addContact();
+		void	displayContacts();
 };
 
 #endif

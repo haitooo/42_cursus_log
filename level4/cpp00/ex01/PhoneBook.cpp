@@ -8,7 +8,12 @@ PhoneBook::PhoneBook() : _contactcount(0)
 {
 }
 
-bool	is_all_digit(const std::string& str)
+int		PhoneBook::getContactCount()
+{
+	return (_contactcount);
+}
+
+bool	isAllDigit(const std::string& str)
 {
 	size_t	i = 0;
 
@@ -21,7 +26,7 @@ bool	is_all_digit(const std::string& str)
 	return (true);
 }
 
-void	put_colum(std::string str)
+void	putColum(std::string str)
 {
 	if (str.length() > 10)
 		std::cout <<str.substr(0, 9) << ".";
@@ -30,7 +35,7 @@ void	put_colum(std::string str)
 	std::cout << "|";
 }
 
-void	PhoneBook::addcontact()
+void	PhoneBook::addContact()
 {
 	int			i = -1;
 	Contact		contact;
@@ -45,7 +50,7 @@ void	PhoneBook::addcontact()
 		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: first name cannot be empty.\033[m" << std::endl << std::endl;
 		return ;
 	}
-	contact.set_firstName(input);
+	contact.setFirstName(input);
 	std::cout << std::setw(WIDTH-40) << "Enter last name      >> ";
 	std::getline(std::cin, input);
 	if (std::cin.eof())
@@ -54,7 +59,7 @@ void	PhoneBook::addcontact()
 		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: last name cannot be empty.\033[m" << std::endl << std::endl;
 		return ;
 	}
-	contact.set_lastName(input);
+	contact.setLastName(input);
 	std::cout << std::setw(WIDTH-40) << "Enter nickname       >> ";
 	std::getline(std::cin, input);
 	if (std::cin.eof())
@@ -64,7 +69,7 @@ void	PhoneBook::addcontact()
 		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: nickname cannot be empty.\033[m" << std::endl << std::endl;
 		return ;
 	}
-	contact.set_nickName(input);
+	contact.setNickName(input);
 	std::cout << std::setw(WIDTH-40) << "Enter phone number   >> ";
 	std::getline(std::cin, input);
 	if (std::cin.eof())
@@ -74,7 +79,7 @@ void	PhoneBook::addcontact()
 		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: phone number cannot be empty.\033[m" << std::endl << std::endl;
 		return ;
 	}
-	contact.set_phoneNum(input);
+	contact.setPhoneNum(input);
 	std::cout << std::setw(WIDTH-40) << "Enter darkest secret >> ";
 	std::getline(std::cin, input);
 	if (std::cin.eof())
@@ -84,7 +89,7 @@ void	PhoneBook::addcontact()
 		std::cout << std::setw(WIDTH+2) << ">>\033[31m Error: secret cannot be empty.\033[m" << std::endl << std::endl;
 		return ;
 	}
-	contact.set_secret(input);
+	contact.setSecret(input);
 	std::cout << std::endl;
 	if (_contactcount < 8)
 	{
@@ -99,7 +104,7 @@ void	PhoneBook::addcontact()
 	}
 }
 
-void	PhoneBook::displaycontacts()
+void	PhoneBook::displayContacts()
 {
 	int			i = -1;
 	int			index;
@@ -111,12 +116,12 @@ void	PhoneBook::displaycontacts()
 	while (++i < _contactcount)
 	{
 		std::cout << std::setw(WIDTH-35) << "|         " << i + 1 << "|";
-		str = _contacts[i].get_firstName();
-		put_colum(str);
-		str = _contacts[i].get_lastName();
-		put_colum(str);
-		str = _contacts[i].get_nickName();
-		put_colum(str);
+		str = _contacts[i].getFirstName();
+		putColum(str);
+		str = _contacts[i].getLastName();
+		putColum(str);
+		str = _contacts[i].getNickName();
+		putColum(str);
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
@@ -126,7 +131,7 @@ void	PhoneBook::displaycontacts()
 		std::getline(std::cin, input);
 		if (std::cin.eof())
 			return ;
-		if (!is_all_digit(input))
+		if (!isAllDigit(input))
 		{
 			std::cout << std::setw(WIDTH) << "\033[31mInvalid input. Please enter (1 - "<< PhoneBook::_contactcount << ")\033[m" << std::endl;
 			continue ;
@@ -137,7 +142,7 @@ void	PhoneBook::displaycontacts()
 			std::cout << std::setw(WIDTH) << "\033[31mIndex out of range. Try again.\033[m" << std::endl;
 			continue ;
 		}
-		_contacts[index - 1].show_detail();
+		_contacts[index - 1].showDetail();
 		break ;
 	}
 }

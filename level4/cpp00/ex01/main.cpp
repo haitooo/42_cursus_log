@@ -6,7 +6,7 @@
 
 #define WIDTH 75
 
-void	put_guide(void)
+void	putGuide(void)
 {
 	std::cout << std::setw(WIDTH+18) << "Please enter \033[1mADD\033[m or \033[1mSEARCH\033[m or \033[1mEXIT\033[m" << std::endl << std::endl;
 	std::cout << std::setw(WIDTH-10) << "\033[32m<HELP>\033[m" << std::endl;
@@ -31,7 +31,7 @@ int	main(void)
 	std::cout << std::setw(WIDTH+3) << "\033[1;5;36mWelcome to PhoneBook!\033[m" << std::endl;
 	while (true)
 	{
-		put_guide();
+		putGuide();
 		std::getline(std::cin, input);
 		if (std::cin.eof())
 		{
@@ -41,9 +41,18 @@ int	main(void)
 		if (input.empty())
 			continue ;
 		if (input == "ADD")
-			PB.addcontact();
+			PB.addContact();
 		else if (input == "SEARCH")
-			PB.displaycontacts();
+		{
+			if (PB.getContactCount() == 0)
+			{
+				std::cout << std::endl << std::endl;
+				std::cout << std::setw(WIDTH) << "\033[31m < Nothing any contacts. >\033[m" << std::endl;
+				std::cout << std::endl << std::endl;
+				continue ;
+			}
+			PB.displayContacts();
+		}
 		else if (input == "EXIT")
 		{
 			std::cout << std::setw(WIDTH-6) << "\033[1;36mGood bye !\033[m" << std::endl;
