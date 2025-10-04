@@ -1,6 +1,6 @@
 NAME = megaphone
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 OBJDIR = objs
 SRCS =	megaphone.cpp
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))

@@ -1,11 +1,5 @@
 #include <iostream>
-
-char	to_upper(char c)
-{
-	if (c >= 'a' && c <= 'z')
-		return (c - 32);
-	return (c);
-}
+#include <string>
 
 int	main(int argc, char **argv)
 {
@@ -22,7 +16,7 @@ int	main(int argc, char **argv)
 	{
 		j = 0;
 		while (argv[i][j])
-			std::cout << to_upper(argv[i][j++]);
+			std::cout << static_cast<char>(toupper(argv[i][j++]));
 	}
 	std::cout << std::endl;
 	return (0);

@@ -3,57 +3,57 @@
 
 #define WIDTH 75
 
-void	Contact::set_firstName(const std::string& str)
+void	Contact::setFirstName(const std::string& str)
 {
 	_firstName = str;
 }
 
-void	Contact::set_lastName(const std::string& str)
+void	Contact::setLastName(const std::string& str)
 {
 	_lastName = str;
 }
 
-void	Contact::set_nickName(const std::string& str)
+void	Contact::setNickName(const std::string& str)
 {
 	_nickName = str;
 }
 
-void	Contact::set_phoneNum(const std::string& str)
+void	Contact::setPhoneNum(const std::string& str)
 {
 	_phoneNum = str;
 }
 
-void	Contact::set_secret(const std::string& str)
+void	Contact::setSecret(const std::string& str)
 {
 	_secret = str;
 }
 
-std::string	Contact::get_firstName() const
+std::string	Contact::getFirstName() const
 {
 	return (_firstName);
 }
 
-std::string	Contact::get_lastName() const
+std::string	Contact::getLastName() const
 {
 	return (_lastName);
 }
 
-std::string	Contact::get_nickName() const
+std::string	Contact::getNickName() const
 {
 	return (_nickName);
 }
 
-std::string	Contact::get_phoneNum() const
+std::string	Contact::getPhoneNum() const
 {
 	return (_phoneNum);
 }
 
-std::string	Contact::get_secret() const
+std::string	Contact::getSecret() const
 {
 	return (_secret);
 }
 
-void Contact::show_detail() const
+void Contact::showDetail() const
 {
 	std::cout << std::endl;
 	std::cout << std::setw(WIDTH-20) << "First Name: " << _firstName << std::endl;
