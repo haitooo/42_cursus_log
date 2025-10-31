@@ -5,6 +5,10 @@ HumanB::HumanB(const std::string& name)
 {
 }
 
+HumanB::~HumanB()
+{
+}
+
 void	HumanB::setWeapon(Weapon& newWeapon)
 {
 	weapon = &newWeapon;

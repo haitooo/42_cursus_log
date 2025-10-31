@@ -62,4 +62,3 @@ void Contact::showDetail() const
 	std::cout << std::setw(WIDTH-20) << "Phone Number: " << _phoneNum << std::endl;
 	std::cout << std::setw(WIDTH-20) << "Darkest Secret: " << _secret << std::endl << std::endl;
 }
-
