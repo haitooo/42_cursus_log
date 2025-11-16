@@ -10,48 +10,51 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "get_next_line.h"
 
 
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	char		*tmp;
-	static char	*stash;
-	char		buffer[BUFFER_SIZE + 1];
-	ssize_t		bytes_read;
+	static char*	stash;
+	char*			line;
+	char			*buf[BUFFER_SIZE + 1];
+	ssize_t			bytes_read;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	while (1)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		if (stash != NULL)
 		{
-			write(2, "Error\n", 6);
-			cleanup();
-			return (NULL);
-		}
-		else if (bytes_read == 0)
-		{
-			cleanup();
-			return (NULL);
+			if (!ft_strchr(stash, '\n'))
+			{
+				ft_strjoin(line, stash);
+				free(stash);
+				stash = NULL;
+			}
+			else
+			{
+				//改行までをreturnして、残りをstashに入れる。
+			}
 		}
 		else
 		{
-			buffer[bytes_read] = '\0';
-			tmp = ft_strjoin(line, buffer);
-			free(line);
-			line = tmp;
-			if (has_breakline(line))
-				break ;
+			bytes_read = read(fd, buf, BUFFER_SIZE);
+			if (bytes_read == -1)
+			{
+				//Error;
+			}
+			else if (bytes_read == 0)
+			{
+				//EOF;
+			}
+			else
+			{
+				buf[bytes_read] = '\0';
+			}
 		}
 	}
-	tmp = my_cutstr(line, buffer);
-	free(line);
-	line = tmp;
 	return (line);
 }
 

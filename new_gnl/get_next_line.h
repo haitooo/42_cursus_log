@@ -17,6 +17,13 @@
 # define BUFFER_SIZE 10
 #endif
 
+#include <unistd.h>
 
+typedef struct s_data
+{
+	char		buffer[BUFFER_SIZE + 1];
+	int			buffer_index;
+	ssize_t		bytes_read;
+} t_data;
 
 #endif
