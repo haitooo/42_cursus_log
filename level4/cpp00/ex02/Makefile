@@ -25,4 +25,3 @@ $(OBJDIR)/%.o:%.cpp
 	$(CXX) $(CXXFLAGS) $(INC) -c $< -o $@
 
 .PHONY: all clean fclean re
-
