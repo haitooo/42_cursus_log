@@ -13,6 +13,7 @@ Fixed::Fixed(const float f)
 {
 	value = static_cast<int>(roundf(f * (1 << fractionalBits)));
 }
+
 Fixed::Fixed(const Fixed& other)
 {
 	*this = other;
