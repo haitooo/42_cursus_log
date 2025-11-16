@@ -1,9 +1,11 @@
-NAME = Fixed
+NAME = bsp
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 OBJDIR = objs
 SRCS =	main.cpp \
-		Fixed.cpp
+		Fixed.cpp \
+		bsp.cpp \
+		Point.cpp
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 INC = -I incs
 

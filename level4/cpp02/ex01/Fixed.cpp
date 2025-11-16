@@ -58,6 +58,5 @@ int	Fixed::toInt(void) const
 
 std::ostream& operator<<(std::ostream& os, const Fixed& rhs)
 {
-	os << rhs.toFloat();
-	return (os);
+	return (os << rhs.toFloat());
 }
