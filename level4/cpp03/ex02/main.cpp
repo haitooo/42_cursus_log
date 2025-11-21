@@ -1,4 +1,4 @@
-	#include "ScavTrap.hpp"
+	#include "FragTrap.hpp"
 
 	int	main(void)
 	{
@@ -16,21 +16,21 @@
 
 		std::cout << std::endl;
 
-		ScavTrap	st1("Scavy");
-		ScavTrap	st2("Guardian");
+		FragTrap	st1("Fragy");
+		FragTrap	st2("Highter");
 
 		std::cout << std::endl;
 
-		st1.attack("Guardian");
+		st1.attack("Highter");
 		st2.takeDamage(st1.getAttackDamage());
 
 		std::cout << std::endl;
 
-		st2.guardGate();
+		st2.highFivesGuys();
 
 		std::cout << std::endl;
 
-		for (int i = 0; i < 52; ++i)
+		for (int i = 0; i < 102; ++i)
 		{
 			int	tmp = st1.getEnergyPoints();
 			st1.attack("Dummy");
@@ -50,10 +50,10 @@
 		st2.beRepaired(10);
 		std::cout << std::endl;
 
-		ScavTrap	st3(st1);
+		FragTrap	st3(st1);
 		std::cout << std::endl;
 
-		ScavTrap	st4("Temp");
+		FragTrap	st4("Temp");
 		st4 = st2;
 		std::cout << std::endl;
 

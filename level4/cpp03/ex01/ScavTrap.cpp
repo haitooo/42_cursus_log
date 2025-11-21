@@ -13,7 +13,6 @@ ScavTrap::ScavTrap(std::string newname) : ClapTrap(newname)
 
 ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other)
 {
-	*this = other;
 	std::cout << BLUE
 			  << "ScavTrap <" << name << "> : Copy Constructer called."
 			  << RESET << std::endl;
