@@ -19,8 +19,13 @@ class	ClapTrap
 		int				hitPoints;
 		int				energyPoints;
 		int				attackDamage;
+		ClapTrap(const std::string &n, int hp, int ep, int ad);
 	public:
-		ClapTrap(std::string newname);
+		static const int	default_hitPoint;
+		static const int	default_energyPoint;
+		static const int	default_attackDamage;
+
+		ClapTrap(const std::string &newname = "CTDefault");
 		ClapTrap(const ClapTrap& other);
 		ClapTrap& operator=(const ClapTrap& other);
 		~ClapTrap();

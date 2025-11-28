@@ -1,6 +1,19 @@
 #include "ClapTrap.hpp"
 
-ClapTrap::ClapTrap(std::string newname) : name(newname), hitPoints(10), energyPoints(10), attackDamage(0)
+const int	ClapTrap::default_hitPoint = 10;
+const int	ClapTrap::default_energyPoint = 10;
+const int	ClapTrap::default_attackDamage = 0;
+
+ClapTrap::ClapTrap(const std::string &n, int hp, int ep, int ad) :
+					name(n), hitPoints(hp), energyPoints(ep), attackDamage(ad)
+{
+	std::cout << BLUE
+			  << "ClapTrap <" << name << "> : Constructer called."
+			  << RESET << std::endl;
+}
+
+ClapTrap::ClapTrap(const std::string &newname) :
+					name(newname), hitPoints(default_hitPoint), energyPoints(default_energyPoint), attackDamage(default_attackDamage)
 {
 	std::cout << BLUE
 			  << "ClapTrap <" << name << "> : Constructer called."
