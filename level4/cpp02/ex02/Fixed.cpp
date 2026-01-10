@@ -89,7 +89,7 @@ Fixed Fixed::operator+(const Fixed& other) const
 {
 	Fixed	result;
 
-	result.setRawBits(getRawBits() + other.getRawBits());
+	result.value = value + other.value;
 	return (result);
 }
 
@@ -97,7 +97,7 @@ Fixed Fixed::operator-(const Fixed& other) const
 {
 	Fixed	result;
 
-	result.setRawBits(getRawBits() - other.getRawBits());
+	result.value = value - other.value;
 	return (result);
 }
 
@@ -106,8 +106,8 @@ Fixed Fixed::operator*(const Fixed& other) const
 	Fixed	result;
 	long	tmp;
 
-	tmp = (static_cast<long>(getRawBits()) * static_cast<long>(other.getRawBits()));
-	result.setRawBits(static_cast<int>(tmp >> fractionalBits));
+	tmp = (static_cast<long>(value) * static_cast<long>(other.value));
+	result.value = static_cast<int>(tmp >> fractionalBits);
 	return (result);
 }
 
@@ -115,11 +115,11 @@ Fixed Fixed::operator/(const Fixed& other) const
 {
 	Fixed	result;
 	long	tmp;
-	long	a = static_cast<long>(getRawBits());
-	long	b = static_cast<long>(other.getRawBits());
+	long	a = static_cast<long>(value);
+	long	b = static_cast<long>(other.value);
 
 	tmp = ((a << fractionalBits)/ b);
-	result.setRawBits(static_cast<int>(tmp));
+	result.value = static_cast<int>(tmp);
 	return (result);
 }
 
