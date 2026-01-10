@@ -5,7 +5,6 @@ OBJDIR = objs
 SRCS =	main.cpp \
 		Fixed.cpp
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
-INC = -I incs
 
 all: $(NAME)
 

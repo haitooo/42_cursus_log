@@ -22,7 +22,7 @@ Fixed::Fixed(const Fixed& other)
 Fixed& Fixed::operator=(const Fixed& other)
 {
 	if (this != &other)
-		value = other.getRawBits();
+		value = other.value;
 	return (*this);
 }
 
@@ -57,32 +57,32 @@ std::ostream& operator<<(std::ostream& os, const Fixed& rhs)
 
 bool Fixed::operator>(const Fixed& other) const
 {
-	return (getRawBits() > other.getRawBits());
+	return (value > other.value);
 }
 
 bool Fixed::operator<(const Fixed& other) const
 {
-	return (getRawBits() < other.getRawBits());
+	return (value < other.value);
 }
 
 bool Fixed::operator>=(const Fixed& other) const
 {
-	return (getRawBits() >= other.getRawBits());
+	return (value >= other.value);
 }
 
 bool Fixed::operator<=(const Fixed& other) const
 {
-	return (getRawBits() <= other.getRawBits());
+	return (value <= other.value);
 }
 
 bool Fixed::operator==(const Fixed& other) const
 {
-	return (getRawBits() == other.getRawBits());
+	return (value == other.value);
 }
 
 bool Fixed::operator!=(const Fixed& other) const
 {
-	return (getRawBits() != other.getRawBits());
+	return (value != other.value);
 }
 
 Fixed Fixed::operator+(const Fixed& other) const

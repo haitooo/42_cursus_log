@@ -7,7 +7,6 @@ SRCS =	main.cpp \
 		bsp.cpp \
 		Point.cpp
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
-INC = -I incs
 
 all: $(NAME)
 
