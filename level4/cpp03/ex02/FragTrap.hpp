@@ -11,7 +11,7 @@
 #define ITALIC "\033[3m"
 #define RESET  "\033[0m"
 
-class	FragTrap : virtual public ClapTrap
+class	FragTrap : public ClapTrap
 {
 	public:
 		static const int	default_hitPoint;
