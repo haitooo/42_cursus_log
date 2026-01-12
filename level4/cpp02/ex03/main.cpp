@@ -40,6 +40,19 @@ int	main(int argc, char** argv)
 	Point c(vals[4], vals[5]);
 	Point p(vals[6], vals[7]);
 
+	// Check if a, b, c form a valid triangle
+	Fixed	ab_x = b.getX() - a.getX();
+	Fixed	ab_y = b.getY() - a.getY();
+	Fixed	ac_x = c.getX() - a.getX();
+	Fixed	ac_y = c.getY() - a.getY();
+	Fixed	cross_product = ab_x * ac_y - ab_y * ac_x;
+
+	if (cross_product == 0)
+	{
+		std::cout << "Error: The three points are collinear. They do not form a valid triangle." << std::endl;
+		return (1);
+	}
+
 	if (bsp(a, b, c, p))
 		std::cout << "point is inside triangle." << std::endl;
 	else
@@ -47,3 +60,8 @@ int	main(int argc, char** argv)
 
 	return (0);
 }
+
+// ./bsp 0 0 5 0 0 5 1 1
+// ./bsp 0 0 5 0 0 5 5 5
+// ./bsp 0 0 5 0 0 5 0 0
+// ./bsp 0 0 5 0 0 5 -1 -1

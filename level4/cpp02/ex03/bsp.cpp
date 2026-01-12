@@ -16,7 +16,7 @@ Fixed	cross(const Point a, const Point b, const Point p)
 	return (result);
 }
 
-bool	bsp(const Point a, const Point b, const Point c, const Point point)
+bool	bsp(Point const a, Point const b, Point const c, Point const point)
 {
 	Fixed	c1 = cross(a, b, point);
 	Fixed	c2 = cross(b, c, point);
