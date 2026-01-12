@@ -20,7 +20,7 @@ class	FragTrap : virtual public ClapTrap
 		FragTrap(const std::string &newname = "FTDefault");
 		FragTrap(const FragTrap& other);
 		FragTrap&	operator=(const FragTrap& other);
-		~FragTrap();
+		virtual~FragTrap();
 
 		void		highFivesGuys(void);
 };

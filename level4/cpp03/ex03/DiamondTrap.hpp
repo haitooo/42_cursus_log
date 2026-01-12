@@ -9,9 +9,9 @@ class	DiamondTrap : public FragTrap, public ScavTrap
 	private:
 		std::string	name;
 	public:
-		using FragTrap::default_hitPoint;
-		using ScavTrap::default_energyPoint;
-		using FragTrap::default_attackDamage;
+		using	FragTrap::default_hitPoint;
+		using	ScavTrap::default_energyPoint;
+		using	FragTrap::default_attackDamage;
 
 		DiamondTrap(const std::string &newname = "DTDefault");
 		DiamondTrap(const DiamondTrap& other);
