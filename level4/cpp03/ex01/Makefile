@@ -6,7 +6,6 @@ SRCS =	main.cpp \
 		ClapTrap.cpp \
 		ScavTrap.cpp
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
-INC = -I incs
 
 all: $(NAME)
 

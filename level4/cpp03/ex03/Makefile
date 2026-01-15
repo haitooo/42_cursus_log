@@ -8,7 +8,6 @@ SRCS =	main.cpp \
 		FragTrap.cpp \
 		DiamondTrap.cpp
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
-INC = -I incs
 
 all: $(NAME)
 
