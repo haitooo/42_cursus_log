@@ -3,11 +3,15 @@
 
 # include "Animal.hpp"
 
-class	cat : public Animal
+class	Cat : public Animal
 {
-	protected:
-
 	public:
+		Cat();
+		Cat(const Cat& other);
+		Cat& operator=(const Cat& other);
+		virtual ~Cat();
+
+		virtual void	makeSound();
 };
 
 #endif
