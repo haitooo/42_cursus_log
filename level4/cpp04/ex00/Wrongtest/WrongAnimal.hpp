@@ -1,8 +1,9 @@
 #ifndef WRONGANIMAL_HPP
 # define WRONGANIMAL_HPP
 
-# include <iostream>
-# include <string>
+#include <iostream>
+#include <string>
+#include "TextFormatter.h"
 
 class	WrongAnimal
 {
@@ -15,8 +16,10 @@ class	WrongAnimal
 		WrongAnimal& operator=(const WrongAnimal& other);
 		~WrongAnimal();
 
-		void	makeSound();
-		void	setType(std::string type);
+		std::string	getType() const;
+		void		setType(std::string type);
+
+		void		makeSound() const;
 };
 
 #endif

@@ -1,7 +1,8 @@
 #ifndef WRONGCAT_HPP
 # define WRONGCAT_HPP
 
-# include "WrongAnimal.hpp"
+#include "WrongAnimal.hpp"
+#include "TextFormatter.h"
 
 class	WrongCat : public WrongAnimal
 {
@@ -11,7 +12,7 @@ class	WrongCat : public WrongAnimal
 		WrongCat& operator=(const WrongCat& other);
 		~WrongCat();
 
-		void	makeSound();
+		void	makeSound() const;
 };
 
 #endif

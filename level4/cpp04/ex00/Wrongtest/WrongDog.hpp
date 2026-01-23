@@ -1,7 +1,8 @@
 #ifndef WRONGDOG_HPP
 # define WRONGDOG_HPP
 
-# include "WrongAnimal.hpp"
+#include "WrongAnimal.hpp"
+#include "TextFormatter.h"
 
 class	WrongDog : public WrongAnimal
 {
@@ -11,7 +12,7 @@ class	WrongDog : public WrongAnimal
 		WrongDog& operator=(const WrongDog& other);
 		~WrongDog();
 
-		void	makeSound();
+		void	makeSound() const;
 };
 
 #endif

@@ -1,10 +1,10 @@
 #include "ClapTrap.hpp"
 
-const int	ClapTrap::default_hitPoint = 10;
-const int	ClapTrap::default_energyPoint = 10;
-const int	ClapTrap::default_attackDamage = 0;
+const  unsigned int	ClapTrap::default_hitPoint = 10;
+const unsigned int	ClapTrap::default_energyPoint = 10;
+const unsigned int	ClapTrap::default_attackDamage = 0;
 
-ClapTrap::ClapTrap(const std::string &n, int hp, int ep, int ad) :
+ClapTrap::ClapTrap(const std::string &n, unsigned int hp, unsigned int ep, unsigned int ad) :
 					name(n), hitPoints(hp), energyPoints(ep), attackDamage(ad)
 {
 	std::cout << BLUE
@@ -55,17 +55,17 @@ std::string	ClapTrap::getName() const
 	return (name);
 }
 
-int	ClapTrap::getHitPoints() const
+unsigned int	ClapTrap::getHitPoints() const
 {
 	return (hitPoints);
 }
 
-int	ClapTrap::getEnergyPoints() const
+unsigned int	ClapTrap::getEnergyPoints() const
 {
 	return (energyPoints);
 }
 
-int	ClapTrap::getAttackDamage() const
+unsigned int	ClapTrap::getAttackDamage() const
 {
 	return (attackDamage);
 }

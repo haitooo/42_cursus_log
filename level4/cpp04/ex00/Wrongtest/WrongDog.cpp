@@ -2,27 +2,43 @@
 
 WrongDog::WrongDog() : WrongAnimal("WrongDog")
 {
-	std::cout << "WrongDog default constructor called" << std::endl;
+	std::cout	<< CYAN << ITALIC
+				<< "WrongDog default constructor called"
+				<< RESET
+				<< std::endl;
 }
 
 WrongDog::WrongDog(const WrongDog& other) : WrongAnimal(other)
 {
-	std::cout << "WrongDog copy constructor called" << std::endl;
+	std::cout	<< CYAN << ITALIC
+				<< "WrongDog copy constructor called"
+				<< RESET
+				<< std::endl;
 }
 
 WrongDog& WrongDog::operator=(const WrongDog& other)
 {
-	std::cout << "WrongDog copy assignment operator called" << std::endl;
-	setType(other.type);
+	std::cout	<< CYAN << ITALIC
+				<< "WrongDog copy assignment operator called"
+				<< RESET
+				<< std::endl;
+
+	if (this == &other)
+		return (*this);
+
+	WrongAnimal::operator=(other);
 	return (*this);
 }
 
 WrongDog::~WrongDog()
 {
-	std::cout << "WrongDog destructor called" << std::endl;
+	std::cout	<< MAGENTA << ITALIC
+				<< "WrongDog destructor called"
+				<< RESET
+				<< std::endl;
 }
 
-void	WrongDog::makeSound()
+void	WrongDog::makeSound() const
 {
 	std::cout << "Woof" << std::endl;
 }
