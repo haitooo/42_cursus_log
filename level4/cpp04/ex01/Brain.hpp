@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "TextFormatter.h"
 
 class	Brain
 {
@@ -15,6 +16,8 @@ class	Brain
 		Brain& operator=(const Brain& other);
 		~Brain();
 
+		const std::string&	getIdea(int index) const;
+		void				setIdea(int index, const std::string& idea);
 };
 
 #endif

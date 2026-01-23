@@ -1,4 +1,4 @@
-NAME = ex00.out
+NAME = ex01.out
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 OBJDIR = objs
@@ -6,9 +6,7 @@ SRCS =	main.cpp \
 		Animal.cpp \
 		Dog.cpp \
 		Cat.cpp \
-		Wrongtest/WrongAnimal.cpp \
-		Wrongtest/WrongCat.cpp \
-		Wrongtest/WrongDog.cpp
+		Brain.cpp
 INC = -I .
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 
