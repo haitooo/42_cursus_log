@@ -43,23 +43,23 @@ int main()
 	delete sleepycat;
 	delete newcat;
 
-	// std::cout << "======= Brain test =======" << std::endl;
+	std::cout << "======= Brain test =======" << std::endl;
 
-	// Brain*		brain = new Brain();
-	// std::string	idea = "I want to eat.";
-	// std::string	idea2 = "I want to sleep.";
+	Brain*		brain = new Brain();
+	std::string	idea2 = "I want to eat.";
+	std::string	idea3 = "I want to sleep.";
 
-	// brain->setIdea(4, idea);
-	// brain->setIdea(88, idea2);
+	brain->setIdea(4, idea2);
+	brain->setIdea(88, idea3);
 
-	// for (int i = 0; i < 100; i++)
-	// 	std::cout << "i = " << i << " : " << brain->getIdea(i) << std::endl;
+	for (int i = 0; i < 100; i++)
+		std::cout << "i = " << i << " : " << brain->getIdea(i) << std::endl;
 
-	// std::cout << "======= Brain error test =======" << std::endl;
-	// std::cout << brain->getIdea(100) << std::endl;
-	// brain->setIdea(100, idea);
+	std::cout << "======= Brain error test =======" << std::endl;
+	std::cout << brain->getIdea(100) << std::endl;
+	brain->setIdea(100, idea);
 
-	// delete brain;
+	delete brain;
 
 	return (0);
 }
