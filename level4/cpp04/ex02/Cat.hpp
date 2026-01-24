@@ -17,7 +17,7 @@ class	Cat : public AAnimal
 
 		Brain&	getBrain() const;
 
-		void			makeSound() const; /*override*/
+		void	makeSound() const; /*override*/
 };
 
 #endif
