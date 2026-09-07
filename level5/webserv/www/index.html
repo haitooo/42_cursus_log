@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SITE-A — webserv</title></head>
+<body>
+	<h1>SITE-A</h1>
+	<p>The site on port 8080. Its root is <code>./www</code>,
+	configured in <code>conf/default.conf</code>.</p>
+
+	<h2>Static content</h2>
+	<ul>
+		<li><a href="/static/">/static/</a> — a listing of a directory under this site (<code>autoindex on</code>)</li>
+		<li><a href="/listing/">/listing/</a> — a listing of a location with a root of its own</li>
+		<li><a href="/nothing-here">/nothing-here</a> — 404, served from the page named by <code>error_page</code></li>
+	</ul>
+
+	<h2>Routing</h2>
+	<ul>
+		<li><a href="/old">/old</a> — a 301 redirect (<code>return</code>)</li>
+		<li><a href="/upload/">/upload/</a> — what has been uploaded. POST stores a file here, DELETE removes it</li>
+	</ul>
+
+	<h2>CGI</h2>
+	<ul>
+		<li><a href="/cgi-bin/hello.py">/cgi-bin/hello.py</a> — Python</li>
+		<li><a href="/cgi-sh/hello.sh">/cgi-sh/hello.sh</a> — shell</li>
+		<li><a href="/cgi-pl/hello.pl">/cgi-pl/hello.pl</a> — Perl</li>
+		<li><a href="/cgi-exe/greeting.bin">/cgi-exe/greeting.bin</a> — a compiled CGI of our own</li>
+		<li><a href="/cgi-bin/cwd.py">/cgi-bin/cwd.py</a> — the directory it runs in, and the file beside it opened by a bare name</li>
+		<li><a href="/cgi-bin/hang.py">/cgi-bin/hang.py</a> — a CGI that never answers. Killed by its deadline, answered 504</li>
+	</ul>
+
+	<h2>Session</h2>
+	<ul>
+		<li><a href="/session">/session</a> — sets a cookie, then recognises the same session on every later visit</li>
+	</ul>
+
+	<h2>The other port</h2>
+	<ul>
+		<li><a href="http://127.0.0.1:8081/">SITE-B (port 8081)</a> — a different site, with a root of its own</li>
+	</ul>
+</body>
+</html>
