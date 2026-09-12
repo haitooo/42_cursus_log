@@ -13,6 +13,7 @@ class	Bureaucrat {
 		static int const	lowestGrade;
 
 		static int	validGrade(int value);
+
 	public:
 		Bureaucrat();
 		Bureaucrat(std::string const & name, int grade);

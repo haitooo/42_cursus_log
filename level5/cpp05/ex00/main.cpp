@@ -1,150 +1,93 @@
 #include "Bureaucrat.hpp"
 #include "TextFormatter.h"
+#include <iostream>
+#include <sstream>
+#include <stdexcept>
+#include <string>
 
-/*
-** Adjacent string literals are concatenated by the preprocessor, so these tags
-** cost nothing at runtime: BOLD GREEN "[ ok ]" RESET is a single literal.
-*/
-#define TAG_OK		BOLD GREEN "[ ok  ]" RESET
-#define TAG_THROW	BOLD CYAN "[throw]" RESET
-#define TAG_BAD		BOLD RED "[ !!  ]" RESET
-#define TAG_NOTE	DIM "        ->" RESET
-
-static void	title(int n, std::string const & text)
+static std::string	prompt(std::string const & message)
 {
-	std::cout << std::endl
-		<< BOLD << YELLOW << "==== " << n << ". " << text << " ====" << RESET << std::endl;
+	std::string	line;
+
+	std::cout << CYAN << message << RESET << std::endl;
+	if (!std::getline(std::cin, line))
+		throw std::runtime_error("input closed");
+
+	return (line);
+}
+
+static int	parseGrade(std::string const & str)
+{
+	std::istringstream	iss(str);
+	std::string			rest;
+	int					value;
+
+	if (!(iss >> value) || (iss >> rest))
+		throw std::runtime_error("grade must be an integer");
+
+	return (value);
+}
+
+static Bureaucrat	createBureaucrat()
+{
+	std::string	name = prompt("Enter Name");
+	std::string	grade_str = prompt("Enter Grade");
+
+	if (grade_str.empty())
+	{
+		std::cout << RED << "Grade is empty. created with default Name \"Bob\" and lowestgrade 150" << RESET << std::endl;
+		return (Bureaucrat());
+	}
+
+	return (Bureaucrat(name, parseGrade(grade_str)));
+}
+
+static void	runCommandLoop(Bureaucrat & bureaucrat)
+{
+	std::string	command;
+
+	while (1)
+	{
+		std::cout << YELLOW << "plz select command. [i] increment / [d] decrement / [q] quit" << RESET << std::endl;
+		if (!std::getline(std::cin, command) || command == "q")
+			break ;
+
+		try
+		{
+			if (command == "i")
+				bureaucrat.incrementGrade();
+			else if (command == "d")
+				bureaucrat.decrementGrade();
+			else
+			{
+				std::cout << MAGENTA << "unknown command: " << command << RESET << std::endl;
+				continue ;
+			}
+			std::cout << bureaucrat << std::endl;
+		}
+		catch (std::exception & e)
+		{
+			std::cout << RED << e.what() << RESET << std::endl;
+		}
+	}
 }
 
 int	main(void)
 {
-	title(1, "valid grades, including both bounds");
 	try
 	{
-		Bureaucrat	alice("Alice", 42);
-		Bureaucrat	best("Best", 1);
-		Bureaucrat	worst("Worst", 150);
+		Bureaucrat	bureaucrat = createBureaucrat();
 
-		std::cout << TAG_OK << " " << alice << std::endl;
-		std::cout << TAG_OK << " " << best << std::endl;
-		std::cout << TAG_OK << " " << worst << std::endl;
+		std::cout << GREEN << "succes create bureaucrat!!" << RESET << std::endl;
+		std::cout << bureaucrat << std::endl;
+
+		runCommandLoop(bureaucrat);
 	}
 	catch (std::exception & e)
 	{
-		std::cout << TAG_BAD << " unexpected: " << e.what() << std::endl;
+		std::cout << RED << e.what() << RESET << std::endl;
+		return (1);
 	}
-
-	title(2, "construction with grade 0 -> too high");
-	try
-	{
-		Bureaucrat	nope("Nope", 0);
-		std::cout << TAG_BAD << " " << nope << std::endl;
-	}
-	catch (Bureaucrat::GradeTooHighException & e)
-	{
-		std::cout << TAG_THROW << " caught by exact type: " << BWHITE << e.what() << RESET << std::endl;
-	}
-	catch (std::exception & e)
-	{
-		std::cout << TAG_BAD << " caught by base: " << e.what() << std::endl;
-	}
-
-	title(3, "construction with grade 151 -> too low");
-	try
-	{
-		Bureaucrat	nope("Nope", 151);
-		std::cout << TAG_BAD << " " << nope << std::endl;
-	}
-	catch (Bureaucrat::GradeTooLowException & e)
-	{
-		std::cout << TAG_THROW << " caught by exact type: " << BWHITE << e.what() << RESET << std::endl;
-	}
-	catch (std::exception & e)
-	{
-		std::cout << TAG_BAD << " caught by base: " << e.what() << std::endl;
-	}
-
-	title(4, "increment lowers the number, decrement raises it");
-	try
-	{
-		Bureaucrat	bob("Bob", 3);
-
-		std::cout << TAG_OK << " start:                    " << bob << std::endl;
-		bob.incrementGrade();
-		std::cout << TAG_OK << " after incrementGrade():   " << bob << std::endl;
-		bob.decrementGrade();
-		bob.decrementGrade();
-		std::cout << TAG_OK << " after 2x decrementGrade(): " << bob << std::endl;
-	}
-	catch (std::exception & e)
-	{
-		std::cout << TAG_BAD << " unexpected: " << e.what() << std::endl;
-	}
-
-	title(5, "incrementGrade() at grade 1 -> too high");
-	try
-	{
-		Bureaucrat	top("Top", 1);
-
-		std::cout << TAG_OK << " " << top << std::endl;
-		top.incrementGrade();
-		std::cout << TAG_BAD << " NOT REACHED" << std::endl;
-	}
-	catch (std::exception & e)
-	{
-		std::cout << TAG_THROW << " caught: " << BWHITE << e.what() << RESET << std::endl;
-	}
-
-	title(6, "decrementGrade() at grade 150 -> too low");
-	try
-	{
-		Bureaucrat	bottom("Bottom", 150);
-
-		std::cout << TAG_OK << " " << bottom << std::endl;
-		bottom.decrementGrade();
-		std::cout << TAG_BAD << " NOT REACHED" << std::endl;
-	}
-	catch (std::exception & e)
-	{
-		std::cout << TAG_THROW << " caught: " << BWHITE << e.what() << RESET << std::endl;
-	}
-
-	title(7, "the object survives a thrown exception unchanged");
-	{
-		Bureaucrat	carol("Carol", 1);
-
-		try
-		{
-			carol.incrementGrade();
-		}
-		catch (std::exception & e)
-		{
-			std::cout << TAG_THROW << " caught: " << BWHITE << e.what() << RESET << std::endl;
-		}
-		std::cout << TAG_OK << " still usable: " << carol << std::endl;
-	}
-
-	title(8, "copy constructor and copy assignment");
-	{
-		Bureaucrat	original("Original", 10);
-		Bureaucrat	copied(original);
-		Bureaucrat	assigned("Assigned", 100);
-
-		assigned = original;
-		std::cout << TAG_OK << " original: " << original << std::endl;
-		std::cout << TAG_OK << " copied:   " << copied << std::endl;
-		std::cout << TAG_OK << " assigned: " << assigned << std::endl;
-		std::cout << TAG_NOTE << " the name is const, so assignment only copies the grade" << std::endl;
-	}
-
-	title(9, "default constructor");
-	{
-		Bureaucrat	def;
-
-		std::cout << TAG_OK << " " << def << std::endl;
-	}
-
-	std::cout << std::endl;
 
 	return (0);
 }
