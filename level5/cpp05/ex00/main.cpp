@@ -16,14 +16,14 @@ static std::string	prompt(std::string const & message)
 	return (line);
 }
 
-static int	parseGrade(std::string const & str)
+static int	parseInt(std::string const & str)
 {
 	std::istringstream	iss(str);
 	std::string			rest;
 	int					value;
 
 	if (!(iss >> value) || (iss >> rest))
-		throw std::runtime_error("grade must be an integer");
+		throw std::runtime_error("not an integer");
 
 	return (value);
 }
@@ -39,7 +39,35 @@ static Bureaucrat	createBureaucrat()
 		return (Bureaucrat());
 	}
 
-	return (Bureaucrat(name, parseGrade(grade_str)));
+	return (Bureaucrat(name, parseInt(grade_str)));
+}
+
+static void	changeGrade(Bureaucrat & bureaucrat, std::string const & command)
+{
+	int	count = parseInt(prompt("Enter How Many Grades"));
+
+	if (count <= 0)
+	{
+		std::cout << MAGENTA << "count must be positive: " << count << RESET << std::endl;
+		return ;
+	}
+
+	try
+	{
+		while (count > 0)
+		{
+			if (command == "i")
+				bureaucrat.incrementGrade();
+			else
+				bureaucrat.decrementGrade();
+			count--;
+		}
+	}
+	catch (std::exception & e)
+	{
+		std::cout << RED << e.what() << RESET << std::endl;
+	}
+	std::cout << bureaucrat << std::endl;
 }
 
 static void	runCommandLoop(Bureaucrat & bureaucrat)
@@ -54,16 +82,10 @@ static void	runCommandLoop(Bureaucrat & bureaucrat)
 
 		try
 		{
-			if (command == "i")
-				bureaucrat.incrementGrade();
-			else if (command == "d")
-				bureaucrat.decrementGrade();
+			if (command == "i" || command == "d")
+				changeGrade(bureaucrat, command);
 			else
-			{
 				std::cout << MAGENTA << "unknown command: " << command << RESET << std::endl;
-				continue ;
-			}
-			std::cout << bureaucrat << std::endl;
 		}
 		catch (std::exception & e)
 		{
