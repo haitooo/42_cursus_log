@@ -105,6 +105,34 @@ static void	clearForms(Form** forms, int & count)
 	count = 0;
 }
 
+static void	changeGrade(Bureaucrat & bureaucrat, std::string const & command)
+{
+	int	count = parseInt(prompt("Enter How Many Grades"));
+
+	if (count <= 0)
+	{
+		std::cout << MAGENTA << "count must be positive: " << count << RESET << std::endl;
+		return ;
+	}
+
+	try
+	{
+		while (count > 0)
+		{
+			if (command == "i")
+				bureaucrat.incrementGrade();
+			else
+				bureaucrat.decrementGrade();
+			count--;
+		}
+	}
+	catch (std::exception & e)
+	{
+		std::cout << RED << e.what() << RESET << std::endl;
+	}
+	std::cout << bureaucrat << std::endl;
+}
+
 static void	runCommandLoop(Bureaucrat & bureaucrat)
 {
 	Form*		forms[MAX_FORM];
@@ -122,16 +150,8 @@ static void	runCommandLoop(Bureaucrat & bureaucrat)
 
 		try
 		{
-			if (command == "i")
-			{
-				bureaucrat.incrementGrade();
-				std::cout << bureaucrat << std::endl;
-			}
-			else if (command == "d")
-			{
-				bureaucrat.decrementGrade();
-				std::cout << bureaucrat << std::endl;
-			}
+			if (command == "i" || command == "d")
+				changeGrade(bureaucrat, command);
 			else if (command == "m")
 				createForm(forms, count);
 			else if (command == "f")
