@@ -4,7 +4,7 @@
 #include <exception>
 #include <string>
 
-class	AForm;
+#include "AForm.hpp"
 
 class	Intern {
 	private:
