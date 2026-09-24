@@ -100,7 +100,7 @@ int	main(void)
 	{
 		Bureaucrat	bureaucrat = createBureaucrat();
 
-		std::cout << GREEN << "succes create bureaucrat!!" << RESET << std::endl;
+		std::cout << GREEN << "success create bureaucrat!!" << RESET << std::endl;
 		std::cout << bureaucrat << std::endl;
 
 		runCommandLoop(bureaucrat);
