@@ -9,6 +9,11 @@ INC = -I .
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 DEPS = $(OBJS:.o=.d)
 
+TEST_NAME = test.out
+TEST_SRCS = test/constructor_test.cpp $(filter-out main.cpp, $(SRCS))
+TEST_OBJS = $(addprefix $(OBJDIR)/, $(TEST_SRCS:.cpp=.o))
+TEST_DEPS = $(TEST_OBJS:.o=.d)
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -19,6 +24,13 @@ clean:
 
 fclean: clean
 		rm -f $(NAME)
+		rm -f $(TEST_NAME)
+
+test: $(TEST_NAME)
+	@./$(TEST_NAME)
+
+$(TEST_NAME): $(TEST_OBJS)
+		$(CXX) $(CXXFLAGS) $(TEST_OBJS) -o $(TEST_NAME)
 
 re: fclean all
 
@@ -26,6 +38,6 @@ $(OBJDIR)/%.o:%.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(DEPFLAGS) $(INC) -c $< -o $@
 
--include $(DEPS)
+-include $(DEPS) $(TEST_DEPS)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test
