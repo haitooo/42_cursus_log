@@ -30,26 +30,26 @@ void	RPN::applyOperator(char op)
 	if (numbers.size() < 2)
 		throw RunTimeErrorException("Error: not enough operands for '" + std::string(1, op) + "'");
 
-	long	right = numbers.top();
-	numbers.pop();
-	long	left = numbers.top();
-	numbers.pop();
+	long	right = numbers.back();
+	numbers.pop_back();
+	long	left = numbers.back();
+	numbers.pop_back();
 
 	switch (op)
 	{
 		case '+':
-			numbers.push(left + right);
+			numbers.push_back(left + right);
 			break ;
 		case '-':
-			numbers.push(left - right);
+			numbers.push_back(left - right);
 			break ;
 		case '*':
-			numbers.push(left * right);
+			numbers.push_back(left * right);
 			break ;
 		case '/':
 			if (right == 0)
 				throw RunTimeErrorException("Error: division by zero");
-			numbers.push(left / right);
+			numbers.push_back(left / right);
 			break ;
 	}
 }
@@ -59,8 +59,7 @@ long	RPN::calculate()
 	std::istringstream	iss(input);
 	std::string			token;
 
-	while (!numbers.empty())
-		numbers.pop();
+	numbers.clear();
 
 	while (iss >> token)
 	{
@@ -70,7 +69,7 @@ long	RPN::calculate()
 		char	c = token[0];
 
 		if (std::isdigit(static_cast<unsigned char>(c)))
-			numbers.push(c - '0');
+			numbers.push_back(c - '0');
 		else if (c == '+' || c == '-' || c == '*' || c == '/')
 			applyOperator(c);
 		else
@@ -80,7 +79,7 @@ long	RPN::calculate()
 	if (numbers.size() != 1)
 		throw RunTimeErrorException("Error: invalid expression");
 
-	return (numbers.top());
+	return (numbers.back());
 }
 
 RPN::RunTimeErrorException::RunTimeErrorException()

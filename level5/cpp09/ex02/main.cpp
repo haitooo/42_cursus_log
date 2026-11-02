@@ -23,7 +23,6 @@ int	main(int argc, char **argv)
 
 	try
 	{
-		// 計測には引数の読み込み（コンテナへの格納）と並べ替えの両方を含める
 		start = std::clock();
 		sorter.sortVector(argc - 1, argv + 1);
 		vectorUs = elapsedUs(start, std::clock());

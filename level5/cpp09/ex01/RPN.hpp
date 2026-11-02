@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <string>
-#include <stack>
 #include <list>
 #include <stdexcept>
 
 class	RPN {
 	private:
-		std::string							input;
-		std::stack<long, std::list<long> >	numbers;
+		std::string			input;
+		std::list<long>		numbers;
 
 		RPN();
 

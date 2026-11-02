@@ -201,7 +201,6 @@ static void	testInvalidInput()
 	check("no numbers throws and what() is \"Error\"", messageIsError);
 }
 
-// Knuth TAOCP Vol.3 5.3.1 の F(n) = Σ ceil(log2(3k/4))：Ford-Johnson の最悪比較回数
 static std::size_t	fordJohnsonBound(std::size_t n)
 {
 	std::size_t	sum = 0;
