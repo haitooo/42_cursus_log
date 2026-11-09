@@ -1,0 +1,6 @@
+*.local
+data/
+secrets/*
+
+.omc
+.env
