@@ -80,7 +80,7 @@ validate_password_value() {
 	password_name="$2"
 
 	if test "${#password}" -lt 8; then
-		log_error "$password_name password must be at least 16 characters."
+		log_error "$password_name password must be at least 8 characters."
 		exit 1
 	fi
 

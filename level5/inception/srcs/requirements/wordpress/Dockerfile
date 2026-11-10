@@ -5,6 +5,7 @@ RUN apt-get update -e any && \
 		 php8.2-fpm \
 		php8.2-cli \
 		php8.2-mysql \
+		php8.2-redis \
 		curl \
 		ca-certificates && \
 	rm -rf /var/lib/apt/lists/*
@@ -17,9 +18,9 @@ RUN curl -fsSL "https://github.com/wp-cli/wp-cli/releases/download/v${WP_CLI_VER
 	mkdir -p /run/php
 
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
-COPY tools/wp_setup.sh /usr/local/bin/
+COPY tools/wp_setup.sh tools/wp_bonus_setup.sh /usr/local/bin/
 
-RUN chmod +x /usr/local/bin/wp_setup.sh
+RUN chmod +x /usr/local/bin/wp_setup.sh /usr/local/bin/wp_bonus_setup.sh
 
 WORKDIR /var/www/html
 

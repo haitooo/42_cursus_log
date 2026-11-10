@@ -1,0 +1,20 @@
+compatibility_level = 3.6
+
+myhostname = mail.inception.local
+mydestination =
+local_transport = error:local delivery is disabled
+alias_maps =
+alias_database =
+
+inet_interfaces = all
+inet_protocols = ipv4
+mynetworks = 127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
+smtpd_relay_restrictions = permit_mynetworks, reject
+
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = texthash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_security_level = encrypt
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+maillog_file = /dev/stdout

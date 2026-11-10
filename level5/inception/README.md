@@ -33,6 +33,11 @@ and the website files are stored in two Docker named volumes whose data lives in
            /home/haito/data/wordpress                      /home/haito/data/mariadb
 ```
 
+As a bonus, `make bonus` adds five more services, each in its own container:
+a Redis object cache for WordPress, an FTP server on the WordPress files,
+Adminer, a static website, and a mail relay that lets WordPress send e-mails
+(password reset, self-registration) through Gmail.
+
 ## Instructions
 
 Prerequisites: a Linux VM with Docker Engine, the Docker Compose plugin and `make`.
@@ -52,7 +57,7 @@ Full details are in [DEV_DOC.md](DEV_DOC.md); day-to-day use is described in
    - `secrets/db_password.txt`: MariaDB password of the WordPress user
    - `secrets/credentials.txt`: `WP_ADMIN_PASSWORD=...` and `WP_USER_PASSWORD=...`
 
-   Database passwords must be 16 to 128 characters long and contain a lowercase
+   Database passwords must be 8 to 128 characters long and contain a lowercase
    letter, an uppercase letter and a digit.
 4. Build and start everything:
    ```sh
@@ -64,6 +69,12 @@ Full details are in [DEV_DOC.md](DEV_DOC.md); day-to-day use is described in
 Other targets: `make stop` / `make start`, `make down` (remove the containers,
 keep the data), `make clean` (also remove volumes and images, keep the files in
 `/home/haito/data`), `make fclean` (also delete the data), `make re`.
+
+Bonus services: add `FTP_USER`, `MAIL_RELAY_HOST`, `MAIL_RELAY_PORT` and
+`MAIL_RELAY_USER` to `srcs/.env`, create `secrets/ftp_password.txt` and
+`secrets/mail_password.txt` (a Gmail app password), then run `make bonus`.
+See [DEV_DOC.md](DEV_DOC.md) for the details and [USER_DOC.md](USER_DOC.md) for
+how to use and check each service.
 
 ## Project description
 
@@ -83,12 +94,21 @@ creates the containers, the network, the volumes and the secrets.
 ├── secrets/                      # passwords, ignored by git, mounted as Docker secrets
 │   ├── credentials.txt           # WordPress user passwords
 │   ├── db_password.txt           # MariaDB password of the WordPress user
-│   └── db_root_password.txt      # MariaDB root password
+│   ├── db_root_password.txt      # MariaDB root password
+│   ├── ftp_password.txt          # bonus: FTP password
+│   └── mail_password.txt         # bonus: Gmail app password
 └── srcs/
     ├── docker-compose.yml        # services, network, volumes, secrets
+    ├── docker-compose.bonus.yml  # bonus services, used together with docker-compose.yml
     ├── .env.example              # template for .env (non-secret settings)
     ├── .env                      # ignored by git
     └── requirements/
+        ├── bonus/
+        │   ├── redis/            # Dockerfile, conf/redis.conf
+        │   ├── ftp/              # Dockerfile, conf/vsftpd.conf, tools/ftp_setup.sh
+        │   ├── adminer/          # Dockerfile
+        │   ├── website/          # Dockerfile, site/ (index.html, style.css)
+        │   └── mail/             # Dockerfile, conf/main.cf, tools/mail_setup.sh
         ├── mariadb/
         │   ├── Dockerfile
         │   ├── conf/60-inception.cnf     # listen on all interfaces, port 3306
@@ -96,7 +116,8 @@ creates the containers, the network, the volumes and the secrets.
         ├── wordpress/
         │   ├── Dockerfile
         │   ├── conf/www.conf             # php-fpm pool listening on port 9000
-        │   └── tools/wp_setup.sh         # download, configure and install WordPress, then exec php-fpm
+        │   ├── tools/wp_setup.sh         # download, configure and install WordPress, then exec php-fpm
+        │   └── tools/wp_bonus_setup.sh   # bonus: Redis cache and e-mail settings, called by wp_setup.sh
         └── nginx/
             ├── Dockerfile
             ├── conf/nginx.conf           # HTTPS server on 443, TLSv1.2/1.3, FastCGI to wordpress:9000
@@ -159,7 +180,7 @@ creates the containers, the network, the volumes and the secrets.
   (MariaDB limit for database names). `DB_USER` may have at most 32 characters:
   older MariaDB versions limit user names to 32 characters while newer ones allow
   more, so the lower limit is used because the MariaDB version is not pinned.
-  Both passwords must be 16 to 128 characters long and contain a lowercase
+  Both passwords must be 8 to 128 characters long and contain a lowercase
   letter, an uppercase letter and a digit.
 - **Network and logs.** `conf/60-inception.cnf` sets `bind-address = 0.0.0.0` so
   that MariaDB accepts connections on every interface of the container (the
@@ -279,6 +300,49 @@ Other ways to get the data into `/home/haito/data` were considered:
   assigned, so WordPress displays the most recently published menu, which puts the
   link in the header. The menu is created only once.
 
+#### `/favicon.ico` answered by NGINX
+
+Browsers request `/favicon.ico` on every page. The site has no such file, so the
+generic `location /` rule passed the request to WordPress, which redirected it to
+`/favicon.ico/` and then rendered the whole home page again: one page view ran
+WordPress three times. A dedicated `location = /favicon.ico` rule now returns 404
+directly from NGINX when the file does not exist, without logging it.
+
+#### Bonus services
+
+- **A second Compose file.** The bonus services are declared in
+  `srcs/docker-compose.bonus.yml` and started with `make bonus`. `make` still
+  starts the mandatory services only, so the mandatory part can be evaluated
+  without any bonus container. `wordpress` only uses Redis and the mail relay when
+  the bonus file sets `REDIS_HOST` and `MAIL_HOST`; otherwise the Redis drop-in
+  and the SMTP plugin are removed before WordPress is loaded. This logic lives in
+  a separate script, `wp_bonus_setup.sh`, which `wp_setup.sh` calls at two points
+  (`before-install` and `after-install`), so that the mandatory script contains no
+  bonus code.
+- **Ports.** Adminer (8082) and FTP (21, 21100-21110) give direct access to the
+  database and the files, so they are published on `127.0.0.1` only. The static
+  website (8081) is published on every interface. Redis and the mail relay are
+  not published at all; they are only used by `wordpress` inside `inception_net`.
+- **Redis** is used as a cache only (no persistence, 64 MB, least recently used
+  keys evicted). The WordPress plugin "Redis Object Cache" stores the results of
+  database queries in Redis.
+- **FTP** shares the WordPress volume. The FTP user has the UID and GID of
+  `www-data`, so files uploaded over FTP can be read by php-fpm, and it is locked
+  in `/var/www/html`. vsftpd can only log to a regular file, so its log is
+  `/var/log/vsftpd.log` inside the container.
+- **Adminer** comes from the Debian package and is served by PHP's built-in web
+  server, as `www-data`: one administrator at a time is enough for this tool.
+- **The static website** is plain HTML and CSS served by `busybox httpd`.
+- **Service of my choice: a mail relay.** WordPress needs to send e-mails for
+  password resets and for self-registration (a new user receives a link to set
+  the password), but the mandatory stack cannot send any e-mail. The `mail`
+  container runs Postfix as a relay: WordPress sends its messages to `mail:25`
+  over SMTP (through a small must-use plugin written by `wp_bonus_setup.sh`), and
+  Postfix forwards them to Gmail's SMTP server over TLS, authenticated with an
+  app password stored as a Docker secret. Sending through Gmail is needed because
+  mail sent directly from a home or school network is usually blocked or treated
+  as spam. Self-registration is turned on only when the relay is running.
+
 ### Virtual Machines vs Docker
 
 Both isolate applications from each other and from the host, but at different levels.
@@ -354,6 +418,9 @@ Official documentation, used for directory layouts, options and behaviour:
 - [NGINX documentation](https://nginx.org/en/docs/) - `ngx_http_ssl_module`, `ngx_http_fastcgi_module`
 - [WordPress developer resources](https://developer.wordpress.org/) and [WP-CLI commands](https://developer.wordpress.org/cli/commands/)
 - [Docker documentation](https://docs.docker.com/) - Dockerfile, Compose file reference, volumes, secrets, networking
+- [Postfix documentation](https://www.postfix.org/documentation.html) - relay host, SASL authentication, TLS (bonus)
+- [vsftpd manual](https://security.appspot.com/vsftpd/vsftpd_conf.html) - `vsftpd.conf` options (bonus)
+- [Redis documentation](https://redis.io/docs/) and [Redis Object Cache plugin](https://wordpress.org/plugins/redis-cache/) (bonus)
 
 Other:
 
@@ -376,6 +443,11 @@ AI (Claude) was used as an assistant for:
 - **Information gathering and documentation**: looking up how Docker, MariaDB,
   NGINX and WordPress behave, and translating and editing these documents from my
   own notes.
+- **Bonus services**: drafting the Dockerfiles, configuration files and setup
+  scripts of the bonus services (following the style of my mandatory scripts),
+  then testing each service with me (Redis hits and misses, FTP upload and
+  download, Adminer log-in, e-mail relay) and fixing the problems found, such as
+  vsftpd being unable to log to stdout and a Redis drop-in left in the volume.
 
 Every suggestion was tested in the running stack before being kept, and I made
 the design decisions myself.

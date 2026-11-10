@@ -6,6 +6,7 @@ DB_HOST="mariadb:3306"
 DB_PASS_PATH="/run/secrets/db_password"
 CREDENTIALS_PATH="/run/secrets/credentials"
 FPM_USER="www-data"
+BONUS_SETUP="/usr/local/bin/wp_bonus_setup.sh"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -304,6 +305,12 @@ create_header_navigation() {
 	log_success "$nav_title created."
 }
 
+run_bonus_setup() {
+	if test -x "$BONUS_SETUP"; then
+		"$BONUS_SETUP" "$1"
+	fi
+}
+
 set_permissions() {
 	log_info "Setting permissions for $FPM_USER..."
 
@@ -325,9 +332,11 @@ main() {
 	download_wordpress
 	wait_for_database
 	create_config
+	run_bonus_setup before-install
 	install_wordpress
 	create_second_user
 	create_header_navigation
+	run_bonus_setup after-install
 	set_permissions
 
 	log_success "WordPress setup completed."

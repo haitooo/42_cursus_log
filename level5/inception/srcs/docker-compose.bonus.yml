@@ -1,0 +1,73 @@
+services:
+  wordpress:
+    environment:
+      REDIS_HOST: redis
+      MAIL_HOST: mail
+    depends_on:
+      - redis
+      - mail
+
+  redis:
+    build:
+      context: ./requirements/bonus/redis
+    image: redis:inception
+    networks:
+      - inception_net
+    restart: unless-stopped
+
+  ftp:
+    build:
+      context: ./requirements/bonus/ftp
+    image: ftp:inception
+    env_file: .env
+    depends_on:
+      - wordpress
+    networks:
+      - inception_net
+    ports:
+      - "127.0.0.1:21:21"
+      - "127.0.0.1:21100-21110:21100-21110"
+    volumes:
+      - wordpress_data:/var/www/html:rw
+    secrets:
+      - ftp_password
+    restart: unless-stopped
+
+  adminer:
+    build:
+      context: ./requirements/bonus/adminer
+    image: adminer:inception
+    depends_on:
+      - mariadb
+    networks:
+      - inception_net
+    ports:
+      - "127.0.0.1:8082:8080"
+    restart: unless-stopped
+
+  website:
+    build:
+      context: ./requirements/bonus/website
+    image: website:inception
+    networks:
+      - inception_net
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  mail:
+    build:
+      context: ./requirements/bonus/mail
+    image: mail:inception
+    env_file: .env
+    networks:
+      - inception_net
+    secrets:
+      - mail_password
+    restart: unless-stopped
+
+secrets:
+  ftp_password:
+    file: ../secrets/ftp_password.txt
+  mail_password:
+    file: ../secrets/mail_password.txt
