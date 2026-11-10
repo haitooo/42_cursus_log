@@ -23,4 +23,5 @@ RUN chmod +x /usr/local/bin/wp_setup.sh
 
 WORKDIR /var/www/html
 
-ENTRYPOINT [ "/bin/sh", "-c", "/usr/local/bin/wp_setup.sh && exec /usr/sbin/php-fpm8.2 -F" ]
+ENTRYPOINT ["/usr/local/bin/wp_setup.sh"]
+CMD ["/usr/sbin/php-fpm8.2", "-F"]

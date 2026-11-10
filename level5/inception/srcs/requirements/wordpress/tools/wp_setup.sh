@@ -309,6 +309,8 @@ main() {
 	set_permissions
 
 	log_success "WordPress setup completed."
+
+	exec "$@"
 }
 
-main
+main "$@"

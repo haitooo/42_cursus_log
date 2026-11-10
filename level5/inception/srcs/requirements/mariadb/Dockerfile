@@ -9,4 +9,5 @@ COPY tools/db_setup.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/db_setup.sh
 
-ENTRYPOINT ["/bin/sh", "-c", "/usr/local/bin/db_setup.sh && exec mariadbd --user=mysql --console"]
+ENTRYPOINT ["/usr/local/bin/db_setup.sh"]
+CMD ["mariadbd", "--user=mysql", "--console"]

@@ -5,15 +5,11 @@ DB_PASS_PATH="/run/secrets/db_password"
 DB_ROOT_PASS_PATH="/run/secrets/db_root_password"
 DB_DATA_DIR="/var/lib/mysql"
 DB_RUNTIME_DIR="/run/mysqld"
-ROOT_CLIENT_CONFIG="/run/mariadb-root-client.cnf"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 RESET='\033[0m'
-
-server_pid=""
 
 log_info() {
 	printf "${BLUE}[INFO]${RESET} %s\n" "$1"
@@ -21,10 +17,6 @@ log_info() {
 
 log_success() {
 	printf "${GREEN}[ OK ]${RESET} %s\n" "$1"
-}
-
-log_warn() {
-	printf "${YELLOW}[WARN]${RESET} %s\n" "$1"
 }
 
 log_error() {
@@ -153,18 +145,6 @@ prepare_runtime() {
 	log_success "MariaDB runtime directory prepared."
 }
 
-create_root_client_config() {
-	(
-		umask 077
-		printf '[client]\nuser=root\npassword="%s"\nprotocol=socket\n' \
-			"$DB_ROOT_PASSWORD" > "$ROOT_CLIENT_CONFIG"
-	)
-}
-
-mariadb_root() {
-	mariadb --defaults-extra-file="$ROOT_CLIENT_CONFIG" "$@"
-}
-
 initialize_database() {
 	if test -d "$DB_DATA_DIR/mysql"; then
 		log_info "Existing MariaDB system tables detected. Skipping initialization."
@@ -181,55 +161,13 @@ initialize_database() {
 	log_success "MariaDB data directory initialized."
 }
 
-start_temporary_server() {
-	log_info "Starting temporary MariaDB server..."
-
-	mariadbd --user=mysql --datadir="$DB_DATA_DIR" --skip-networking &
-
-	server_pid=$!
-
-	attempt=0
-	until root_error=$(mariadb_root -e "SELECT 1" 2>&1)
-	do
-		attempt=$((attempt + 1))
-
-		# Access denied will not fix itself by waiting: the root password in
-		# the secret differs from the one stored in the existing database.
-		case "$root_error" in
-			*"ERROR 1045"*)
-				printf '\n'
-				log_error "db_root_password does not match the root password stored in $DB_DATA_DIR."
-				log_error "Changing db_root_password after initialization is not supported. See README."
-				exit 1
-				;;
-		esac
-
-		if ! kill -0 "$server_pid" 2>/dev/null; then
-			log_error "Temporary MariaDB server exited unexpectedly."
-			exit 1
-		fi
-
-		if test "$attempt" -ge 30; then
-			printf '\n'
-			log_error "MariaDB did not become ready after 30 attempts: $root_error"
-			exit 1
-		fi
-
-		printf "\r${YELLOW}[WAIT]${RESET} Waiting for MariaDB... (%d/30)" "$attempt"
-		sleep 1
-	done
-
-	if test "$attempt" -gt 0; then
-		printf '\n'
-	fi
-
-	log_success "Temporary MariaDB server is ready."
-}
-
 configure_database() {
 	log_info "Configuring application database and user..."
 
-	mariadb_root << EOF
+	if ! mariadbd --user=mysql --datadir="$DB_DATA_DIR" \
+		--bootstrap --skip-networking << EOF
+FLUSH PRIVILEGES;
+
 CREATE DATABASE IF NOT EXISTS \`$DB_NAME\`;
 
 CREATE USER IF NOT EXISTS '$DB_USER'@'%'
@@ -244,35 +182,12 @@ TO '$DB_USER'@'%';
 ALTER USER 'root'@'localhost'
 IDENTIFIED VIA mysql_native_password USING PASSWORD('$DB_ROOT_PASSWORD');
 EOF
-
-	log_success "Application database and user configured."
-}
-
-stop_temporary_server() {
-	log_info "Stopping temporary MariaDB server..."
-
-	mariadb-admin --defaults-extra-file="$ROOT_CLIENT_CONFIG" shutdown
-
-	wait "$server_pid"
-	server_pid=""
-
-	log_success "Temporary MariaDB server stopped."
-}
-
-cleanup() {
-	if test -n "$server_pid"; then
-		log_warn "Cleaning up temporary MariaDB server..."
-
-		if kill -0 "$server_pid" 2>/dev/null; then
-			mariadb-admin --defaults-extra-file="$ROOT_CLIENT_CONFIG" shutdown \
-				>/dev/null 2>&1 || kill "$server_pid" 2>/dev/null || :
-		fi
-
-		wait "$server_pid" 2>/dev/null || :
-		server_pid=""
+	then
+		log_error "Failed to configure the database in bootstrap mode."
+		exit 1
 	fi
 
-	rm -f "$ROOT_CLIENT_CONFIG"
+	log_success "Application database and user configured."
 }
 
 main() {
@@ -282,21 +197,12 @@ main() {
 	validate_passwords
 
 	prepare_runtime
-
-	trap 'exit 143' TERM
-	trap 'exit 130' INT
-	trap 'cleanup' EXIT
-
-	create_root_client_config
 	initialize_database
-	start_temporary_server
 	configure_database
-	stop_temporary_server
-	cleanup
-
-	trap - EXIT TERM INT
 
 	log_success "MariaDB setup completed."
+
+	exec "$@"
 }
 
-main
+main "$@"
