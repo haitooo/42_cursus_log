@@ -283,6 +283,27 @@ create_second_user() {
 	log_success "User $WP_USER created."
 }
 
+create_header_navigation() {
+	nav_title="Header navigation"
+	existing=$(wp_cli post list --post_type=wp_navigation \
+		--title="$nav_title" --format=ids)
+
+	if test -n "$existing"; then
+		log_info "$nav_title already exists. Skipping creation."
+		return 0
+	fi
+
+	log_info "Creating $nav_title with a log in link..."
+
+	wp_cli post create \
+		--post_type=wp_navigation \
+		--post_status=publish \
+		--post_title="$nav_title" \
+		--post_content='<!-- wp:page-list /--><!-- wp:loginout /-->' >/dev/null
+
+	log_success "$nav_title created."
+}
+
 set_permissions() {
 	log_info "Setting permissions for $FPM_USER..."
 
@@ -306,6 +327,7 @@ main() {
 	create_config
 	install_wordpress
 	create_second_user
+	create_header_navigation
 	set_permissions
 
 	log_success "WordPress setup completed."
