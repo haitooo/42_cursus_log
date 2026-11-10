@@ -1,6 +1,7 @@
-*.local
-data/
+.env
 secrets/*
 
-.omc
-.env
+/README
+
+*.local
+.omc/
