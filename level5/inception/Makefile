@@ -35,6 +35,15 @@ ps:
 logs:
 	$(COMPOSE) logs -f
 
+mariadb:
+	$(COMPOSE) exec mariadb bash
+
+nginx:
+	$(COMPOSE) exec nginx bash
+
+wordpress:
+	$(COMPOSE) exec wordpress bash
+
 check_files:
 	@for f in $(ENV_FILE) $(SECRET_FILES); do \
 		if test ! -f "$$f"; then \
